@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fund_items', function (Blueprint $table) {
+        Schema::create('category_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fund_id');
-            $table->string('category_item_id');
-            $table->string('description');
+            $table->foreignId('category_id');
+            $table->string('name_zh');
+            $table->string('name_en')->nullable();
+            $table->string('name_pt')->nullable();
             $table->string('account_code')->nullable();
-            $table->string('sequence')->nullable();
-            $table->string('amount')->nullable();
             $table->text('remark')->nullable();
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fund_items');
+        Schema::dropIfExists('category_items');
     }
 };

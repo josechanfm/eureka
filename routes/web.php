@@ -33,6 +33,10 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::get('admin',[App\Http\Controllers\Admin\DashboardController::class,'index'])->name('admin.dashboard');
+    Route::resource('admin/configs',App\Http\Controllers\Admin\ConfigController::class)->names('admin.configs');
+    Route::resource('admin/categories',App\Http\Controllers\Admin\CategoryController::class)->names('admin.categories');
+    Route::resource('admin/funds',App\Http\Controllers\Admin\FundController::class)->names('admin.funds');
+    Route::resource('admin/fund/{fund}/items',App\Http\Controllers\Admin\FundItemController::class)->names('admin.fund.items');
 
 });
 

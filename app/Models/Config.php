@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Config extends Model
 {
     use HasFactory;
+    protected $fillable=['key','content','remark'];
     protected $casts=['content'=>'json'];
 
     public static function item($key){

@@ -14,22 +14,20 @@ class ConfigSeeder extends Seeder
     public function run(): void
     {
         Config::create(
-            ['key'=>'fund_categories','content'=>'
-            [
-                {
-                    "value": "INTERNAL",
-                    "label": "校內項目"
-                },
-                {
-                    "value": "FDCT",
-                    "label": "科技發展基金項目"
-                },
-                {
-                    "value": "DELEGATE",
-                    "label": "校外委託項目"
-                }
+            ['key'=>'fund_categories','content'=>
+                [
+                    [
+                        "value"=> "INTERNAL",
+                        "label"=> "校內項目"
+                    ],[
+                        "value"=> "FDCT",
+                        "label"=> "科技發展基金項目"
+                    ],[
+                        "value"=> "DELEGATE",
+                        "label"=> "校外委託項目"
+                    ]
+                ]
             ]
-            ']
         );
     }
 }
