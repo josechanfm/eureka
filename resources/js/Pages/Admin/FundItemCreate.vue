@@ -24,11 +24,9 @@
               <tr>
                 <td colspan="3">
                   {{ i + 1 }}. {{ catItem.name_zh }}
-                  <a-button @click="onModifyItems(catItem,fund)" class="float-right ant-btn-primary">Modify</a-button>
                 </td>
               </tr>
-              <template v-for="(item, itemIdx) in fund.items">
-                <template v-if="catItem.id == item.category_item_id">
+              <template v-for="(item, itemIdx) in fund.items.filter(i=>i.category_item_id==catItem.id)">
                   <template v-if="item.accounts.length>1">
                     <tr>
                     <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
@@ -42,12 +40,22 @@
                               :fieldNames="{value:'id',label:'name_zh'}" 
                               :style="{width:'400px'}"
                             />
-
                           </td>
                           <td width="150px">
                             <a-input v-model:value="account.amount"/>
                           </td>
-                          <td><a-button @click="onAddItemAccount(accountIdx, item)">+</a-button></td>
+                          <td>
+                            <a-button @click="onAddItemAccount(accountIdx, item, catItem)" type="info" size="small">+</a-button>
+                            <a-popconfirm
+                              title="Are you sure delete this task?"
+                              ok-text="Yes"
+                              cancel-text="No"
+                              @confirm="onRemoveItemAccount(accountIdx, item, catItem)"
+                              @cancel="()=>{}"
+                            >
+                            <a-button type="danger" size="small">-</a-button>
+                            </a-popconfirm>
+                          </td>
                         </tr>
                       </table>
                     </td>
@@ -55,7 +63,16 @@
                       <a-input v-model:value="item.amount"/>
                     </td>
                     <td>
-                      <a-button @click="onAddItem(itemIdx, catItem, item)">+</a-button>
+                      <a-button @click="onAddItem(itemIdx, catItem, item)" type="info" size="small">+</a-button>
+                          <a-popconfirm
+                            title="Are you sure delete this task?"
+                            ok-text="Yes"
+                            cancel-text="No"
+                            @confirm="onRemoveItemAccount(accountIdx, item, catItem)"
+                            @cancel="()=>{}"
+                          >
+                          <a-button @click="onRemoveItem(itemIdx, catItem, item)" type="danger" size="small">-</a-button>
+                      </a-popconfirm>
                     </td>
                   </tr>
                   </template>
@@ -69,19 +86,19 @@
                         :fieldNames="{value:'id',label:'name_zh'}" 
                         :style="{width:'400px'}"
                       />
+                      <a-button @click="onMultipleAccounts(item, catItem)" type="info" size="small" class="float-right">*</a-button>
                       <!-- <a-input v-model:value="item.accounts[0].description"/> -->
                     </td>
                     <td>
                       <a-input v-model:value="item.accounts[0].amount"/>
-                      
                     </td>
                     <td>
-                      <a-button @click="onAddItem(catItem, item)">+</a-button>
+                      <a-button @click="onAddItem(itemIdx, catItem, item)" type="info" size="small">+</a-button>
+                      <a-button @click="onRemoveItem(itemIdx, catItem, item)" type="danger" size="small">-</a-button>
                     </td>
                   </tr>
 
                   </template>
-                </template>
               </template>
               <tr>
                 <td colspan="2" style="text-align: right;">小計</td>
@@ -95,43 +112,6 @@
         </a-form>
       </div>
     </div>
-      <!-- Modal Start-->
-      <a-modal v-model:open="modal.isOpen" :title="modal.title" width="60%">
-        <template v-for="item in modal.items">
-          <template v-for="account in item.accounts">
-            <a-row>
-              <a-col :span="16">
-                {{ account.description }}
-              </a-col>
-              <a-col :span="6">
-                {{ account.amount }}
-              </a-col>
-              <a-col :span="2">
-
-              </a-col>
-            </a-row>
-          </template>
-        </template>
-        <hr>
-        <a-row>
-            <a-col :span="16">
-              <a-select 
-                v-model:value="modal.catItemAccountId" 
-                :options="modal.catItem.accounts" 
-                :fieldNames="{value:'id',label:'name_zh'}" 
-                style="width:400px"
-              />
-            </a-col>
-            <a-col :span="6">
-              <a-input v-model:value="modal.amount"/>
-            </a-col>
-            <a-col :span="2">
-              <a-button @click="addFundItem()">Add</a-button>
-            </a-col>
-          </a-row>
-
-      </a-modal>
-    
   </AdminLayout>
 </template>
 
@@ -146,11 +126,7 @@ export default {
   props: ["fund", "category"],
   data() {
     return {
-      modal:{
-        isOpen:false,
-        catItem:null,
-        items:null
-      },
+      deletedItemAccounts:[],
       rules: {
         name: { required: true },
         email: { required: true, type: "email" },
@@ -182,64 +158,41 @@ export default {
   computed() {
   },
   methods: {
-    onAddItem(itemIdx, catItem,fundItem){
-      console.log('onAddItem'+itemIdx)
-      console.log(catItem)
-      console.log(fundItem)
-      console.log(this.fund.items)
-      this.fund.items.push({
+    onMultipleAccounts(item, catItem){
+      item.accounts.push({
+        category_item_account_id:catItem.accounts[0].id
+      })
+    },
+    onAddItem(itemIdx, catItem, fundItem){
+      console.log(fundItem.id)
+      this.fund.items.splice(this.fund.items.indexOf(fundItem)+1,0,{
         "fund_id":fundItem.fund_id,
         "category_item_id":catItem.id,
         "description":'xx',
         "amount":123,
         "accounts":[
-          {"fund_item_id":fundItem.id}
+          {
+            "fund_item_id":fundItem.id,
+            "category_item_account_id":catItem.accounts[0].id
+          }
         ]
       })
     },
-    onAddItemAccount(accountIdx, item){
-      console.log('onAddItemAccount'+accountIdx)
-      item.accounts.push({})
+    onRemoveItem(itemIdx, catItem, fundItem){
+      console.log(itemIdx)
+      console.log(fundItem)
+      this.fund.items.splice(this.fund.items.indexOf(fundItem),1)
     },
-    onModifyItems(catItem, fund) {
-      this.modal.isOpen=true
-      this.modal.catItem=catItem
-      this.modal.fund_id=fund.id
-      this.modal.items=fund.items.filter(i=>i.category_item_id==catItem.id)
+    onAddItemAccount(accountIdx, item, catItem){
+      item.accounts.splice(accountIdx+1, 0, {'category_item_account_id':catItem.accounts[0].id})
+      //item.accounts.push({})
     },
-    // addFundItem(){
-    //   console.log('addFundItem')
-    //   let catAccount=this.modal.catItem.accounts.find(a=>a.id==this.modal.catItemAccountId)
-    //   let fundItemAccount={
-    //     "description":catAccount.name_zh,
-    //     "account_code":catAccount.account_code,
-    //     "amount":this.modal.amount
-
-    //   }
-
-    //   this.modal.items.push({
-    //     "fund_id":this.modal.fund_id,
-    //     "category_item_id":catAccount.category_item_id,
-    //     "accounts":fundItemAccount
-    //   });
-      
-      // this.modal.items.push({
-      //   "fund_id":fundItem.id,
-      //   "category_item_id":fundItem.category_item_id
-      // })
-      // console.log(fundItem);
-      // let account=this.modal.catItem.accounts.find(a=>a.id==this.modal.catItemAccountId)
-      // //console.log(account);
-
-      // fundItem.accounts.push({
-      //   "fund_item_id":fundItem.id,
-      //   "account_code":account.account_code,
-      //   "description":account.name_zh,
-      //   "amount":this.modal.amount
-      // });
-    //},
+    onRemoveItemAccount(accountIdx, item, catItem){
+      console.log(accountIdx);
+      console.log(item);
+      item.accounts.splice(accountIdx,1)
+    },
     onFinish() {
-      console.log(this.fund);
       this.$inertia.post(route("admin.fund.items.store", this.fund.id), this.fund.items, {
         onSuccess: (page) => {
           console.log(page);

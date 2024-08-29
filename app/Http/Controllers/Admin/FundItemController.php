@@ -39,6 +39,9 @@ class FundItemController extends Controller
     public function store(Request $request, Fund $fund)
     {
         $items=$request->all();
+        $fundItems=FundItem::whereNotIn('id',array_column($items,'id'))->delete();
+        //dd($fundItems);
+
         //dd($items);
         foreach($items as $item){
             $accounts=$item['accounts'];
@@ -46,11 +49,15 @@ class FundItemController extends Controller
             if(isset($item['id'])){
                 unset($item['created_at']);
                 unset($item['updated_at']);
-                FundItem::where('id',$item['id'])->update($item);
+                //FundItem::where('id',$item['id'])->update($item);
+                $fundItem=FundItem::find($item['id']);
+                $fundItem->update($item);
+                $fundItem->save();
             }else{
-                $fund->items()->create($item);
+                $fundItem=$fund->items()->create($item);
+                //$fundItem=FundItem::find($item['id']);
             }
-            $fundItem=FundItem::find($item['id']);
+            
 
             foreach($accounts as $a){
                 if(isset($a['id'])){
