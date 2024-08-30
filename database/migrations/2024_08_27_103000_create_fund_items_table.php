@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('fund_id');
             $table->string('category_item_id');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('account_code')->nullable();
             $table->string('sequence')->nullable();
             $table->string('amount')->nullable();

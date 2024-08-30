@@ -135,6 +135,7 @@
           declarant: { required: true},
           birm: { required: true },
           project_code: { required: true },
+          title:{ required: true }
         },
         validateMessages: {
           required: "${label} is required!",

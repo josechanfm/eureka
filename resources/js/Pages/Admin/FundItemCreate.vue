@@ -35,7 +35,7 @@
             </tr>
             <template v-for="(catItem, i) in myCategoryItems">
               <tr>
-                <td colspan="3">
+                <td colspan="6">
                   {{ i + 1 }}. {{ catItem.name_zh }}
                 </td>
               </tr>
@@ -43,20 +43,24 @@
                 <template v-if="item.accounts.length==1">
                   <tr>
                     <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
-                    <td width="80%">
+                    <td width="400px">
                       <a-select v-model:value="item.accounts[0].category_item_account_id" :options="catItem.accounts"
-                        :fieldNames="{ value: 'id', label: 'name_zh' }" :style="{ width: '400px' }" />
-                        <a-tooltip>
-                          <template #title>Multiple Items</template>
-                            <a-button @click="onMultipleAccounts(item, catItem)" type="info" size="small" class="float-right">*</a-button>
-                          
-                        </a-tooltip>
+                        :fieldNames="{ value: 'id', label: 'name_zh' }" :style="{ width: '100%' }" />
                       <!-- <a-input v-model:value="item.accounts[0].description"/> -->
                     </td>
                     <td>
+                      <a-input v-model:value="item.accounts[0].description"/>
+                    </td>
+                    <td width="60px">
+                      <a-tooltip>
+                        <template #title>Multiple Items</template>
+                          <a-button @click="onMultipleAccounts(item, catItem)" type="info" size="small">*</a-button>
+                      </a-tooltip>
+                    </td>
+                    <td width="200px">
                       <a-input v-model:value="item.accounts[0].amount" />
                     </td>
-                    <td>
+                    <td width="60px">
                       <a-tooltip>
                           <template #title>Add budget item</template>
                           <a-button @click="onAddItem(itemIdx, catItem, item)" type="info" size="small">+</a-button>
@@ -71,17 +75,20 @@
                 <template v-else>
                   <tr>
                     <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
-                    <td width="80%">
+                    <td colspan="3">
                       <table width="100%">
                         <tr v-for="(account, accountIdx) in item.accounts">
-                          <td>
+                          <td width="400px">
                             <a-select v-model:value="account.category_item_account_id" :options="catItem.accounts"
                               :fieldNames="{ value: 'id', label: 'name_zh' }" :style="{ width: '400px' }" />
+                          </td>
+                          <td>
+                            <a-input v-model:value="account.description"/>
                           </td>
                           <td width="150px">
                             <a-input v-model:value="account.amount" />
                           </td>
-                          <td>
+                          <td width="60px">
                             <a-tooltip>
                               <template #title>Add budget item</template>
                               <a-button @click="onAddItemAccount(accountIdx, item, catItem)" type="info"
@@ -99,7 +106,7 @@
                       </table>
                     </td>
                     <td>
-                      <a-input v-model:value="item.amount" />
+                      <a-input v-model:value="item.account"/>
                     </td>
                     <td>
                       <a-button @click="onAddItem(itemIdx, catItem, item)" type="info" size="small">+</a-button>
@@ -115,7 +122,7 @@
                 </template>
               </template>
               <tr>
-                <td colspan="2" style="text-align: right;">小計</td>
+                <td colspan="3" style="text-align: right;">小計</td>
                 <td>xxx</td>
               </tr>
             </template>
@@ -246,6 +253,6 @@ export default {
 <style scoped>
 table td,
 tr {
-  border: 1px solid black
+  border: 1px solid lightgray
 }
 </style>
