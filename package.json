@@ -19,6 +19,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "ant-design-vue": "^4.2.3"
+        "ant-design-vue": "^4.2.3",
+        "laravel-vue-i18n": "^2.7.7"
     }
 }

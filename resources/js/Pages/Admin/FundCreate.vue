@@ -8,7 +8,6 @@
 
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
-          {{fund}}
           <a-form
           :model="fund"
           name="fund"
@@ -164,12 +163,9 @@
     },
     methods: {
       onFinish() {
-        
         if(this.fund.id==null){
-          console.log('store new');
           this.recordStore()
         }else{
-          console.log('update existing');
           this.recordUpdate()
         }
       },

@@ -8,19 +8,19 @@
 
     <div class="container mx-auto pt-5">
       <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
-        <a-select v-model:value="catItemSelected" :style="{ width: '400px' }" >
-          <a-select-option 
-            v-for="item in category.items"
-            :key="item.id"
-            :value="item.id"
-            :disabled="isDisabled(item.id)"
-          >
-            {{ item.name_zh }}
-          </a-select-option>
-        </a-select>
-        <a-button @click="onAddCategoryItem()">Add Section</a-button>
-
-        
+        <div class="float-right">
+          <a-select v-model:value="catItemSelected" :style="{ width: '400px' }" class="mr-5">
+            <a-select-option 
+              v-for="item in category.items"
+              :key="item.id"
+              :value="item.id"
+              :disabled="isDisabled(item.id)"
+            >
+              {{ item.name_zh }}
+            </a-select-option>
+          </a-select>
+          <a-button @click="onAddCategoryItem()" type="primary">Add Section</a-button>
+        </div>
         <a-form :model="fund.items" name="fund" :label-col="labelCol" autocomplete="off" :rules="rules"
           :validate-messages="validateMessages" @finish="onFinish" enctype="multipart/form-data">
           <!-- <a-form-item label="支助項目分類" name="category">
@@ -177,12 +177,7 @@ export default {
         }
         return acc;
     }, []);
-
     this.myCategoryItems=this.category.items.filter(i=>uniqueCatItems.includes(i.id));
-
-    console.log(this.category.items);
-    console.log(uniqueCatItems)
-    console.log(this.myCategoryItems)
   },
   computed() {
   },
@@ -195,9 +190,7 @@ export default {
      
     },
     onAddCategoryItem() {
-      console.log(this.catItemSelected)
       const catItem = this.category.items.find(i => i.id == this.catItemSelected);
-      console.log(catItem);
       this.myCategoryItems.push(catItem);
       this.fund.items.push({
         'fund_id': this.fund.id,
@@ -214,7 +207,6 @@ export default {
       })
     },
     onAddItem(itemIdx, catItem, fundItem) {
-      console.log(fundItem.id)
       this.fund.items.splice(this.fund.items.indexOf(fundItem) + 1, 0, {
         "fund_id": fundItem.fund_id,
         "category_item_id": catItem.id,
@@ -229,8 +221,6 @@ export default {
       })
     },
     onRemoveItem(itemIdx, catItem, fundItem) {
-      console.log(itemIdx)
-      console.log(fundItem)
       this.fund.items.splice(this.fund.items.indexOf(fundItem), 1)
     },
     onAddItemAccount(accountIdx, item, catItem) {
@@ -238,8 +228,6 @@ export default {
       //item.accounts.push({})
     },
     onRemoveItemAccount(accountIdx, item, catItem) {
-      console.log(accountIdx);
-      console.log(item);
       item.accounts.splice(accountIdx, 1)
     },
     onFinish() {
