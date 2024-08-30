@@ -5,17 +5,14 @@
           Config
         </h2>
       </template>
-      <button
-        @click="createRecord()"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3"
-      >
-        Create
-      </button>
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+          <a-button type="primary" class="float-right m-5" :href="route('admin.funds.create')">Create</a-button>
+
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
+                <a-button :href="route('admin.funds.edit',record.id)" >Edit</a-button>
                 <a-button @click="editRecord(record)">Edit</a-button>
               </template>
               <template v-else>
@@ -102,9 +99,10 @@
           },
         ],
         rules: {
-          name: { required: true },
-          email: { required: true, type: "email" },
-          password: { required: true },
+          entity: { required: true },
+          declarant: { required: true},
+          birm: { required: true },
+          project_code: { required: true },
         },
         validateMessages: {
           required: "${label} is required!",

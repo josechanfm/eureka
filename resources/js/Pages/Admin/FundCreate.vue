@@ -8,6 +8,7 @@
 
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
+          {{fund}}
           <a-form
           :model="fund"
           name="fund"
@@ -131,9 +132,10 @@
         //   repayments:{}
         // },
         rules: {
-          name: { required: true },
-          email: { required: true, type: "email" },
-          password: { required: true },
+          entity: { required: true },
+          declarant: { required: true},
+          birm: { required: true },
+          project_code: { required: true },
         },
         validateMessages: {
           required: "${label} is required!",
@@ -162,6 +164,16 @@
     },
     methods: {
       onFinish() {
+        
+        if(this.fund.id==null){
+          console.log('store new');
+          this.recordStore()
+        }else{
+          console.log('update existing');
+          this.recordUpdate()
+        }
+      },
+      recordStore(){
         this.$inertia.post(route("admin.funds.store"), this.fund, {
           onSuccess: (page) => {
             console.log(page);
@@ -170,6 +182,18 @@
             console.log(error);
           },
         });
+
+      },
+      recordUpdate(){
+        this.$inertia.patch(route("admin.funds.update", this.fund.id), this.fund, {
+          onSuccess: (page) => {
+            console.log(page);
+          },
+          onError: (error) => {
+            console.log(error);
+          },
+        });
+
       }
     },
   };

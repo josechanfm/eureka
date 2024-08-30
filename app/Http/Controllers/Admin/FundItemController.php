@@ -18,7 +18,12 @@ class FundItemController extends Controller
      */
     public function index(Fund $fund)
     {
-        //
+        $fund->items;
+        return Inertia::render('Admin/FundItemCreate',[
+            'category'=>Category::with('items')->find(1),
+            'fund'=>$fund,
+        ]);
+        
     }
 
     /**
@@ -26,11 +31,7 @@ class FundItemController extends Controller
      */
     public function create(Fund $fund)
     {
-        $fund->items;
-        return Inertia::render('Admin/FundItemCreate',[
-            'category'=>Category::with('items')->find(1),
-            'fund'=>$fund,
-        ]);
+
     }
 
     /**
@@ -72,15 +73,15 @@ class FundItemController extends Controller
                 }
             }
         }
-        return redirect()->back();
+        return redirect()->route('admin.funds.index',$fund);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Fund $fund)
     {
-        //
+
     }
 
     /**

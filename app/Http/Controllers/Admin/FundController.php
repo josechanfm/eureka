@@ -27,7 +27,11 @@ class FundController extends Controller
     {
         return Inertia::render('Admin/FundCreate',[
             'categories'=>Category::all(),
-            'fund'=>(Object)['grants'=>[],'repayments'=>[]]
+            'fund'=>(Object)[
+                'fund_category_id'=>1,
+                'grants'=>[],
+                'repayments'=>[]
+            ]
         ]);
     }
 
@@ -40,8 +44,8 @@ class FundController extends Controller
         $data=$request->all();
         // $data['grants']=json_encode($request->grants);
         // $data['repayments']=json_encode($request->repayments);
-        Fund::create($data);
-        return redirect()->back();
+        $fund=Fund::create($data);
+        return redirect()->route('admin.fund.items.index',$fund->id);
     }
 
     /**
@@ -67,9 +71,10 @@ class FundController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Fund $fund)
     {
-        //
+        $fund->update($request->all());
+        return redirect()->route('admin.fund.items.index',$fund->id);
     }
 
     /**
