@@ -7,13 +7,12 @@
       </template>
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-button type="primary" class="float-right m-5" :href="route('admin.funds.create')">Create</a-button>
+          <a-button type="primary" class="float-right m-5" :href="route('staff.funds.create')">Create</a-button>
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button>To Close</a-button>
-                <a-button :href="route('admin.fund.expends.index',record.id)" >Expends</a-button>
-                <a-button :href="route('admin.funds.edit',record.id)" >Edit</a-button>
+                <a-button :href="route('staff.fund.expends.index',record.id)" >Expends</a-button>
+                <a-button :href="route('staff.funds.edit',record.id)" >Edit</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}

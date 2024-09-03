@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Fund;
+use App\Models\User;
 
 class FundController extends Controller
 {
@@ -15,8 +16,9 @@ class FundController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Funds',[
-            'funds'=>Fund::all()
+        //dd(auth()->user());
+        return Inertia::render('Staff/Funds',[
+            'funds'=>Fund::whereBelongsTo(auth()->user(), 'ownedBy')->orderBy('created_at','DESC')->get()
         ]);
     }
 
@@ -25,7 +27,7 @@ class FundController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/FundCreate',[
+        return Inertia::render('Staff/FundCreate',[
             'categories'=>Category::all(),
             'fund'=>(Object)[
                 'fund_category_id'=>1,
@@ -51,9 +53,9 @@ class FundController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Fund $fund)
+    public function show(string $id)
     {
-        dd($fund->summary());
+        //
     }
 
     /**
@@ -61,7 +63,7 @@ class FundController extends Controller
      */
     public function edit(Fund $fund)
     {
-        return Inertia::render('Admin/FundCreate',[
+        return Inertia::render('Staff/FundCreate',[
             'categories'=>Category::all(),
             'fund'=>$fund
         ]);

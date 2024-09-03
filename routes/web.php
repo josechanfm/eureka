@@ -32,12 +32,30 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::get('admin',[App\Http\Controllers\Admin\DashboardController::class,'index'])->name('admin.dashboard');
-    Route::resource('admin/configs',App\Http\Controllers\Admin\ConfigController::class)->names('admin.configs');
-    Route::resource('admin/categories',App\Http\Controllers\Admin\CategoryController::class)->names('admin.categories');
-    Route::resource('admin/funds',App\Http\Controllers\Admin\FundController::class)->names('admin.funds');
-    Route::resource('admin/fund/{fund}/items',App\Http\Controllers\Admin\FundItemController::class)->names('admin.fund.items');
+    Route::resource('funds',App\Http\Controllers\Staff\FundController::class)->names('staff.funds');
+    Route::resource('fund/{fund}/items',App\Http\Controllers\Staff\FundItemController::class)->names('staff.fund.items');
+    Route::resource('fund/{fund}/expends',App\Http\Controllers\Staff\ExpendController::class)->names('staff.fund.expends');
+    Route::resource('expend/{expend}/items',App\Http\Controllers\Staff\ExpendItemController::class)->names('staff.expend.items');
+
 
 });
-
+Route::group([
+    'prefix' => '/admin',
+    'middleware' => [
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+        'role:admin'
+    ]
+], function () {
+    Route::get('/',[App\Http\Controllers\Admin\DashboardController::class,'index'])->name('admin.dashboard');
+    Route::resource('configs',App\Http\Controllers\Admin\ConfigController::class)->names('admin.configs');
+    Route::resource('categories',App\Http\Controllers\Admin\CategoryController::class)->names('admin.categories');
+    Route::resource('funds',App\Http\Controllers\Admin\FundController::class)->names('admin.funds');
+    Route::resource('fund/{fund}/items',App\Http\Controllers\Admin\FundItemController::class)->names('admin.fund.items');
+    Route::resource('fund/{fund}/expends',App\Http\Controllers\Admin\ExpendController::class)->names('admin.fund.expends');
+    Route::resource('expend/{expend}/items',App\Http\Controllers\Admin\ExpendItemController::class)->names('admin.expend.items');
+    Route::post('expend/{expend}/toggle_lock',[App\Http\Controllers\Admin\ExpendController::class,'toggleLock'])->name('admin.expend.toggleLock');
+    Route::post('expend/{expend}/toggle_close',[App\Http\Controllers\Admin\ExpendController::class,'toggleClose'])->name('admin.expend.toggleClose');
+});
 

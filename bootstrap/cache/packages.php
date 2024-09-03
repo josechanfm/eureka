@@ -1,4 +1,19 @@
 <?php return array (
+  'ahmedsaoud31/laravel-permission-to-vuejs' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'LaravelAndVueJS\\LaravelAndVueJSServiceProvider',
+    ),
+  ),
+  'directorytree/ldaprecord-laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'LdapRecord\\Laravel\\LdapServiceProvider',
+      1 => 'LdapRecord\\Laravel\\LdapAuthServiceProvider',
+    ),
+  ),
   'inertiajs/inertia-laravel' => 
   array (
     'providers' => 
@@ -71,6 +86,13 @@
     'aliases' => 
     array (
       'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
+    ),
+  ),
+  'spatie/laravel-permission' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Permission\\PermissionServiceProvider',
     ),
   ),
   'tightenco/ziggy' => 

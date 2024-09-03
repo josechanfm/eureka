@@ -238,7 +238,7 @@ export default {
       item.accounts.splice(accountIdx, 1)
     },
     onFinish() {
-      this.$inertia.post(route("admin.fund.items.store", this.fund.id), this.fund.items, {
+      this.$inertia.post(route("staff.fund.items.store", this.fund.id), this.fund.items, {
         onSuccess: (page) => {
           console.log(page);
         },

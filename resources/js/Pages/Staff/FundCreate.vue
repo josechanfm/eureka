@@ -105,10 +105,8 @@
               </a-form-item>
            </a-col>
           </a-row>
-          
           <div class="flex flex-row item-center justify-center">
-            <a-button :href="route('admin.funds.index')">Back</a-button>
-            <!-- <a-button type="primary" html-type="submit">Submit</a-button> -->
+            <a-button type="primary" html-type="submit">Submit</a-button>
           </div>
 
         </a-form>
@@ -173,7 +171,7 @@
         }
       },
       recordStore(){
-        this.$inertia.post(route("admin.funds.store"), this.fund, {
+        this.$inertia.post(route("staff.funds.store"), this.fund, {
           onSuccess: (page) => {
             console.log(page);
           },
@@ -184,7 +182,7 @@
 
       },
       recordUpdate(){
-        this.$inertia.patch(route("admin.funds.update", this.fund.id), this.fund, {
+        this.$inertia.patch(route("staff.funds.update", this.fund.id), this.fund, {
           onSuccess: (page) => {
             console.log(page);
           },

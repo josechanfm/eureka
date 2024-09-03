@@ -13,4 +13,8 @@ class FundItemAccount extends Model
     public function item(){
         return $this->belongsTo(FundItem::class,'fund_item_id');
     }
+
+    public function categoryItemAccount(){
+        return $this->belongsTo(CategoryItemAccount::class)->with('item');
+    }
 }

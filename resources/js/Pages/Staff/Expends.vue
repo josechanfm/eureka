@@ -2,18 +2,17 @@
     <AdminLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Config
+          {{ $t('welcome') }}
         </h2>
       </template>
-      <a-button @click="createRecord()" type="primary">
-        Create
-      </a-button>
       <div class="container mx-auto pt-5">
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-table :dataSource="configs" :columns="columns">
+        <div class="bg-white relative shadow rounded-lg overflow-x-auto text-right">
+          <a-button type="primary" @click="createRecord()">Create</a-button>
+          <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button @click="editRecord(record)">Edit</a-button>
+                <a-button :href="route('staff.expend.items.index',record.id)" >Items</a-button>
+                <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">Edit</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -34,11 +33,20 @@
           :rules="rules"
           :validate-messages="validateMessages"
         >
-          <a-form-item label="Key" name="key">
-            <a-input v-model:value="modal.data.key" />
+          <a-form-item label="Title" name="title">
+            <a-input v-model:value="modal.data.title" />
           </a-form-item>
-          <a-form-item label="Content" name="content">
-            <a-textarea v-model:value="modal.data.content" :rows="15" />
+          <a-form-item label="Proposal No." name="proposal_number">
+            <a-input v-model:value="modal.data.proposal_number" />
+          </a-form-item>
+          <a-form-item label="Proposed at" name="proposed_at">
+            <a-date-picker v-model:value="modal.data.proposed_at" :format="dateFormat" :valueFormat="dateFormat"/>
+          </a-form-item>
+          <a-form-item label="Proposed by" name="proposed_by">
+            <a-input v-model:value="modal.data.proposed_by"/>
+          </a-form-item>
+          <a-form-item label="Approved at" name="approved_at">
+            <a-date-picker v-model:value="modal.data.approved_at" :format="dateFormat" :valueFormat="dateFormat"/>
           </a-form-item>
           <a-form-item label="Remark" name="remark">
             <a-textarea v-model:value="modal.data.remark" />
@@ -73,23 +81,35 @@
     components: {
       AdminLayout,
     },
-    props: ["configs"],
+    props: ["fund","expends"],
     data() {
       return {
+        dateFormat:'YYYY-MM-DD',
         modal: {
           isOpen: false,
           data: {},
           title: "Modal",
           mode: "",
         },
-        teacherStateLabels: {},
+          teacherStateLabels: {},
         columns: [
           {
-            title: "Key",
-            i18n: "key",
-            dataIndex: "key",
-          },
-          {
+            title: "Title",
+            i18n: "title",
+            dataIndex: "title",
+          },{
+            title: "Propsal Number",
+            i18n: "proposal_number",
+            dataIndex: "proposal_number",
+          },{
+            title: "Propsal At",
+            i18n: "proposed_at",
+            dataIndex: "proposed_at",
+          },{
+            title: "Propssed By",
+            i18n: "proposed_by",
+            dataIndex: "proposed_by",
+          },{
             title: "Operation",
             i18n: "operation",
             dataIndex: "operation",
@@ -97,9 +117,7 @@
           },
         ],
         rules: {
-          name: { required: true },
-          email: { required: true, type: "email" },
-          password: { required: true },
+          title: { required: true },
         },
         validateMessages: {
           required: "${label} is required!",
@@ -122,24 +140,24 @@
       
     },
     methods: {
-      createRecord() {
-        this.modal.data = {};
-        this.modal.mode = "CREATE";
-        this.modal.title = "create";
-        this.modal.isOpen = true;
+      createRecord(){
+        this.modal.data = {}
+        this.modal.data.fund_id=this.fund.id
+        this.modal.mode = "CREATE"
+        this.modal.title = "Create"
+        this.modal.isOpen = true
       },
-      editRecord(record) {
-        this.modal.data = { ...record };
-        this.modal.data.content = JSON.stringify(record.content);
-        this.modal.mode = "EDIT";
-        this.modal.title = "edit";
-        this.modal.isOpen = true;
+      editRecord(record){
+        this.modal.data = {...record}
+        this.modal.mode = "EDIT"
+        this.modal.title = "Edit"
+        this.modal.isOpen = true
       },
       storeRecord() {
         this.$refs.modalRef
           .validateFields()
           .then(() => {
-            this.$inertia.post(route("admin.configs.store"), this.modal.data, {
+            this.$inertia.post(route("staff.fund.expends.store",this.fund.id), this.modal.data, {
               onSuccess: (page) => {
                 this.modal.data = {};
                 this.modal.isOpen = false;
@@ -156,7 +174,7 @@
       updateRecord() {
         console.log(this.modal.data);
         this.$inertia.patch(
-          route("admin.configs.update", this.modal.data.id),
+          route("staff.fund.expends.update", {fund:this.fund.id,expend:this.modal.data.id}),
           this.modal.data,
           {
             onSuccess: (page) => {

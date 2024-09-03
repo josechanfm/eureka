@@ -2,18 +2,22 @@
     <AdminLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Config
+          {{ $t('welcome') }}
+          ..
         </h2>
       </template>
-      <a-button @click="createRecord()" type="primary">
-        Create
-      </a-button>
+      <div>Title:{{ expend.fund.title }}</div>
+      <div>Code: {{ expend.fund.project_code }}</div>
+      <div>Responsible: {{ expend.fund.responsible }}</div>
+      <div>Amount: {{ expend.fund.amount }}</div>
+      <hr>
+      <div>Expenditure: {{ expend.title }}</div>
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-table :dataSource="configs" :columns="columns">
+          <a-table :dataSource="expend.items" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button @click="editRecord(record)">Edit</a-button>
+                <!-- <a-button :href="route('admin.fund.expends.edit',{fund:record.fund_id,expend:record.id})" >Edit</a-button> -->
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -22,8 +26,9 @@
           </a-table>
         </div>
       </div>
-      <!-- Modal Start-->
-      <a-modal v-model:open="modal.isOpen" :title="modal.title" width="60%">
+
+            <!-- Modal Start-->
+            <a-modal v-model:open="modal.isOpen" :title="modal.title" width="60%">
         <a-form
           ref="modalRef"
           :model="modal.data"
@@ -34,11 +39,14 @@
           :rules="rules"
           :validate-messages="validateMessages"
         >
-          <a-form-item label="Key" name="key">
-            <a-input v-model:value="modal.data.key" />
+          <a-form-item label="Account" name="fund_item_account_id">
+            <a-select v-model:value="modal.data.fund_item_account_id" :options="accounts"/>
           </a-form-item>
-          <a-form-item label="Content" name="content">
-            <a-textarea v-model:value="modal.data.content" :rows="15" />
+          <a-form-item label="Description" name="description">
+            <a-input v-model:value="modal.data.description" />
+          </a-form-item>
+          <a-form-item label="Amount" name="amount" >
+            <a-input v-model:value="modal.data.amount" :disabled="modal.data.fund_item_account_id==null || modal.data.description==null"/>
           </a-form-item>
           <a-form-item label="Remark" name="remark">
             <a-textarea v-model:value="modal.data.remark" />
@@ -62,9 +70,11 @@
         </template>
       </a-modal>
       <!-- Modal End-->
+
     </AdminLayout>
   </template>
   
+
   <script>
   import AdminLayout from "@/Layouts/AdminLayout.vue";
   import { defineComponent, reactive } from "vue";
@@ -73,33 +83,31 @@
     components: {
       AdminLayout,
     },
-    props: ["configs"],
+    props: ["expend","availableAccounts"],
     data() {
       return {
+        accounts:[],
         modal: {
           isOpen: false,
           data: {},
           title: "Modal",
           mode: "",
         },
-        teacherStateLabels: {},
         columns: [
           {
-            title: "Key",
-            i18n: "key",
-            dataIndex: "key",
-          },
-          {
-            title: "Operation",
-            i18n: "operation",
-            dataIndex: "operation",
-            key: "operation",
+            title: "Description",
+            i18n: "description",
+            dataIndex: "description",
+          },{
+            title: "Amount",
+            i18n: "amount",
+            dataIndex: "amount",
           },
         ],
         rules: {
-          name: { required: true },
-          email: { required: true, type: "email" },
-          password: { required: true },
+          fund_item_account_id: { required: true },
+          description: { required: true },
+          amount: { required: true, validator: this.validateAmount, trigger: 'blur'},
         },
         validateMessages: {
           required: "${label} is required!",
@@ -111,6 +119,7 @@
             range: "${label} must be between ${min} and ${max}",
           },
         },
+      
         labelCol: {
           style: {
             width: "150px",
@@ -119,27 +128,32 @@
       };
     },
     created() {
-      
+      this.accounts=this.availableAccounts.map(a=> ({
+          value:a.id,
+          label:a.account_code+' '+a.description+' ('+a.available+')'
+        })
+      )
+      console.log(this.accounts);
     },
     methods: {
-      createRecord() {
-        this.modal.data = {};
-        this.modal.mode = "CREATE";
-        this.modal.title = "create";
-        this.modal.isOpen = true;
+      createRecord(){
+        this.modal.data = {}
+        this.modal.data.expend_id = this.expend.id
+        this.modal.mode = "CREATE"
+        this.modal.title = "create"
+        this.modal.isOpen = true
       },
-      editRecord(record) {
-        this.modal.data = { ...record };
-        this.modal.data.content = JSON.stringify(record.content);
-        this.modal.mode = "EDIT";
-        this.modal.title = "edit";
-        this.modal.isOpen = true;
+      editRecord(record){
+        this.modal.data = {...record}
+        this.modal.mode = "CREATE"
+        this.modal.title = "create"
+        this.modal.isOpen = true
       },
       storeRecord() {
         this.$refs.modalRef
           .validateFields()
           .then(() => {
-            this.$inertia.post(route("admin.configs.store"), this.modal.data, {
+            this.$inertia.post(route("admin.expend.items.store",this.expend.id), this.modal.data, {
               onSuccess: (page) => {
                 this.modal.data = {};
                 this.modal.isOpen = false;
@@ -156,9 +170,7 @@
       updateRecord() {
         console.log(this.modal.data);
         this.$inertia.patch(
-          route("admin.configs.update", this.modal.data.id),
-          this.modal.data,
-          {
+          route("admin.expend.items.update", this.modal.data.id),this.modal.data,{
             onSuccess: (page) => {
               this.modal.data = {};
               this.modal.isOpen = false;
@@ -170,6 +182,30 @@
           }
         );
       },
+      validateAmount(){
+        console.log('validating amount');
+        const account=this.availableAccounts.find(a=>a.id==this.modal.data.fund_item_account_id)
+        console.log(account.available)  
+        console.log(this.modal.data.amount);
+
+        const value=account.available-this.modal.data.amount
+        return new Promise((resolve, reject)=>{
+          if (value<0) {
+            reject(new Error('Budget limit exceeded. remains:'+account.available));
+            // } else if (value.length < 3) {
+            //   callback(new Error('Username must be at least 3 characters long.'));
+          } else {
+            resolve();
+          }
+
+        })
+      },
+      onChangeAmount(){
+        const account=this.availableAccounts.find(a=>a.id==this.modal.data.fund_item_account_id)
+        console.log(account.available)  
+        console.log(this.modal.data.amount);
+        console.log(account.available-this.modal.data.amount)  
+      }
     },
   };
   </script>

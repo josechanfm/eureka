@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('fund_item_id')->constrained()->cascadeOnDelete();
             $table->string('description')->nullable();
             $table->string('account_code');
-            $table->string('amount')->nullable();
+            $table->integer('amount')->nullable();
             $table->timestamps();
         });
     }

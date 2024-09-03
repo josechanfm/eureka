@@ -27,9 +27,11 @@ return new class extends Migration
             $table->string('repayment')->nullable();
             $table->string('grants')->default('[]');
             $table->string('repayments')->nullable('[]');
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
+            $table->foreignId('owner_id')->nullable();
+            $table->foreignId('creater_id')->nullable();
+            $table->foreignId('updater_id')->nullable();
             $table->text('remark')->nullable();
+            $table->boolean('is_closed')->default(false);
             $table->timestamps();
         });
     }

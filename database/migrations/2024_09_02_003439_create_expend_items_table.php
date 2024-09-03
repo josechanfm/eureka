@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fund_items', function (Blueprint $table) {
+        Schema::create('expend_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fund_id');
-            $table->string('category_item_id');
+            $table->foreignId('expend_id');
+            $table->foreignId('fund_item_account_id');
             $table->string('description')->nullable();
-            $table->string('account_code')->nullable();
-            $table->string('sequence')->nullable();
-            $table->integer('amount')->nullable();
-            $table->text('remark')->nullable();
+            $table->integer('amount');
+            $table->string('remark')->nullable();
+            $table->foreignId('creater_id')->nullable();
+            $table->foreignId('updater_id')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fund_items');
+        Schema::dropIfExists('expend_items');
     }
 };
