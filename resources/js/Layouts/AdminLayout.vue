@@ -8,12 +8,18 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { GlobalOutlined } from '@ant-design/icons-vue';
+import { loadLanguageAsync } from "laravel-vue-i18n";
+import { usePage } from "@inertiajs/vue3";
 
 defineProps({
     title: String,
 });
 
 const showingNavigationDropdown = ref(false);
+
+const page = usePage();
+//loadLanguageAsync(page.props.value.lang);
+loadLanguageAsync('zh');
 
 const switchToTeam = (team) => {
     router.put(route('current-team.update'), {
