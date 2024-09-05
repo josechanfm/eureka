@@ -6,13 +6,12 @@
           ..
         </h2>
       </template>
-      <div>Title:{{ expend.fund.title }}</div>
-      <div>Code: {{ expend.fund.project_code }}</div>
-      <div>Responsible: {{ expend.fund.responsible }}</div>
-      <div>Amount: {{ expend.fund.amount }}</div>
-      <hr>
-      <div>Expenditure: {{ expend.title }}</div>
       <div class="container mx-auto pt-5">
+        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+          <ExpendHeader :expend="expend"/>
+        </div>
+        <a-divider/>
+
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
           <a-table :dataSource="expend.items" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
@@ -77,11 +76,12 @@
 
   <script>
   import AdminLayout from "@/Layouts/AdminLayout.vue";
-  import { defineComponent, reactive } from "vue";
+  import ExpendHeader from "@/Pages/Staff/ExpendHeader.vue";
   
   export default {
     components: {
       AdminLayout,
+      ExpendHeader
     },
     props: ["expend","availableAccounts"],
     data() {

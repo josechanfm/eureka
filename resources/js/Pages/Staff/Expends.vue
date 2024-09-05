@@ -6,6 +6,10 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
+        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+          <FundHeader :fund="fund"/>
+        </div>
+        <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto text-right">
           <a-button type="primary" @click="createRecord()">Create</a-button>
           <a-table :dataSource="expends" :columns="columns">
@@ -75,11 +79,12 @@
   
   <script>
   import AdminLayout from "@/Layouts/AdminLayout.vue";
-  import { defineComponent, reactive } from "vue";
-  
+  import FundHeader from "@/Pages/Staff/FundHeader.vue";
+
   export default {
     components: {
       AdminLayout,
+      FundHeader
     },
     props: ["fund","expends"],
     data() {

@@ -73,7 +73,7 @@ class FundItemController extends Controller
                 }
             }
         }
-        return redirect()->route('admin.funds.index',$fund);
+        return redirect()->route('staff.funds.index');
     }
 
     /**

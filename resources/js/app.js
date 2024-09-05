@@ -8,6 +8,8 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import { i18nVue } from 'laravel-vue-i18n'
+import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
+import  RolePermission  from './Directives/RolePermission.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -19,8 +21,10 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(Antd)
+            .use(LaravelPermissionToVueJS)
+            .use(RolePermission)
             .use(i18nVue, {
-                lang: 'pt',
+                lang: 'en',
                 resolve: lang => {
                     const langs = import.meta.glob('../../lang/*.json', { eager: true });
                     return langs[`../../lang/${lang}.json`].default;

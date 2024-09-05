@@ -7,8 +7,13 @@
     </template>
 
     <div class="container mx-auto pt-5">
+      <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+        <FundHeader :fund="fund"/>
+      </div>
+      <a-divider/>
+
       <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
-        <div class="float-right">
+        <div class="float-right pb-5">
           <a-select v-model:value="catItemSelected" :style="{ width: '400px' }" class="mr-5">
             <a-select-option 
               v-for="item in category.items"
@@ -58,7 +63,12 @@
                       </a-tooltip>
                     </td>
                     <td width="200px">
-                      <a-input v-model:value="item.accounts[0].amount" />
+                      <a-input-number 
+                        v-model:value="item.accounts[0].amount" 
+                        :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                        :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                        :style="{width:'100%'}"
+                      />
                     </td>
                     <td width="60px">
                       <a-tooltip>
@@ -86,7 +96,12 @@
                             <a-input v-model:value="account.description"/>
                           </td>
                           <td width="150px">
-                            <a-input v-model:value="account.amount" />
+                            <a-input-number
+                              v-model:value="account.amount" 
+                              :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                              :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                              :style="{width:'100%'}"
+                            />
                           </td>
                           <td width="60px">
                             <a-tooltip>
@@ -106,7 +121,12 @@
                       </table>
                     </td>
                     <td>
-                      <a-input v-model:value="item.account"/>
+                      <a-input-number 
+                        v-model:value="item.account"
+                        :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                        :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                        :style="{width:'100%'}"
+                      />
                     </td>
                     <td>
                       <a-button @click="onAddItem(itemIdx, catItem, item)" type="info" size="small">+</a-button>
@@ -127,7 +147,8 @@
               </tr>
             </template>
           </table>
-          <div class="flex flex-row item-center justify-center">
+          <div class="flex flex-row item-center justify-center gap-5 pt-5">
+            <a-button :href="route('staff.funds.index')">Back</a-button>
             <a-button type="primary" html-type="submit">Submit</a-button>
           </div>
         </a-form>
@@ -138,11 +159,12 @@
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { defineComponent, reactive } from "vue";
+import FundHeader from "@/Pages/Staff/FundHeader.vue";
 
 export default {
   components: {
     AdminLayout,
+    FundHeader
   },
   props: ["fund", "category"],
   data() {
@@ -251,8 +273,8 @@ export default {
 };
 </script>
 <style scoped>
-table td,
-tr {
-  border: 1px solid lightgray
+table td, tr {
+  border: 1px solid lightgray;
+  padding: 0px;
 }
 </style>

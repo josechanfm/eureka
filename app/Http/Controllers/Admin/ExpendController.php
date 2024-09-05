@@ -15,7 +15,6 @@ class ExpendController extends Controller
      */
     public function index(Fund $fund)
     {
-        //dd($fund);
         return Inertia::render('Admin/Expends',[
             'fund'=>$fund,
             'expends'=>Expend::whereBelongsTo($fund)->get()

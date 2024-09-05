@@ -42,13 +42,12 @@ class Fund extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
     public function summary(){
-        $categoryItems=$this->category->items;
-        foreach($categoryItems as $item){
+        $items=$this->items;
+        foreach($items as $item){
             foreach($item->accounts as $account){
-                $fundAccountIds=$this->accounts->where('account_code',$account->account_code)->pluck('id');
-                $account->total=ExpendItem::whereIn('fund_item_account_id',$fundAccountIds)->sum('amount');
+                $account->total=ExpendItem::where('fund_item_account_id',$account->id)->sum('amount');
             }
-        };
-        return $categoryItems;
+        }
+        return $items;
     }
 }

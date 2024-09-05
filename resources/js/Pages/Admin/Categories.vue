@@ -5,18 +5,15 @@
           Config
         </h2>
       </template>
-      <button
-        @click="createRecord()"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3"
-      >
-        Create
-      </button>
+
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+          <a-button type="primary" class="float-right m-5" @click="createRecord()">Create</a-button>
           <a-table :dataSource="categories" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
                 <a-button @click="editRecord(record)">Edit</a-button>
+                <a-button :href="route('admin.category.items.index',record.id)">Items</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -40,14 +37,9 @@
           <a-form-item label="Title (zh)" name="title_zh">
             <a-input v-model:value="modal.data.title_zh" />
           </a-form-item>
-          <a-form-item label="Content" name="content">
-            <a-textarea v-model:value="modal.data.content" :rows="5" />
+          <a-form-item label="Remark" name="remark">
+            <a-textarea v-model:value="modal.data.remark" :rows="5" />
           </a-form-item>
-          <template v-for="item in modal.data.items">
-            <a-form-item label="item" name="item">
-              <a-input v-model:value="item.name_zh" />
-            </a-form-item>
-          </template>
         </a-form>
         <template #footer>
           <a-button

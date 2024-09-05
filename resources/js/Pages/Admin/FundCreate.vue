@@ -106,8 +106,9 @@
            </a-col>
           </a-row>
           
-          <div class="flex flex-row item-center justify-center">
+          <div class="flex flex-row item-center justify-center gap-5 pt-5">
             <a-button :href="route('admin.funds.index')">Back</a-button>
+            <a-button :href="route('admin.fund.items.index',fund.id)">Items</a-button>
             <!-- <a-button type="primary" html-type="submit">Submit</a-button> -->
           </div>
 

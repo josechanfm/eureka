@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Models\CategoryItem;
 use App\Models\Fund;
+use Illuminate\Support\Facades\DB;
+
 
 class FundController extends Controller
 {
@@ -15,6 +18,7 @@ class FundController extends Controller
      */
     public function index()
     {
+        //dd(auth()->user());
         return Inertia::render('Admin/Funds',[
             'funds'=>Fund::all()
         ]);
@@ -53,7 +57,12 @@ class FundController extends Controller
      */
     public function show(Fund $fund)
     {
-        dd($fund->summary());
+        $categoryItemIds=$fund->items->keyBy('category_item_id')->pluck('category_item_id')->toArray();
+        $fund->summary();
+        return Inertia::render('Admin/FundSummary',[
+            'categoryItems'=>CategoryItem::whereIn('id',$categoryItemIds)->with('accounts')->get(),
+            'fund'=>$fund,
+        ]);
     }
 
     /**
@@ -84,4 +93,11 @@ class FundController extends Controller
     {
         //
     }
+
+    public function toggleClose(Fund $fund){
+        $fund->is_closed=!$fund->is_closed;
+        $fund->save();
+       
+    }
+
 }

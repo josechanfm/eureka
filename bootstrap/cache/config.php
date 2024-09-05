@@ -105,6 +105,11 @@
       'web' => 
       array (
         'driver' => 'session',
+        'provider' => 'users',
+      ),
+      'ldap_web' => 
+      array (
+        'driver' => 'session',
         'provider' => 'ldap',
       ),
       'sanctum' => 

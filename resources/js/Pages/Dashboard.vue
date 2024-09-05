@@ -1,10 +1,10 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Welcome from '@/Components/Welcome.vue';
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AdminLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
@@ -14,9 +14,15 @@ import Welcome from '@/Components/Welcome.vue';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <Welcome />
+                    <div>
+                        <inertia-link :href="route('staff.funds.index')">Funds</inertia-link>
+                    </div>
+                    <div>
+                        <inertia-link :href="route('admin.funds.index')">Admin</inertia-link>
+                    </div>
+                    
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </AdminLayout>
 </template>

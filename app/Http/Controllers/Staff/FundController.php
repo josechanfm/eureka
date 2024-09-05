@@ -18,7 +18,7 @@ class FundController extends Controller
     {
         //dd(auth()->user());
         return Inertia::render('Staff/Funds',[
-            'funds'=>Fund::whereBelongsTo(auth()->user(), 'ownedBy')->orderBy('created_at','DESC')->get()
+            'funds'=>Fund::whereBelongsTo(auth()->user(), 'ownedBy')->where('is_closed',false)->orderBy('created_at','DESC')->get()
         ]);
     }
 
@@ -47,7 +47,7 @@ class FundController extends Controller
         // $data['grants']=json_encode($request->grants);
         // $data['repayments']=json_encode($request->repayments);
         $fund=Fund::create($data);
-        return redirect()->route('admin.fund.items.index',$fund->id);
+        return redirect()->route('staff.fund.items.index',$fund->id);
     }
 
     /**
@@ -76,7 +76,7 @@ class FundController extends Controller
     public function update(Request $request, Fund $fund)
     {
         $fund->update($request->all());
-        return redirect()->route('admin.fund.items.index',$fund->id);
+        return redirect()->route('staff.fund.items.index',$fund->id);
     }
 
     /**

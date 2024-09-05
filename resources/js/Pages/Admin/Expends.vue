@@ -7,13 +7,10 @@
       </template>
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <div>Title: {{ fund.title }}</div>
-          <div>Project code: {{ fund.project_code }}</div>
-          <div>Responsible: {{ fund.responsible }}</div>
-          <div>Amount: {{ fund.amount }}</div>
-          <div>Type: {{ fund.type }}</div>
-          <div>Duration: {{ fund.duration }}</div>
-          <hr>
+          <FundHeader :fund="fund" />
+        </div>
+        <a-divider/>
+        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
@@ -91,11 +88,12 @@
   
   <script>
   import AdminLayout from "@/Layouts/AdminLayout.vue";
-  import { defineComponent, reactive } from "vue";
+  import FundHeader from "@/Pages/Staff/FundHeader.vue";
   
   export default {
     components: {
       AdminLayout,
+      FundHeader
     },
     props: ["fund","expends"],
     data() {

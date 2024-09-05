@@ -11,9 +11,13 @@
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button>To Close</a-button>
+                <a-button @click="toggleClose(record)">
+                  <span v-if="record.is_closed">Reopen</span>
+                  <span v-else>Close</span>
+                </a-button>
                 <a-button :href="route('admin.fund.expends.index',record.id)" >Expends</a-button>
                 <a-button :href="route('admin.funds.edit',record.id)" >Edit</a-button>
+                <a-button :href="route('admin.funds.show',record.id)" >Summary</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -67,6 +71,10 @@
       
     },
     methods: {
+      toggleClose(record){
+        this.$inertia.post(route('admin.fund.toggleClose',record.id));
+      }
+
     },
   };
   </script>

@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
     
-    protected $fillable=['title_zh','title_en','title_pt'];
+    protected $fillable=['title_zh','title_en','title_pt','remark'];
 
     public function items(){
         return $this->hasMany(CategoryItem::class)->with('accounts');

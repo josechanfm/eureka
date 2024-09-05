@@ -7,6 +7,11 @@
     </template>
 
     <div class="container mx-auto pt-5">
+      <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+        <FundHeader :fund="fund"/>
+      </div>
+      <a-divider/>
+
       <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
         <div class="float-right">
           <a-select v-model:value="catItemSelected" :style="{ width: '400px' }" class="mr-5">
@@ -127,8 +132,9 @@
               </tr>
             </template>
           </table>
-          <div class="flex flex-row item-center justify-center">
-            <a-button type="primary" html-type="submit">Submit</a-button>
+          <div class="flex flex-row item-center justify-center gap-5 pt-5">
+            <a-button :href="route('admin.funds.index')">Back</a-button>
+            <!-- <a-button type="primary" html-type="submit">Submit</a-button> -->
           </div>
         </a-form>
       </div>
@@ -138,11 +144,12 @@
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { defineComponent, reactive } from "vue";
+import FundHeader from "@/Pages/Staff/FundHeader.vue";
 
 export default {
   components: {
     AdminLayout,
+    FundHeader
   },
   props: ["fund", "category"],
   data() {

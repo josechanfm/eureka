@@ -24,7 +24,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::uMkkyYXppGJTHtq0',
+            '_route' => 'generated::9TTcF7mkx07DcKVV',
           ),
           1 => NULL,
           2 => 
@@ -61,7 +61,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::1UW1GbKZEC5moXCh',
+            '_route' => 'generated::4Q2EFYGcUdjso4tl',
           ),
           1 => NULL,
           2 => 
@@ -171,7 +171,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::YvXl0mpFn1kkjfXw',
+            '_route' => 'generated::SuGKRlb0yaoWHQel',
           ),
           1 => NULL,
           2 => 
@@ -228,7 +228,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::aiWQRAR0aE9Ms9zs',
+            '_route' => 'generated::p4LxaVMA4100lJhR',
           ),
           1 => NULL,
           2 => 
@@ -301,7 +301,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::8DRnXXsvWpqm4KXt',
+            '_route' => 'generated::OoSuefCTpkoR4VlF',
           ),
           1 => NULL,
           2 => 
@@ -431,7 +431,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Sebubb0EM2RZxRX7',
+            '_route' => 'generated::TiVLT3xvkGyrEJ5D',
           ),
           1 => NULL,
           2 => 
@@ -663,7 +663,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::nFYSrzXyU8tCVQbP',
+            '_route' => 'generated::NGZGWWqEX3GPbvsB',
           ),
           1 => NULL,
           2 => 
@@ -683,7 +683,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::j5Qz1Kb1JHkKC7wi',
+            '_route' => 'generated::M5DbvA2T8XjlRrli',
           ),
           1 => NULL,
           2 => 
@@ -964,7 +964,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/team(?|s/([^/]++)(?|(*:60)|/members(?|(*:78)|/([^/]++)(?|(*:97))))|\\-invitations/([^/]++)(?|(*:132)))|/fund(?|s/([^/]++)(?|(*:163)|/edit(*:176)|(*:184))|/([^/]++)/(?|items(?|(*:214)|/(?|create(*:232)|([^/]++)(?|(*:251)|/edit(*:264)|(*:272)))|(*:282))|expends(?|(*:301)|/(?|create(*:319)|([^/]++)(?|(*:338)|/edit(*:351)|(*:359)))|(*:369))))|/expend/([^/]++)/items(?|(*:405)|/(?|create(*:423)|([^/]++)(?|(*:442)|/edit(*:455)|(*:463)))|(*:473))|/admin/(?|c(?|onfigs/([^/]++)(?|(*:514)|/edit(*:527)|(*:535))|ategories/([^/]++)(?|(*:565)|/edit(*:578)|(*:586)))|fund(?|s/([^/]++)(?|(*:616)|/edit(*:629)|(*:637))|/([^/]++)/(?|items(?|(*:667)|/(?|create(*:685)|([^/]++)(?|(*:704)|/edit(*:717)|(*:725)))|(*:735))|expends(?|(*:754)|/(?|create(*:772)|([^/]++)(?|(*:791)|/edit(*:804)|(*:812)))|(*:822))))|expend/([^/]++)/(?|items(?|(*:860)|/(?|create(*:878)|([^/]++)(?|(*:897)|/edit(*:910)|(*:918)))|(*:928))|toggle_(?|lock(*:951)|close(*:964)))))/?$}sDu',
+      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/team(?|s/([^/]++)(?|(*:60)|/members(?|(*:78)|/([^/]++)(?|(*:97))))|\\-invitations/([^/]++)(?|(*:132)))|/fund(?|s/([^/]++)(?|(*:163)|/edit(*:176)|(*:184))|/([^/]++)/(?|items(?|(*:214)|/(?|create(*:232)|([^/]++)(?|(*:251)|/edit(*:264)|(*:272)))|(*:282))|expends(?|(*:301)|/(?|create(*:319)|([^/]++)(?|(*:338)|/edit(*:351)|(*:359)))|(*:369))))|/expend/([^/]++)/items(?|(*:405)|/(?|create(*:423)|([^/]++)(?|(*:442)|/edit(*:455)|(*:463)))|(*:473))|/admin/(?|c(?|onfigs/([^/]++)(?|(*:514)|/edit(*:527)|(*:535))|ategor(?|ies/([^/]++)(?|(*:568)|/edit(*:581)|(*:589))|y/(?|([^/]++)/items(?|(*:620)|/(?|create(*:638)|([^/]++)(?|(*:657)|/edit(*:670)|(*:678)))|(*:688))|item/([^/]++)/accounts(?|(*:722)|/(?|create(*:740)|([^/]++)(?|(*:759)|/edit(*:772)|(*:780)))|(*:790)))))|fund(?|s/([^/]++)(?|(*:822)|/edit(*:835)|(*:843))|/([^/]++)/(?|items(?|(*:873)|/(?|create(*:891)|([^/]++)(?|(*:910)|/edit(*:923)|(*:931)))|(*:941))|expends(?|(*:960)|/(?|create(*:978)|([^/]++)(?|(*:997)|/edit(*:1010)|(*:1019)))|(*:1030))|toggle_close(*:1052)))|expend/([^/]++)/(?|items(?|(*:1090)|/(?|create(*:1109)|([^/]++)(?|(*:1129)|/edit(*:1143)|(*:1152)))|(*:1163))|toggle_(?|lock(*:1187)|close(*:1201)))))/?$}sDu',
     ),
     3 => 
     array (
@@ -1815,7 +1815,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      565 => 
+      568 => 
       array (
         0 => 
         array (
@@ -1838,7 +1838,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      578 => 
+      581 => 
       array (
         0 => 
         array (
@@ -1861,7 +1861,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      586 => 
+      589 => 
       array (
         0 => 
         array (
@@ -1903,7 +1903,327 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      616 => 
+      620 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.items.index',
+          ),
+          1 => 
+          array (
+            0 => 'category',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      638 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.items.create',
+          ),
+          1 => 
+          array (
+            0 => 'category',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      657 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.items.show',
+          ),
+          1 => 
+          array (
+            0 => 'category',
+            1 => 'item',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      670 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.items.edit',
+          ),
+          1 => 
+          array (
+            0 => 'category',
+            1 => 'item',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      678 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.items.update',
+          ),
+          1 => 
+          array (
+            0 => 'category',
+            1 => 'item',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.items.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'category',
+            1 => 'item',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      688 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.items.store',
+          ),
+          1 => 
+          array (
+            0 => 'category',
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      722 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.item.accounts.index',
+          ),
+          1 => 
+          array (
+            0 => 'item',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      740 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.item.accounts.create',
+          ),
+          1 => 
+          array (
+            0 => 'item',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      759 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.item.accounts.show',
+          ),
+          1 => 
+          array (
+            0 => 'item',
+            1 => 'account',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      772 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.item.accounts.edit',
+          ),
+          1 => 
+          array (
+            0 => 'item',
+            1 => 'account',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      780 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.item.accounts.update',
+          ),
+          1 => 
+          array (
+            0 => 'item',
+            1 => 'account',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.item.accounts.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'item',
+            1 => 'account',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      790 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.category.item.accounts.store',
+          ),
+          1 => 
+          array (
+            0 => 'item',
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      822 => 
       array (
         0 => 
         array (
@@ -1926,7 +2246,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      629 => 
+      835 => 
       array (
         0 => 
         array (
@@ -1949,7 +2269,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      637 => 
+      843 => 
       array (
         0 => 
         array (
@@ -1991,7 +2311,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      667 => 
+      873 => 
       array (
         0 => 
         array (
@@ -2014,7 +2334,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      685 => 
+      891 => 
       array (
         0 => 
         array (
@@ -2037,7 +2357,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      704 => 
+      910 => 
       array (
         0 => 
         array (
@@ -2061,7 +2381,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      717 => 
+      923 => 
       array (
         0 => 
         array (
@@ -2085,7 +2405,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      725 => 
+      931 => 
       array (
         0 => 
         array (
@@ -2129,7 +2449,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      735 => 
+      941 => 
       array (
         0 => 
         array (
@@ -2151,7 +2471,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      754 => 
+      960 => 
       array (
         0 => 
         array (
@@ -2174,7 +2494,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      772 => 
+      978 => 
       array (
         0 => 
         array (
@@ -2197,7 +2517,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      791 => 
+      997 => 
       array (
         0 => 
         array (
@@ -2221,7 +2541,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      804 => 
+      1010 => 
       array (
         0 => 
         array (
@@ -2245,7 +2565,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      812 => 
+      1019 => 
       array (
         0 => 
         array (
@@ -2289,7 +2609,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      822 => 
+      1030 => 
       array (
         0 => 
         array (
@@ -2311,7 +2631,29 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      860 => 
+      1052 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.fund.toggleClose',
+          ),
+          1 => 
+          array (
+            0 => 'fund',
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1090 => 
       array (
         0 => 
         array (
@@ -2334,7 +2676,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      878 => 
+      1109 => 
       array (
         0 => 
         array (
@@ -2357,7 +2699,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      897 => 
+      1129 => 
       array (
         0 => 
         array (
@@ -2381,7 +2723,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      910 => 
+      1143 => 
       array (
         0 => 
         array (
@@ -2405,7 +2747,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      918 => 
+      1152 => 
       array (
         0 => 
         array (
@@ -2449,7 +2791,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      928 => 
+      1163 => 
       array (
         0 => 
         array (
@@ -2471,7 +2813,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      951 => 
+      1187 => 
       array (
         0 => 
         array (
@@ -2493,7 +2835,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      964 => 
+      1201 => 
       array (
         0 => 
         array (
@@ -2530,7 +2872,7 @@ app('router')->setCompiledRoutes(
   ),
   'attributes' => 
   array (
-    'generated::uMkkyYXppGJTHtq0' => 
+    'generated::9TTcF7mkx07DcKVV' => 
     array (
       'methods' => 
       array (
@@ -2549,7 +2891,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::uMkkyYXppGJTHtq0',
+        'as' => 'generated::9TTcF7mkx07DcKVV',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2604,7 +2946,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::1UW1GbKZEC5moXCh' => 
+    'generated::4Q2EFYGcUdjso4tl' => 
     array (
       'methods' => 
       array (
@@ -2627,7 +2969,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::1UW1GbKZEC5moXCh',
+        'as' => 'generated::4Q2EFYGcUdjso4tl',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2874,7 +3216,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::YvXl0mpFn1kkjfXw' => 
+    'generated::SuGKRlb0yaoWHQel' => 
     array (
       'methods' => 
       array (
@@ -2896,7 +3238,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::YvXl0mpFn1kkjfXw',
+        'as' => 'generated::SuGKRlb0yaoWHQel',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2988,7 +3330,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::aiWQRAR0aE9Ms9zs' => 
+    'generated::p4LxaVMA4100lJhR' => 
     array (
       'methods' => 
       array (
@@ -3011,7 +3353,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::aiWQRAR0aE9Ms9zs',
+        'as' => 'generated::p4LxaVMA4100lJhR',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3143,7 +3485,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::8DRnXXsvWpqm4KXt' => 
+    'generated::OoSuefCTpkoR4VlF' => 
     array (
       'methods' => 
       array (
@@ -3166,7 +3508,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::8DRnXXsvWpqm4KXt',
+        'as' => 'generated::OoSuefCTpkoR4VlF',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3419,7 +3761,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Sebubb0EM2RZxRX7' => 
+    'generated::TiVLT3xvkGyrEJ5D' => 
     array (
       'methods' => 
       array (
@@ -3442,7 +3784,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::Sebubb0EM2RZxRX7',
+        'as' => 'generated::TiVLT3xvkGyrEJ5D',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4205,7 +4547,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::nFYSrzXyU8tCVQbP' => 
+    'generated::NGZGWWqEX3GPbvsB' => 
     array (
       'methods' => 
       array (
@@ -4228,7 +4570,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::nFYSrzXyU8tCVQbP',
+        'as' => 'generated::NGZGWWqEX3GPbvsB',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4244,7 +4586,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::j5Qz1Kb1JHkKC7wi' => 
+    'generated::M5DbvA2T8XjlRrli' => 
     array (
       'methods' => 
       array (
@@ -4271,7 +4613,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::j5Qz1Kb1JHkKC7wi',
+        'as' => 'generated::M5DbvA2T8XjlRrli',
       ),
       'fallback' => false,
       'defaults' => 
@@ -6051,6 +6393,576 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
+    'admin.category.items.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/category/{category}/items',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.items.index',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@index',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@index',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/{category}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.items.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/category/{category}/items/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.items.create',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@create',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@create',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/{category}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.items.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/category/{category}/items',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.items.store',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@store',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@store',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/{category}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.items.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/category/{category}/items/{item}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.items.show',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@show',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@show',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/{category}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.items.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/category/{category}/items/{item}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.items.edit',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@edit',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@edit',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/{category}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.items.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'admin/category/{category}/items/{item}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.items.update',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@update',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@update',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/{category}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.items.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'admin/category/{category}/items/{item}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.items.destroy',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemController@destroy',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/{category}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.item.accounts.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/category/item/{item}/accounts',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.item.accounts.index',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@index',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@index',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/item/{item}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.item.accounts.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/category/item/{item}/accounts/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.item.accounts.create',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@create',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@create',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/item/{item}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.item.accounts.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/category/item/{item}/accounts',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.item.accounts.store',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@store',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@store',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/item/{item}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.item.accounts.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/category/item/{item}/accounts/{account}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.item.accounts.show',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@show',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@show',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/item/{item}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.item.accounts.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/category/item/{item}/accounts/{account}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.item.accounts.edit',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@edit',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@edit',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/item/{item}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.item.accounts.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'admin/category/item/{item}/accounts/{account}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.item.accounts.update',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@update',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@update',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/item/{item}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.category.item.accounts.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'admin/category/item/{item}/accounts/{account}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'as' => 'admin.category.item.accounts.destroy',
+        'uses' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Admin\\CategoryItemAccountController@destroy',
+        'namespace' => NULL,
+        'prefix' => 'admin/category/item/{item}',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
     'admin.funds.index' => 
     array (
       'methods' => 
@@ -7176,6 +8088,46 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.fund.toggleClose' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/fund/{fund}/toggle_close',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:sanctum',
+          2 => 'Laravel\\Jetstream\\Http\\Middleware\\AuthenticateSession',
+          3 => 'verified',
+          4 => 'role:admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\FundController@toggleClose',
+        'controller' => 'App\\Http\\Controllers\\Admin\\FundController@toggleClose',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.fund.toggleClose',
       ),
       'fallback' => false,
       'defaults' => 

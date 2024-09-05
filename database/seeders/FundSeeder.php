@@ -16,7 +16,7 @@ class FundSeeder extends Seeder
     {
         $category=Category::find(1);
         $fund=Fund::create([
-            'fund_category_id'=>$category->id,
+            'category_id'=>$category->id,
             'entity'=>'MPU',
             'declarant'=>'Jose',
             'birm'=>'12345678',
@@ -28,6 +28,7 @@ class FundSeeder extends Seeder
             'duration'=>'36',
             'grant'=>'3 phases',
             'grants'=>["10,000","20,000","30,000","40,000","50,000","60,000"],
+            'is_closed'=>false,
             'repayments'=>[]
         ]);
 

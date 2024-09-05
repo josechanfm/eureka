@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('proposal_number')->nullable();
             $table->date('proposed_at')->nullable();
+            $table->string('proposed_by')->nullable();
             $table->date('approved_at')->nullable();
-            $table->string('approved_by')->nullable();
             $table->string('remark')->nullable();
             $table->foreignId('owner_id');
             $table->foreignId('creater_id')->nullable();

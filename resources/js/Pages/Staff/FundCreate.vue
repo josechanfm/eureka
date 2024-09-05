@@ -105,8 +105,10 @@
               </a-form-item>
            </a-col>
           </a-row>
-          <div class="flex flex-row item-center justify-center">
+          <div class="flex flex-row item-center justify-center gap-5 pt-5">
+            <a-button :href="route('staff.funds.index')">Back</a-button>
             <a-button type="primary" html-type="submit">Submit</a-button>
+            <a-button :href="route('staff.fund.items.index',fund.id)" v-if="fund.id">Items</a-button>
           </div>
 
         </a-form>
