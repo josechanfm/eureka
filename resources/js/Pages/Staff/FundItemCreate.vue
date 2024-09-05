@@ -88,9 +88,9 @@
                     <td colspan="3">
                       <table width="100%">
                         <tr v-for="(account, accountIdx) in item.accounts">
-                          <td width="400px">
+                          <td width="300px">
                             <a-select v-model:value="account.category_item_account_id" :options="catItem.accounts"
-                              :fieldNames="{ value: 'id', label: 'name_zh' }" :style="{ width: '400px' }" />
+                              :fieldNames="{ value: 'id', label: 'name_zh' }" :style="{ width: '300px' }" />
                           </td>
                           <td>
                             <a-input v-model:value="account.description"/>
@@ -120,9 +120,9 @@
                         </tr>
                       </table>
                     </td>
-                    <td>
+                    <td width="150px">
                       <a-input-number 
-                        v-model:value="item.account"
+                        v-model:value="item.amount"
                         :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                         :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                         :style="{width:'100%'}"

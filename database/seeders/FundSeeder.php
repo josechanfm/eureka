@@ -29,6 +29,7 @@ class FundSeeder extends Seeder
             'grant'=>'3 phases',
             'grants'=>["10,000","20,000","30,000","40,000","50,000","60,000"],
             'is_closed'=>false,
+            'owner_id'=>1,
             'repayments'=>[]
         ]);
 
