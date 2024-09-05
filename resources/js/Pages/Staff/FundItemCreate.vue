@@ -2,7 +2,7 @@
   <AdminLayout title="Dashboard">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Create Funding
+        {{ $t('my_project') }}
       </h2>
     </template>
 
@@ -24,7 +24,7 @@
               {{ item.name_zh }}
             </a-select-option>
           </a-select>
-          <a-button @click="onAddCategoryItem()" type="primary">Add Section</a-button>
+          <a-button @click="onAddCategoryItem()" type="primary">{{ $t('add_funding_item') }}</a-button>
         </div>
         <a-form :model="fund.items" name="fund" :label-col="labelCol" autocomplete="off" :rules="rules"
           :validate-messages="validateMessages" @finish="onFinish" enctype="multipart/form-data">
@@ -33,9 +33,9 @@
           </a-form-item> -->
           <table width="100%">
             <tr>
-              <th>序號</th>
-              <th>支出項目</th>
-              <th>批准金額</th>
+              <th>{{ $t('sequence') }}</th>
+              <th>{{ $t('funding_item') }}</th>
+              <th>{{ $t('funding_amount') }}</th>
               <th></th>
             </tr>
             <template v-for="(catItem, i) in myCategoryItems">
@@ -58,7 +58,7 @@
                     </td>
                     <td width="60px">
                       <a-tooltip>
-                        <template #title>Multiple Items</template>
+                        <template #title>{{ $t('multiple_item') }}</template>
                           <a-button @click="onMultipleAccounts(item, catItem)" type="info" size="small">*</a-button>
                       </a-tooltip>
                     </td>
@@ -72,7 +72,7 @@
                     </td>
                     <td width="60px">
                       <a-tooltip>
-                          <template #title>Add budget item</template>
+                          <template #title>{{ $t('add_budget_item') }}</template>
                           <a-button @click="onAddItem(itemIdx, catItem, item)" type="info" size="small">+</a-button>
                       </a-tooltip>
                       <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
@@ -105,14 +105,14 @@
                           </td>
                           <td width="60px">
                             <a-tooltip>
-                              <template #title>Add budget item</template>
+                              <template #title>{{ $t('add_budget_item') }}</template>
                               <a-button @click="onAddItemAccount(accountIdx, item, catItem)" type="info"
                                 size="small">+</a-button>
                             </a-tooltip>
                               <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
                                 @confirm="onRemoveItemAccount(accountIdx, item, catItem)" @cancel="() => { }">
                                 <a-tooltip>
-                                  <template #title>Remove budget item</template>
+                                  <template #title>{{ $t('remove_budget_item') }}</template>
                                   <a-button type="danger" size="small">-</a-button>
                                 </a-tooltip>
                             </a-popconfirm>
@@ -133,7 +133,7 @@
                         <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
                           @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
                           <a-tooltip>
-                            <template #title>Remove budget item</template>
+                            <template #title>{{ $t('remove_budget_item') }}</template>
                             <a-button type="danger" size="small">-</a-button>
                           </a-tooltip>
                         </a-popconfirm>
@@ -142,14 +142,14 @@
                 </template>
               </template>
               <tr>
-                <td colspan="4" style="text-align: right;">小計</td>
+                <td colspan="4" style="text-align: right;">{{ $t('sub_total') }}</td>
                 <td colspan="2">xxx</td>
               </tr>
             </template>
           </table>
           <div class="flex flex-row item-center justify-center gap-5 pt-5">
-            <a-button :href="route('staff.funds.index')">Back</a-button>
-            <a-button type="primary" html-type="submit">Submit</a-button>
+            <a-button :href="route('staff.funds.index')">{{ $t('back') }}</a-button>
+            <a-button type="primary" html-type="submit">{{ $t('submit') }}</a-button>
           </div>
         </a-form>
       </div>

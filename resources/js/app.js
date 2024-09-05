@@ -24,7 +24,7 @@ createInertiaApp({
             .use(LaravelPermissionToVueJS)
             .use(RolePermission)
             .use(i18nVue, {
-                lang: 'en',
+                lang: 'zh',
                 resolve: lang => {
                     const langs = import.meta.glob('../../lang/*.json', { eager: true });
                     return langs[`../../lang/${lang}.json`].default;
