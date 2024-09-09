@@ -67,4 +67,6 @@ class User extends Authenticatable implements LdapAuthenticatable
         'profile_photo_url',
     ];
 
+    protected $with=['roles'];
+
 }

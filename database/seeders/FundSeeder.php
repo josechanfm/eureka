@@ -36,19 +36,21 @@ class FundSeeder extends Seeder
         $categoryItems=$category->items;
 
         foreach($categoryItems as $i=>$item){
-            $fundItem=$fund->items()->create([
-                'category_item_id'=>$item->id,
-                'description'=>'經費_'.$i,
-                'account_code'=>$item->account_code,
-                'amount'=>'12345'
-            ]);
+
             $accounts=$item->accounts;
             foreach($accounts as $i=>$a){
+                $fundItem=$fund->items()->create([
+                    'category_item_id'=>$item->id,
+                    'description'=>$item->name_zh,
+                    'account_code'=>$item->account_code,
+                    'amount'=>rand(1000,50000)
+                ]);
+    
                 $fundItem->accounts()->create([
                     'category_item_account_id'=>$a->id,
                     'description'=>$a->name_zh,
                     'account_code'=>$a->account_code,
-                    'amount'=>'100'.$i
+                    'amount'=>null
                 ]);
             }
         }

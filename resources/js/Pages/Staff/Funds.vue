@@ -13,6 +13,7 @@
               <template v-if="column.dataIndex == 'operation'">
                 <a-button :href="route('staff.fund.expends.index',record.id)" >Expends</a-button>
                 <a-button :href="route('staff.funds.edit',record.id)" >Edit</a-button>
+                <a-button :href="route('staff.fund.items.index',record.id)" >Items</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}

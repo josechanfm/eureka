@@ -40,12 +40,16 @@ class FundItemController extends Controller
     public function store(Request $request, Fund $fund)
     {
         $items=$request->all();
-        $fundItems=FundItem::whereNotIn('id',array_column($items,'id'))->delete();
-        //dd($fundItems);
+        //dd(array_column($items,'id'));
 
         //dd($items);
+        //$accountIds=array_column($accounts,'id');
+
         foreach($items as $item){
             $accounts=$item['accounts'];
+            $fundItem=FundItem::find($item['id']);
+            $fundItem->accounts()->whereNotIn('id',array_column($accounts,'id'))->delete();
+
             unset($item['accounts']);
             if(isset($item['id'])){
                 unset($item['created_at']);

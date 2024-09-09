@@ -27,13 +27,17 @@ class FundController extends Controller
      */
     public function create()
     {
+        $fund=Fund::make(['category_id'=>1,'grants'=>[],'repayments'=>[]]);
+        //dd('create fund',$fund);
+
         return Inertia::render('Staff/FundCreate',[
             'categories'=>Category::all(),
-            'fund'=>(Object)[
-                'fund_category_id'=>1,
-                'grants'=>[],
-                'repayments'=>[]
-            ]
+            'fund'=>$fund
+            // 'fund'=>(Object)[
+            //     'category_id'=>1,
+            //     'grants'=>[],
+            //     'repayments'=>[]
+            // ]
         ]);
     }
 
@@ -47,6 +51,18 @@ class FundController extends Controller
         // $data['grants']=json_encode($request->grants);
         // $data['repayments']=json_encode($request->repayments);
         $fund=Fund::create($data);
+        $categoryItems=Category::find($request->category_id)->items;
+
+        foreach($categoryItems as $item){
+            $fundItem=$fund->items()->create([
+                'category_item_id'=>$item->id,
+            ]);
+            $fundItem->accounts()->create([
+                'category_item_account_id'=>$item->accounts[0]->id,
+                'account_code'=>$item->accounts[0]->account_code
+            ]);
+        }
+
         return redirect()->route('staff.fund.items.index',$fund->id);
     }
 
