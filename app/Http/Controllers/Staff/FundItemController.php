@@ -20,7 +20,7 @@ class FundItemController extends Controller
     {
         $fund->items;
         return Inertia::render('Staff/FundItemCreate',[
-            'category'=>Category::with('items')->find(1),
+            'category'=>Category::with('items')->find($fund->category_id),
             'fund'=>$fund,
         ]);
         
@@ -45,10 +45,13 @@ class FundItemController extends Controller
         //dd($items);
         //$accountIds=array_column($accounts,'id');
 
-        foreach($items as $item){
+        foreach($items as $i=>$item){
+            $item['sequence']=$i;
             $accounts=$item['accounts'];
-            $fundItem=FundItem::find($item['id']);
-            $fundItem->accounts()->whereNotIn('id',array_column($accounts,'id'))->delete();
+            if(isset($item['id'])){
+                $fundItem=FundItem::find($item['id']);
+                $fundItem->accounts()->whereNotIn('id',array_column($accounts,'id'))->delete();
+            }
 
             unset($item['accounts']);
             if(isset($item['id'])){
@@ -59,6 +62,7 @@ class FundItemController extends Controller
                 $fundItem->update($item);
                 $fundItem->save();
             }else{
+                
                 $fundItem=$fund->items()->create($item);
                 //$fundItem=FundItem::find($item['id']);
             }
@@ -70,9 +74,9 @@ class FundItemController extends Controller
                     unset($a['updated_at']);
                     FundItemAccount::where('id',$a['id'])->update($a);
                 }else{
-                    $cia=CategoryItemAccount::find($a['category_item_account_id']);
-                    $a['user_define']=$cia->user_define;
-                    $a['account_code']=$cia->account_code;
+                    // $cia=CategoryItemAccount::find($a['category_item_account_id']);
+                    // $a['user_define']=$cia->user_define;
+                    // $a['account_code']=$cia->account_code;
                     //$a['fund_item_id']=$fundItem->id;
                     $fundItem->accounts()->create($a);
                 }

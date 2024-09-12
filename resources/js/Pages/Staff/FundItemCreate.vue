@@ -5,7 +5,6 @@
         {{ $t('my_project') }}
       </h2>
     </template>
-
     <div class="container mx-auto pt-5">
       <div class="bg-white relative shadow rounded-lg overflow-x-auto">
         <FundHeader :fund="fund"/>
@@ -18,7 +17,6 @@
           <!-- <a-form-item label="支助項目分類" name="category">
             <a-select v-model:value="items.fund_category_id" :options="fundCategory.items" :fieldNames="{value:'id',label:'name_zh'}"/>
           </a-form-item> -->
-          
           <table width="100%">
             <tr>
               <th>{{ $t('sequence') }}</th>
@@ -28,27 +26,22 @@
             </tr>
             <template v-for="(catItem, i) in category.items">
               <tr>
-                <td colspan="6">
+                <td colspan="5">
                   {{ i + 1 }}. {{ catItem.name_zh }}
                   <a-button @click="onAddCategoryItem(catItem)" type="info" size="small">+</a-button>
                 </td>
               </tr>
               <template v-for="(item, itemIdx) in fund.items.filter(i => i.category_item_id == catItem.id)">
-                <template v-if="item.accounts.length==1">
+                <template v-if="item.splits.length==1">
                   <tr>
                     <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
-                    <td width="400px">
-                      <a-select v-model:value="item.accounts[0].category_item_account_id" :options="catItem.accounts"
-                        :fieldNames="{ value: 'id', label: 'name_zh' }" :style="{ width: '100%' }" />
-                      <!-- <a-input v-model:value="item.accounts[0].description"/> -->
-                    </td>
                     <td>
-                      <a-input v-model:value="item.accounts[0].description"/>
+                      <a-input v-model:value="item.splits[0].description"/>
                     </td>
                     <td width="60px">
                       <a-tooltip>
                         <template #title>{{ $t('multiple_item') }}</template>
-                          <a-button @click="onMultipleAccounts(item, catItem)" type="info" size="small">*</a-button>
+                          <a-button @click="onMultipleSplits(item, catItem)" type="info" size="small">*</a-button>
                       </a-tooltip>
                     </td>
                     <td width="200px">
@@ -74,19 +67,15 @@
                 <template v-else>
                   <tr>
                     <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
-                    <td colspan="3">
+                    <td colspan="2">
                       <table width="100%">
-                        <tr v-for="(account, accountIdx) in item.accounts">
-                          <td width="300px">
-                            <a-select v-model:value="account.category_item_account_id" :options="catItem.accounts"
-                              :fieldNames="{ value: 'id', label: 'name_zh' }" :style="{ width: '300px' }" />
-                          </td>
+                        <tr v-for="(split, splitIdx) in item.splits">
                           <td>
-                            <a-input v-model:value="account.description"/>
+                            <a-input v-model:value="split.description"/>
                           </td>
                           <td width="150px">
                             <a-input-number
-                              v-model:value="account.amount" 
+                              v-model:value="split.amount" 
                               :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                               :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                               :style="{width:'100%'}"
@@ -95,11 +84,11 @@
                           <td width="60px">
                             <a-tooltip>
                               <template #title>{{ $t('add_budget_item') }}</template>
-                              <a-button @click="onAddItemAccount(accountIdx, item, catItem)" type="info"
+                              <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="info"
                                 size="small">+</a-button>
                             </a-tooltip>
                               <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
-                                @confirm="onRemoveItemAccount(accountIdx, item, catItem)" @cancel="() => { }">
+                                @confirm="onRemoveItemSplit(splitIdx, item, catItem)" @cancel="() => { }">
                                 <a-tooltip>
                                   <template #title>{{ $t('remove_budget_item') }}</template>
                                   <a-button type="danger" size="small">-</a-button>
@@ -118,7 +107,7 @@
                       />
                     </td>
                     <td>
-                      <a-button @click="onAddItem(itemIdx, catItem, item)" type="info" size="small">+</a-button>
+                      <a-button @click="onAddItem(catItem, item)" type="info" size="small">+</a-button>
                         <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
                           @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
                           <a-tooltip>
@@ -212,41 +201,48 @@ export default {
      
     },
 
-    onMultipleAccounts(item, catItem) {
-      item.accounts.push({
-        category_item_account_id: catItem.accounts[0].id
+    onMultipleSplits(item, catItem) {
+      item.splits.push({
+        //category_item_account_id: catItem.accounts[0].id
       })
     },
     onAddItem(catItem, fundItem) {
+      console.log(catItem)
+      console.log(fundItem)
       this.fund.items.splice(this.fund.items.indexOf(fundItem) + 1, 0, {
         "fund_id": fundItem.fund_id,
         "category_item_id": catItem.id,
         "description": catItem.name_zh,
         "amount": 123,
-        "accounts": [
+        "splits": [
           {
             "fund_item_id": fundItem.id,
-            "category_item_account_id": catItem.accounts[0].id
+            "description":"new item"
+            //"category_item_account_id": catItem.accounts[0].id
           }
         ]
       })
+      console.log(this.fund.items);
     },
     onRemoveItem(itemIdx, catItem, fundItem) {
       this.fund.items.splice(this.fund.items.indexOf(fundItem), 1)
     },
-    onAddItemAccount(accountIdx, item, catItem) {
-      item.accounts.splice(accountIdx + 1, 0, { 'category_item_account_id': catItem.accounts[0].id })
-      //item.accounts.push({})
+    onAddItemSplit(splitIdx, item, catItem) {
+      //item.accounts.splice(accountIdx + 1, 0, { 'category_item_account_id': catItem.accounts[0].id })
+      item.splits.push({
+        'description':'new item',
+        'amount':0
+      })
     },
-    onRemoveItemAccount(accountIdx, item, catItem) {
-      item.accounts.splice(accountIdx, 1)
+    onRemoveItemSplit(splitIdx, item, catItem) {
+      item.splits.splice(splitIdx, 1)
     },
     onAddCategoryItem(catItem){
       this.fund.items.push({
         "fund_id":this.fund.id,
         "category_item_id":catItem.id,
         "accounts":[{
-          "category_item_account_id":catItem.accounts[0].id,
+          //"category_item_account_id":catItem.accounts[0].id,
           "account_code":catItem.accounts[0].account_code
         }]
       })

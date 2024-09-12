@@ -39,39 +39,35 @@ class FundSeeder extends Seeder
         $categoryItems=$category->items;
 
         foreach($categoryItems as $i=>$item){
-            $accounts=$item->accounts;
-            foreach($accounts as $i=>$a){
+            $splits=$item->accounts;
+            foreach($splits as $i=>$a){
                 $fundItem=$fund->items()->create([
                     'category_item_id'=>$item->id,
+                    'sequence'=>$i,
                     'description'=>$item->name_zh,
-                    'account_code'=>$item->account_code,
                     'amount'=>rand(1000,50000)
                 ]);
     
-                $fundItem->accounts()->create([
-                    'category_item_account_id'=>$a->id,
+                $fundItem->splits()->create([
+                    'sequence'=>1,
                     'description'=>$a->name_zh,
-                    'user_define'=>$a->user_define,
-                    'account_code'=>$a->account_code,
                     'amount'=>null
                 ]);
             }
         }
         $fundItem=FundItem::find(5);
-        $categoryItemAccount=CategoryItemAccount::find(1);
-        $fundItem->accounts()->create([
-           'category_item_account_id'=>$categoryItemAccount->id,
-           'description'=>$categoryItemAccount->name_zh.' B',
-           'user_define'=>$categoryItemAccount->user_define,
-           'account_code'=>$categoryItemAccount->account_code
+        //$categoryItemAccount=CategoryItemAccount::find(1);
+        $fundItem->splits()->create([
+            'sequence'=>2,
+            'description'=>'Additional item'
+           //'description'=>$categoryItemAccount->name_zh.' B',
         ]);
         $fundItem=FundItem::find(7);
         $categoryItemAccount=CategoryItemAccount::find(7);
-        $fundItem->accounts()->create([
-           'category_item_account_id'=>$categoryItemAccount->id,
-           'description'=>$categoryItemAccount->name_zh.' B',
-           'user_define'=>$categoryItemAccount->user_define,
-           'account_code'=>$categoryItemAccount->account_code
+        $fundItem->splits()->create([
+            'sequence'=>2,
+            'description'=>'Additional item'
+           //'description'=>$categoryItemAccount->name_zh.' B',
         ]);
     }
 }

@@ -19,9 +19,10 @@ class ExpendItemController extends Controller
         $expend->items;
         $fund=$expend->fund;
         $fund->items;
+        //dd($fund->items);
         $availableAccounts=$fund->availableAccounts();
         return Inertia::render('Staff/ExpendItems',[
-            'categoryItems'=>Category::find(1)->items,
+            'categoryItems'=>Category::find($fund->category_id)->items,
             'fund'=>$fund,
             'expend'=>$expend,
             'availableAccounts'=>$availableAccounts
@@ -42,13 +43,21 @@ class ExpendItemController extends Controller
      */
     public function store(Expend $expend, Request $request)
     {
-
-        $expendItem=ExpendItem::create([
-            'expend_id'=>$expend->id,
-            'fund_item_account_id'=>$request->accountId,
-            'description'=>$request->description,
-            'amount'=>$request->amount
-        ]);
+        
+        $data=$request->all();
+        foreach($data as $i=>$d){
+            unset($data[$i]['created_at']);
+            unset($data[$i]['updated_at']);
+        }
+        foreach($data as $d)        {
+            if(isset($d['id'])){
+                $d['creater_id']=auth()->user()->id;
+                ExpendItem::where('id',$d['id'])->update($d);
+            }else{
+                $d['updater_id']=auth()->user()->id;
+                ExpendItem::create($d);
+            }
+        }
         return redirect()->back();
     }
 

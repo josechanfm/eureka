@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fund_item_accounts', function (Blueprint $table) {
+        Schema::create('fund_item_splits', function (Blueprint $table) {
             $table->id();
             $table->foreignId('fund_item_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('category_item_account_id');
+            $table->integer('sequence')->nullable();
             $table->string('description')->nullable();
-            $table->boolean('user_define');
-            $table->string('account_code');
             $table->integer('amount')->nullable();
             $table->timestamps();
         });
@@ -28,7 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fund_item_accounts');
+        Schema::dropIfExists('fund_item_splits');
     }
 };
 

@@ -15,22 +15,22 @@ class Fund extends Model
         return $this->belongsTo(Category::class)->with('items');
     }
     public function items(){
-        return $this->hasMany(FundItem::class)->with('accounts');
+        return $this->hasMany(FundItem::class)->with('splits');
     }
-    public function accounts(){
-        return $this->hasManyThrough(FundItemAccount::class, FundItem::class);
+    public function splits(){
+        return $this->hasManyThrough(FundItemSplit::class, FundItem::class);
     }
-    public function availableAccounts(){
-        $accounts=$this->hasManyThrough(FundItemAccount::class, FundItem::class)->with('item')->get();
-        foreach($accounts as $i=>$account){
-            $accounts[$i]->available=$account->amount??$account->item->amount;
+    public function availableSplits(){
+        $splits=$this->hasManyThrough(FundItemSplit::class, FundItem::class)->with('item')->get();
+        foreach($splits as $i=>$split){
+            $splits[$i]->available=$split->amount??$split->item->amount;
         }
         ;
-        foreach($accounts as $i=>$account){
-            $spends=$this->expendItems->where('fund_item_account_id',$account->id)->sum('amount');
-            $accounts[$i]->available-=$spends;
+        foreach($splits as $i=>$split){
+            $spends=$this->expendItems->where('fund_item_split_id',$split->id)->sum('amount');
+            $splits[$i]->available-=$spends;
         }
-        return $accounts;
+        return $splits;
     }
     public function expends(){
         return $this->hasMany(Expend::class);
@@ -44,8 +44,8 @@ class Fund extends Model
     public function summary(){
         $items=$this->items;
         foreach($items as $item){
-            foreach($item->accounts as $account){
-                $account->total=ExpendItem::where('fund_item_account_id',$account->id)->sum('amount');
+            foreach($item->splits as $split){
+                $split->total=ExpendItem::where('fund_item_split_id',$split->id)->sum('amount');
             }
         }
         return $items;

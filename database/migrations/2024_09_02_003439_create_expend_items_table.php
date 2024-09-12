@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('expend_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('expend_id');
-            $table->foreignId('fund_item_account_id');
+            $table->foreignId('fund_item_split_id');
             $table->string('description')->nullable();
             $table->integer('amount');
             $table->string('remark')->nullable();

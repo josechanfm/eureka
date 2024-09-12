@@ -27,6 +27,7 @@
             </table>
           </div>
         </div>
+        <a-button type="primary" @click="onSaveExpendItems">Save</a-button>
         <a-divider/>
         
         <div class="container mx-auto pt-5">
@@ -64,22 +65,20 @@
             <tr v-for="(item, idx) in fund.items.filter(item=>item.category_item_id==selectedAccount.itemId)">
               <td>{{ selectedAccount.itemId }}.{{ idx+1 }}</td>
               <td>
-                <template v-if="item.accounts.length==1">
-                  {{ item.accounts[0].description }}
-                  {{ item.accounts[0].account_code }}
-                  <input type="radio" v-model="selectedAccount.accountId" :value="item.accounts[0].id" style="width:30px" @change="onChnageSelectedAccount(item.accounts[0])">Select</input>
+                <!-- <template v-if="item.splits.length==1">
+                  {{ item.splits[0].description }}
+                  <input type="radio" v-model="selectedAccount.accountId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedAccount(item.splits[0])">Select</input>
                 </template>
                 <template v-else>
                   <table width="100%" border="1">
-                    <tr v-for="account in item.accounts">
+                    <tr v-for="account in item.splits">
                       <td>
                         {{ account.description }}
-                        {{ account.account_code }}
                       </td>
                       <td>{{ account.amount }}</td>
                     </tr>
                   </table>
-                </template>
+                </template> -->
               </td>
               <td>
                   {{ item.amount }}
@@ -179,11 +178,11 @@
       },
       getFundItemAccount(fundItemAccountId){
         const item=this.availableAccounts.find(a=>a.id==fundItemAccountId)
-        return item.description+" "+item.account_code
+        return item.description
       },
       budgetAvailable(item){
-        if(item.accounts.length==1){
-          return this.availableAccounts.find(a=>a.id==item.accounts[0].id).available
+        if(item.splits.length==1){
+          return this.availableAccounts.find(a=>a.id==item.splits[0].id).available
         }else{
           return '---'
         }
@@ -194,7 +193,25 @@
       },
       onAddAccountItem(){
         console.log(this.selectedAccount);
-        this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedAccount, {
+        this.expend.items.push({
+          'expend_id':this.expend.id,
+          'fund_item_account_id':this.selectedAccount.itemId,
+          'description':this.selectedAccount.description,
+          'amount':this.selectedAccount.amount
+
+        });
+        // this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedAccount, {
+        //     onSuccess: (page) => {
+        //       console.log(page)
+        //     },
+        //     onError: (err) => {
+        //       console.log(err)
+        //     },
+        //   });
+      },
+      onSaveExpendItems(){
+        console.log(this.expend);
+        this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.expend.items, {
             onSuccess: (page) => {
               console.log(page)
             },
