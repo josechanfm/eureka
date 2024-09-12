@@ -1,6 +1,9 @@
 {
-    "lang":"zh",
-    "welcome":"歡迎來到科研經費管理系統",
+"create":"新增",
+"update":"更新",
+"edit":"修改",
+"delete":"刪除",
+"view":"瀏覽",
 "back":"返回",
 "submit":"遞交",
 "funding_items":"支助項目",
@@ -23,6 +26,8 @@
 "project_phase4":"第四期",
 "project_phase5":"第五期",
 "project_phase6":"第六期",
+"grant_phases":"資助分 :phase 期發放",
+"repayment_phases":"資助分 :phase 期償還",
 "funding_category":"支助項目分類",
 "funding_description":"支助項目描述",
 "sequence":"序號",
@@ -33,5 +38,7 @@
 "multiple_item":"多項輸入",
 "add_budget_item":"增加預算項目",
 "remove_budget_item":"刪除預算項目",
-    "thank_you":"感謝"
+"compensated":"有償",
+"non_compensated":"無償",
+"thank_you":"感謝"
 }

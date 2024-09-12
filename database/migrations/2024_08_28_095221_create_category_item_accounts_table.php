@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name_zh');
             $table->string('name_en')->nullable();
             $table->string('name_pt')->nullable();
+            $table->boolean('user_define');
             $table->string('account_code');
             $table->text('remark')->nullable();
             $table->timestamps();

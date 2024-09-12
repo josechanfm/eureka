@@ -11,9 +11,9 @@
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('staff.fund.expends.index',record.id)" >Expends</a-button>
-                <a-button :href="route('staff.funds.edit',record.id)" >Edit</a-button>
-                <a-button :href="route('staff.fund.items.index',record.id)" >Items</a-button>
+                <a-button :href="route('staff.fund.expends.index',record.id)" >{{ $t('expends') }}</a-button>
+                <a-button :href="route('staff.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
+                <a-button :href="route('staff.fund.items.index',record.id)" >{{ $t('funding_items') }}</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}

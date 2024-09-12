@@ -71,13 +71,15 @@ class FundItemController extends Controller
                     FundItemAccount::where('id',$a['id'])->update($a);
                 }else{
                     $cia=CategoryItemAccount::find($a['category_item_account_id']);
+                    $a['user_define']=$cia->user_define;
                     $a['account_code']=$cia->account_code;
                     //$a['fund_item_id']=$fundItem->id;
                     $fundItem->accounts()->create($a);
                 }
             }
         }
-        return redirect()->route('staff.funds.index');
+        return redirect()->back();
+        //return redirect()->route('staff.funds.index');
     }
 
     /**
@@ -85,7 +87,6 @@ class FundItemController extends Controller
      */
     public function show(Fund $fund)
     {
-
     }
 
     /**

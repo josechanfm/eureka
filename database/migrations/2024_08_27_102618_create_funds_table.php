@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('funds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id');
-            $table->string('entity');
-            $table->string('declarant');
+            $table->string('entity')->nullable();
+            $table->string('declarant')->nullable();
             $table->string('birm')->nullable();
-            $table->string('project_code')->nullable();
-            $table->string('title')->nullable();
+            $table->string('project_code');
+            $table->string('title');
             $table->string('responsible')->nullable();
             $table->string('amount')->nullable();
             $table->string('type')->nullable();

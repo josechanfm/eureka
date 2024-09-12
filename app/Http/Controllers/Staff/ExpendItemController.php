@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Category;
 use App\Models\Expend;
 use App\Models\ExpendItem;
 
@@ -17,9 +18,11 @@ class ExpendItemController extends Controller
     {
         $expend->items;
         $fund=$expend->fund;
-        $fund->acccounts;
+        $fund->items;
         $availableAccounts=$fund->availableAccounts();
         return Inertia::render('Staff/ExpendItems',[
+            'categoryItems'=>Category::find(1)->items,
+            'fund'=>$fund,
             'expend'=>$expend,
             'availableAccounts'=>$availableAccounts
             //'items'=>$expend->items
@@ -39,8 +42,13 @@ class ExpendItemController extends Controller
      */
     public function store(Expend $expend, Request $request)
     {
-        $data=$request->all();
-        $expendItem=ExpendItem::create($data);
+
+        $expendItem=ExpendItem::create([
+            'expend_id'=>$expend->id,
+            'fund_item_account_id'=>$request->accountId,
+            'description'=>$request->description,
+            'amount'=>$request->amount
+        ]);
         return redirect()->back();
     }
 
@@ -63,9 +71,11 @@ class ExpendItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Expend $expend, ExpendItem $item)
     {
-        //
+        // dd($expend, $item);
+        $item->update($request->all());
+        return redirect()->back();
     }
 
     /**

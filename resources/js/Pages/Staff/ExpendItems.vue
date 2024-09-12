@@ -9,66 +9,90 @@
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
           <ExpendHeader :expend="expend"/>
         </div>
+        <div class="container mx-auto pt-5">
+          <div class="bg-white relative shadow rounded-lg md:p-5">
+            <table width="100%" border="1">
+              <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>amount</th>
+                <th>fund item account id</th>
+              </tr>
+              <tr v-for="(item, idx) in expend.items">
+                <td>{{ idx+1 }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ getFundItemAccount(item.fund_item_account_id) }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
         <a-divider/>
-
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-button type="primary" @click="createRecord()" :disabled="expend.is_locked || expend.is_closed">Create</a-button>
-          <a-table :dataSource="expend.items" :columns="columns">
-            <template #bodyCell="{ column, text, record, index }">
-              <template v-if="column.dataIndex == 'operation'">
-                <!-- <a-button :href="route('staff.fund.expends.edit',{fund:record.fund_id,expend:record.id})" >Edit</a-button> -->
-              </template>
-              <template v-else>
-                {{ record[column.dataIndex] }}
-              </template>
-            </template>
-          </a-table>
+        
+        <div class="container mx-auto pt-5">
+          <div class="bg-white relative shadow rounded-lg md:p-5">
+            <div class="flex items-center gap-5 p-5">
+              <table width="100%">
+                <tr>
+                  <td width="50px">
+                    <a-select v-model:value="selectedAccount.itemId" :style="{width:'200px'}" :options="categoryItems" :fieldNames="{value:'id',label:'name_zh'}"/>
+                  </td>
+                <td>
+                  <a-input v-model:value="selectedAccount.description" width="100%"/>
+                </td>
+                <td width="100px">
+                  <a-input v-model:value="selectedAccount.amount" width="100%"/>
+                </td>
+                <td width="20px">
+                  <a-button type="primary" @click="onAddAccountItem()">Add</a-button>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td colspan="3">{{ selectedAccount.name }}</td>
+              </tr>
+              </table>
+              
+            </div>
+            <table width="100%" border="1">
+            <tr>
+              <th>#</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Available</th>
+            </tr>
+            <tr v-for="(item, idx) in fund.items.filter(item=>item.category_item_id==selectedAccount.itemId)">
+              <td>{{ selectedAccount.itemId }}.{{ idx+1 }}</td>
+              <td>
+                <template v-if="item.accounts.length==1">
+                  {{ item.accounts[0].description }}
+                  {{ item.accounts[0].account_code }}
+                  <input type="radio" v-model="selectedAccount.accountId" :value="item.accounts[0].id" style="width:30px" @change="onChnageSelectedAccount(item.accounts[0])">Select</input>
+                </template>
+                <template v-else>
+                  <table width="100%" border="1">
+                    <tr v-for="account in item.accounts">
+                      <td>
+                        {{ account.description }}
+                        {{ account.account_code }}
+                      </td>
+                      <td>{{ account.amount }}</td>
+                    </tr>
+                  </table>
+                </template>
+              </td>
+              <td>
+                  {{ item.amount }}
+              </td>
+              <td>
+                {{ budgetAvailable(item) }}
+              </td>
+            </tr>
+            </table>
+          </div>
         </div>
       </div>
 
-            <!-- Modal Start-->
-            <a-modal v-model:open="modal.isOpen" :title="modal.title" width="60%">
-        <a-form
-          ref="modalRef"
-          :model="modal.data"
-          name="Teacher"
-          :label-col="{ span: 8 }"
-          :wrapper-col="{ span: 16 }"
-          autocomplete="off"
-          :rules="rules"
-          :validate-messages="validateMessages"
-        >
-          <a-form-item label="Account" name="fund_item_account_id">
-            <a-select v-model:value="modal.data.fund_item_account_id" :options="accounts"/>
-          </a-form-item>
-          <a-form-item label="Description" name="description">
-            <a-input v-model:value="modal.data.description" />
-          </a-form-item>
-          <a-form-item label="Amount" name="amount" >
-            <a-input v-model:value="modal.data.amount" :disabled="modal.data.fund_item_account_id==null || modal.data.description==null"/>
-          </a-form-item>
-          <a-form-item label="Remark" name="remark">
-            <a-textarea v-model:value="modal.data.remark" />
-          </a-form-item>
-        </a-form>
-        <template #footer>
-          <a-button
-            v-if="modal.mode == 'EDIT'"
-            key="Update"
-            type="primary"
-            @click="updateRecord()"
-            >Update</a-button
-          >
-          <a-button
-            v-if="modal.mode == 'CREATE'"
-            key="Store"
-            type="primary"
-            @click="storeRecord()"
-            >Add</a-button
-          >
-        </template>
-      </a-modal>
-      <!-- Modal End-->
 
     </AdminLayout>
   </template>
@@ -83,83 +107,30 @@
       AdminLayout,
       ExpendHeader
     },
-    props: ["expend","availableAccounts"],
+    props: ["categoryItems","fund","expend","availableAccounts"],
     data() {
       return {
-        accounts:[],
-        modal: {
-          isOpen: false,
-          data: {},
-          title: "Modal",
-          mode: "",
-        },
-        columns: [
-          {
-            title: "Description",
-            i18n: "description",
-            dataIndex: "description",
-          },{
-            title: "Amount",
-            i18n: "amount",
-            dataIndex: "amount",
-          },
-        ],
-        rules: {
-          fund_item_account_id: { required: true },
-          description: { required: true },
-          amount: { required: true, validator: this.validateAmount, trigger: 'blur'},
-        },
-        validateMessages: {
-          required: "${label} is required!",
-          types: {
-            email: "${label} is not a valid email!",
-            number: "${label} is not a valid number!",
-          },
-          number: {
-            range: "${label} must be between ${min} and ${max}",
-          },
-        },
-      
-        labelCol: {
-          style: {
-            width: "150px",
-          },
+        selectedAccount:{
+          itemId:null,
+          accountId:null,
+          name:null,
+          description:null,
         },
       };
     },
     created() {
-      this.accounts=this.availableAccounts.map(a=> ({
-          value:a.id,
-          label:a.account_code+' '+a.description+' ('+a.available+')'
-        })
-      )
-      console.log(this.accounts);
     },
     methods: {
-      createRecord(){
-        this.modal.data = {}
-        this.modal.data.expend_id = this.expend.id
-        this.modal.mode = "CREATE"
-        this.modal.title = "create"
-        this.modal.isOpen = true
-      },
-      editRecord(record){
-        this.modal.data = {...record}
-        this.modal.mode = "CREATE"
-        this.modal.title = "create"
-        this.modal.isOpen = true
-      },
       storeRecord() {
         this.$refs.modalRef
           .validateFields()
           .then(() => {
-            this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.modal.data, {
+            this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedAccount, {
               onSuccess: (page) => {
-                this.modal.data = {};
-                this.modal.isOpen = false;
+                console.log(page)
               },
               onError: (err) => {
-                console.log(err);
+                console.log(err)
               },
             });
           })
@@ -170,7 +141,7 @@
       updateRecord() {
         console.log(this.modal.data);
         this.$inertia.patch(
-          route("staff.expend.items.update", this.modal.data.id),this.modal.data,{
+          route("staff.expend.items.update", {expend:this.expend.id, item:this.modal.data.id}),this.modal.data,{
             onSuccess: (page) => {
               this.modal.data = {};
               this.modal.isOpen = false;
@@ -205,6 +176,32 @@
         console.log(account.available)  
         console.log(this.modal.data.amount);
         console.log(account.available-this.modal.data.amount)  
+      },
+      getFundItemAccount(fundItemAccountId){
+        const item=this.availableAccounts.find(a=>a.id==fundItemAccountId)
+        return item.description+" "+item.account_code
+      },
+      budgetAvailable(item){
+        if(item.accounts.length==1){
+          return this.availableAccounts.find(a=>a.id==item.accounts[0].id).available
+        }else{
+          return '---'
+        }
+        
+      },
+      onChnageSelectedAccount(account){
+        this.selectedAccount.name=account.description
+      },
+      onAddAccountItem(){
+        console.log(this.selectedAccount);
+        this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedAccount, {
+            onSuccess: (page) => {
+              console.log(page)
+            },
+            onError: (err) => {
+              console.log(err)
+            },
+          });
       }
     },
   };

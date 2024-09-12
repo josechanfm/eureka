@@ -1,9 +1,12 @@
 {
-    "lang":"zh",
-    "welcome":"Welecome to the research funding managemnt system",
+"create":"Create",
+"update":"Update",
+"edit":"Edit",
+"delete":"Delete",
+"view":"View",
 "back":"Back",
 "submit":"Submit",
-"funding_items":"Funding Items",
+"funding_items":"Funding Item",
 "add_funding_item":"Add funding item",
 "my_project":"My Project",
 "project_entity":"Applicant Entity",
@@ -23,6 +26,8 @@
 "project_phase4":"Phase 4",
 "project_phase5":"Phase 5",
 "project_phase6":"Phase 6",
+"grant_phases":"Funding will be disbuted in :phase phases",
+"repayment_phases":"Funding is repayable in :phase phases",
 "funding_category":"Funding Category",
 "funding_description":"Funding Description",
 "sequence":"Sequence",
@@ -33,5 +38,7 @@
 "multiple_item":"Multiple Items",
 "add_budget_item":"Add Budget Item",
 "remove_budget_item":"Remove Budget Item",
+"compensated":"Compensated",
+"non_compensated":"Non-compensated",
     "thank_you":"Thank Your"
 }

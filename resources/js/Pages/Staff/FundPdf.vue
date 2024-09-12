@@ -34,7 +34,6 @@
                 </td>
               </tr>
               <template v-for="(item, itemIdx) in fund.items.filter(i => i.category_item_id == catItem.id)">
-                <template v-if="item.accounts.length==1">
                   <tr>
                     <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
                     <td width="400px">
@@ -52,6 +51,7 @@
                       </a-tooltip>
                     </td>
                     <td width="200px">
+                      {{item.total}}
                       <a-input-number 
                         v-model:value="item.amount" 
                         :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -70,65 +70,6 @@
                       </a-popconfirm>
                     </td>
                   </tr>
-                </template>
-                <template v-else>
-                  <tr>
-                    <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
-                    <td colspan="3">
-                      <table width="100%">
-                        <tr v-for="(account, accountIdx) in item.accounts">
-                          <td width="300px">
-                            <a-select v-model:value="account.category_item_account_id" :options="catItem.accounts"
-                              :fieldNames="{ value: 'id', label: 'name_zh' }" :style="{ width: '300px' }" />
-                          </td>
-                          <td>
-                            <a-input v-model:value="account.description"/>
-                          </td>
-                          <td width="150px">
-                            <a-input-number
-                              v-model:value="account.amount" 
-                              :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                              :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                              :style="{width:'100%'}"
-                            />
-                          </td>
-                          <td width="60px">
-                            <a-tooltip>
-                              <template #title>{{ $t('add_budget_item') }}</template>
-                              <a-button @click="onAddItemAccount(accountIdx, item, catItem)" type="info"
-                                size="small">+</a-button>
-                            </a-tooltip>
-                              <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
-                                @confirm="onRemoveItemAccount(accountIdx, item, catItem)" @cancel="() => { }">
-                                <a-tooltip>
-                                  <template #title>{{ $t('remove_budget_item') }}</template>
-                                  <a-button type="danger" size="small">-</a-button>
-                                </a-tooltip>
-                            </a-popconfirm>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td width="150px">
-                      <a-input-number 
-                        v-model:value="item.amount"
-                        :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                        :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                        :style="{width:'100%'}"
-                      />
-                    </td>
-                    <td>
-                      <a-button @click="onAddItem(itemIdx, catItem, item)" type="info" size="small">+</a-button>
-                        <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
-                          @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
-                          <a-tooltip>
-                            <template #title>{{ $t('remove_budget_item') }}</template>
-                            <a-button type="danger" size="small">-</a-button>
-                          </a-tooltip>
-                        </a-popconfirm>
-                    </td>
-                  </tr>
-                </template>
               </template>
               <tr>
                 <td colspan="4" style="text-align: right;">{{ $t('sub_total') }}</td>

@@ -59,6 +59,7 @@ class FundController extends Controller
             ]);
             $fundItem->accounts()->create([
                 'category_item_account_id'=>$item->accounts[0]->id,
+                'user_define'=>$item->accounts[0]->user_define,
                 'account_code'=>$item->accounts[0]->account_code
             ]);
         }
@@ -69,9 +70,19 @@ class FundController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Fund $fund)
     {
-        //
+        //$fund->items;
+        foreach($fund->items as $item){
+            $item->total=$item->accounts->sum('amount');
+        }
+        //dd('fund show',$fund);
+        return Inertia::render('Staff/FundPdf',[
+            'category'=>Category::with('items')->find(1),
+            'fund'=>$fund,
+        ]);
+
+
     }
 
     /**
