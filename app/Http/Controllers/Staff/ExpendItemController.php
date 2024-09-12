@@ -20,12 +20,13 @@ class ExpendItemController extends Controller
         $fund=$expend->fund;
         $fund->items;
         //dd($fund->items);
-        $availableAccounts=$fund->availableAccounts();
+        //dd(Category::where('version',$expend->year)->first());
+        $availableSplits=$fund->availableSplits();
         return Inertia::render('Staff/ExpendItems',[
             'categoryItems'=>Category::find($fund->category_id)->items,
             'fund'=>$fund,
             'expend'=>$expend,
-            'availableAccounts'=>$availableAccounts
+            'availableSplits'=>$availableSplits
             //'items'=>$expend->items
         ]);
     }

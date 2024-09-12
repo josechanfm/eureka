@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->char('version',4);
             $table->string('title_zh');
             $table->string('title_en')->nullable();
             $table->string('title_pt')->nullable();
             $table->text('remark')->nullable();
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

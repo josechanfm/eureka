@@ -37,6 +37,9 @@
           :rules="rules"
           :validate-messages="validateMessages"
         >
+          <a-form-item label="Year" name="year">
+            <a-select v-model:value="modal.data.year" :options="years"/>
+          </a-form-item>
           <a-form-item label="Title" name="title">
             <a-input v-model:value="modal.data.title" />
           </a-form-item>
@@ -89,6 +92,7 @@
     props: ["fund","expends"],
     data() {
       return {
+        years:[],
         dateFormat:'YYYY-MM-DD',
         modal: {
           isOpen: false,
@@ -99,6 +103,10 @@
           teacherStateLabels: {},
         columns: [
           {
+            title: "Year",
+            i18n: "year",
+            dataIndex: "year",
+          },{
             title: "Title",
             i18n: "title",
             dataIndex: "title",
@@ -142,7 +150,10 @@
       };
     },
     created() {
-      
+      let yearStart=new Date().getFullYear();
+      for(let i=0;i<5;i++){
+        this.years.push({value:yearStart+i})
+      }
     },
     methods: {
       createRecord(){

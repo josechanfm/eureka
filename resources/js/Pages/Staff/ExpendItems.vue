@@ -16,13 +16,13 @@
                 <th>#</th>
                 <th>Description</th>
                 <th>amount</th>
-                <th>fund item account id</th>
+                <th>fund item split id</th>
               </tr>
               <tr v-for="(item, idx) in expend.items">
                 <td>{{ idx+1 }}</td>
                 <td>{{ item.description }}</td>
                 <td>{{ item.amount }}</td>
-                <td>{{ getFundItemAccount(item.fund_item_account_id) }}</td>
+                <td>{{ getFundItemSplit(item.fund_item_split_id) }}</td>
               </tr>
             </table>
           </div>
@@ -36,24 +36,23 @@
               <table width="100%">
                 <tr>
                   <td width="50px">
-                    <a-select v-model:value="selectedAccount.itemId" :style="{width:'200px'}" :options="categoryItems" :fieldNames="{value:'id',label:'name_zh'}"/>
+                    <a-select v-model:value="selectedSplit.itemId" :style="{width:'200px'}" :options="categoryItems" :fieldNames="{value:'id',label:'name_zh'}"/>
                   </td>
                 <td>
-                  <a-input v-model:value="selectedAccount.description" width="100%"/>
+                  <a-input v-model:value="selectedSplit.description" width="100%"/>
                 </td>
                 <td width="100px">
-                  <a-input v-model:value="selectedAccount.amount" width="100%"/>
+                  <a-input v-model:value="selectedSplit.amount" width="100%"/>
                 </td>
                 <td width="20px">
-                  <a-button type="primary" @click="onAddAccountItem()">Add</a-button>
+                  <a-button type="primary" @click="onAddSplitItem()">Add</a-button>
                 </td>
               </tr>
               <tr>
                 <td></td>
-                <td colspan="3">{{ selectedAccount.name }}</td>
+                <td colspan="3">{{ selectedSplit.name }}</td>
               </tr>
               </table>
-              
             </div>
             <table width="100%" border="1">
             <tr>
@@ -62,23 +61,23 @@
               <th>Amount</th>
               <th>Available</th>
             </tr>
-            <tr v-for="(item, idx) in fund.items.filter(item=>item.category_item_id==selectedAccount.itemId)">
-              <td>{{ selectedAccount.itemId }}.{{ idx+1 }}</td>
+            <tr v-for="(item, idx) in fund.items.filter(item=>item.category_item_id==selectedSplit.itemId)">
+              <td>{{ selectedSplit.itemId }}.{{ idx+1 }}</td>
               <td>
-                <!-- <template v-if="item.splits.length==1">
+                <template v-if="item.splits.length==1">
                   {{ item.splits[0].description }}
-                  <input type="radio" v-model="selectedAccount.accountId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedAccount(item.splits[0])">Select</input>
+                  <input type="radio" v-model="selectedSplit.splitId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedSplit(item.splits[0])">Select</input>
                 </template>
                 <template v-else>
                   <table width="100%" border="1">
-                    <tr v-for="account in item.splits">
+                    <tr v-for="split in item.splits">
                       <td>
-                        {{ account.description }}
+                        {{ split.description }}
                       </td>
-                      <td>{{ account.amount }}</td>
+                      <td>{{ split.amount }}</td>
                     </tr>
                   </table>
-                </template> -->
+                </template>
               </td>
               <td>
                   {{ item.amount }}
@@ -106,12 +105,12 @@
       AdminLayout,
       ExpendHeader
     },
-    props: ["categoryItems","fund","expend","availableAccounts"],
+    props: ["categoryItems","fund","expend","availableSplits"],
     data() {
       return {
-        selectedAccount:{
+        selectedSplit:{
           itemId:null,
-          accountId:null,
+          splitId:null,
           name:null,
           description:null,
         },
@@ -124,7 +123,7 @@
         this.$refs.modalRef
           .validateFields()
           .then(() => {
-            this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedAccount, {
+            this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedSplit, {
               onSuccess: (page) => {
                 console.log(page)
               },
@@ -154,14 +153,14 @@
       },
       validateAmount(){
         console.log('validating amount');
-        const account=this.availableAccounts.find(a=>a.id==this.modal.data.fund_item_account_id)
-        console.log(account.available)  
+        const split=this.availableSplits.find(a=>a.id==this.modal.data.fund_item_split_id)
+        console.log(split.available)  
         console.log(this.modal.data.amount);
 
-        const value=account.available-this.modal.data.amount
+        const value=split.available-this.modal.data.amount
         return new Promise((resolve, reject)=>{
           if (value<0) {
-            reject(new Error('Budget limit exceeded. remains:'+account.available));
+            reject(new Error('Budget limit exceeded. remains:'+split.available));
             // } else if (value.length < 3) {
             //   callback(new Error('Username must be at least 3 characters long.'));
           } else {
@@ -171,36 +170,36 @@
         })
       },
       onChangeAmount(){
-        const account=this.availableAccounts.find(a=>a.id==this.modal.data.fund_item_account_id)
-        console.log(account.available)  
+        const split=this.availableSplits.find(a=>a.id==this.modal.data.fund_item_split_id)
+        console.log(split.available)  
         console.log(this.modal.data.amount);
-        console.log(account.available-this.modal.data.amount)  
+        console.log(split.available-this.modal.data.amount)  
       },
-      getFundItemAccount(fundItemAccountId){
-        const item=this.availableAccounts.find(a=>a.id==fundItemAccountId)
+      getFundItemSplit(fundItemSplitId){
+        const item=this.availableSplits.find(a=>a.id==fundItemSplitId)
         return item.description
       },
       budgetAvailable(item){
         if(item.splits.length==1){
-          return this.availableAccounts.find(a=>a.id==item.splits[0].id).available
+          return this.availableSplits.find(a=>a.id==item.splits[0].id).available
         }else{
           return '---'
         }
         
       },
-      onChnageSelectedAccount(account){
-        this.selectedAccount.name=account.description
+      onChnageSelectedSplit(split){
+        this.selectedSplit.name=split.description
       },
-      onAddAccountItem(){
-        console.log(this.selectedAccount);
+      onAddSplitItem(){
+        console.log(this.selectedSplit);
         this.expend.items.push({
           'expend_id':this.expend.id,
-          'fund_item_account_id':this.selectedAccount.itemId,
-          'description':this.selectedAccount.description,
-          'amount':this.selectedAccount.amount
+          'fund_item_split_id':this.selectedSplit.itemId,
+          'description':this.selectedSplit.description,
+          'amount':this.selectedSplit.amount
 
         });
-        // this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedAccount, {
+        // this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedSplit, {
         //     onSuccess: (page) => {
         //       console.log(page)
         //     },
