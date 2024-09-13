@@ -15,7 +15,10 @@ class CategorySeeder extends Seeder
     {
         $category=Category::create(
             [
+                'type'=>'FDCT',
+                'version'=>'2024',
                 'title_zh'=>'校內項目',
+                'active'=>true
             ]
         );
         $data=[

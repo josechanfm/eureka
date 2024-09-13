@@ -22,8 +22,9 @@ return new class extends Migration
             $table->date('approved_at')->nullable();
             $table->string('remark')->nullable();
             $table->foreignId('owner_id');
-            $table->foreignId('creater_id')->nullable();
+            $table->foreignId('creator_id')->nullable();
             $table->foreignId('updater_id')->nullable();
+            $table->boolean('is_submitted')->default(false);
             $table->boolean('is_locked')->default(false);
             $table->boolean('is_closed')->default(false);
             $table->timestamps();

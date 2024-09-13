@@ -41,7 +41,7 @@ class ExpendController extends Controller
     {
         $data=$request->all();
         $data['owner_id']=auth()->user()->id;
-        $data['creater_id']=auth()->user()->id;
+        $data['creator_id']=auth()->user()->id;
         Expend::create($data);
         return redirect()->back();
     }

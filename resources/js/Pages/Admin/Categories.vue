@@ -8,7 +8,7 @@
 
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-button type="primary" class="float-right m-5" @click="createRecord()">Create</a-button>
+          <a-button type="primary" class="float-right m-5" @click="creatorecord()">Create</a-button>
           <a-table :dataSource="categories" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">

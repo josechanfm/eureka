@@ -49,19 +49,24 @@ class ExpendItemController extends Controller
     public function store(Expend $expend, Request $request)
     {
         
-        $data=$request->all();
-        foreach($data as $i=>$d){
-            unset($data[$i]['created_at']);
-            unset($data[$i]['updated_at']);
+        $toLock=$request->toLock;
+        $items=$request->items;
+        foreach($items as $i=>$item){
+            unset($items[$i]['created_at']);
+            unset($items[$i]['updated_at']);
         }
-        foreach($data as $d)        {
-            if(isset($d['id'])){
-                $d['creater_id']=auth()->user()->id;
-                ExpendItem::where('id',$d['id'])->update($d);
+        foreach($items as $item){
+            if(isset($item['id'])){
+                $item['creator_id']=auth()->user()->id;
+                ExpendItem::where('id',$item['id'])->update($item);
             }else{
-                $d['updater_id']=auth()->user()->id;
-                ExpendItem::create($d);
+                $item['updater_id']=auth()->user()->id;
+                ExpendItem::create($item);
             }
+        }
+        if($toLock){
+            $expend->is_submitted=true;
+            $expend->save();
         }
         return redirect()->back();
     }

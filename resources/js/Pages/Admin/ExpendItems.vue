@@ -106,6 +106,10 @@
             i18n: "account",
             dataIndex: "account",
           },{
+            title: "Reference",
+            i18n: "reference",
+            dataIndex: "reference_code",
+          },{
             title: "Amount",
             i18n: "amount",
             dataIndex: "amount",

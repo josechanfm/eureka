@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('grants')->default('[]');
             $table->string('repayments')->nullable('[]');
             $table->foreignId('owner_id')->nullable();
-            $table->foreignId('creater_id')->nullable();
+            $table->foreignId('creator_id')->nullable();
             $table->foreignId('updater_id')->nullable();
             $table->text('remark')->nullable();
             $table->boolean('is_closed')->default(false);

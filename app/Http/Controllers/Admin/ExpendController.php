@@ -36,7 +36,7 @@ class ExpendController extends Controller
     {
         $data=$request->all();
         $data['owner_id']=auth()->user()->id;
-        $data['creater_id']=auth()->user()->id;
+        $data['creator_id']=auth()->user()->id;
         Expend::create($data);
         return redirect()->back();
     }
@@ -80,9 +80,20 @@ class ExpendController extends Controller
         //
     }
 
+    public function toggleSubmit(Expend $expend){
+        $expend->is_submitted=!$expend->is_submitted;
+        $expend->save();
+    }
     public function toggleLock(Expend $expend){
         $expend->is_locked=!$expend->is_locked;
         $expend->save();
+
+        $codePrefix=substr('0000'.$expend->id,-4);
+        foreach($expend->items as $i=>$item){
+            $item->reference_code=$codePrefix.'-'.substr('00'.($i+1),-2);
+            $item->save();
+        };
+
     }
     public function toggleClose(Expend $expend){
         $expend->is_closed=!$expend->is_closed;

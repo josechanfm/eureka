@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->integer('amount');
             $table->string('remark')->nullable();
-            $table->foreignId('creater_id')->nullable();
+            $table->string('account_code');
+            $table->string('reference_code')->nullable();
+            $table->foreignId('creator_id')->nullable();
             $table->foreignId('updater_id')->nullable();
             $table->timestamps();
         });

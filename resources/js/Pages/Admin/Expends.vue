@@ -14,17 +14,24 @@
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button @click="toggleLock(record)">
+                <a-button @click="toggleSubmit(record)" :disabled="record.is_locked">
+                  <span v-if="record.is_submitted">Submitted</span>
+                  <span v-else>Unsubmited</span>
+                </a-button>
+                <a-button @click="toggleLock(record)" :disabled="!record.is_submitted || record.is_closed">
                   <span v-if="record.is_locked">Unlock</span>
                   <span v-else>Lock</span>
                 </a-button>
-                <a-button @click="toggleClose(record)">
+                <a-button @click="toggleClose(record)" :disabled="!record.is_locked">
                   <span v-if="record.is_closed">Reopen</span>
                   <span v-else>Close</span>
                 </a-button>
                 <a-button :href="route('admin.expend.items.index',record.id)" >Items</a-button>
                 <a-button @click="viewRecord(record)" v-if="record.is_locked || record.is_closed">View</a-button>
                 <a-button @click="editRecord(record)" v-else>Edit</a-button>
+              </template>
+              <template v-else-if="column.dataIndex == 'reference'">
+                {{ '000'+record.id }}
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -124,6 +131,10 @@
             i18n: "proposed_by",
             dataIndex: "proposed_by",
           },{
+            title: "Reference",
+            i18n: "reference",
+            dataIndex: "reference",
+          },{
             title: "Operation",
             i18n: "operation",
             dataIndex: "operation",
@@ -207,6 +218,9 @@
             },
           }
         );
+      },
+      toggleSubmit(record){
+        this.$inertia.post(route('admin.expend.toggleSubmit',record.id));
       },
       toggleLock(record){
         this.$inertia.post(route('admin.expend.toggleLock',record.id));

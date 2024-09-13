@@ -66,6 +66,7 @@ Route::group([
     Route::resource('fund/{fund}/expends',App\Http\Controllers\Admin\ExpendController::class)->names('admin.fund.expends');
     Route::resource('expend/{expend}/items',App\Http\Controllers\Admin\ExpendItemController::class)->names('admin.expend.items');
     Route::post('fund/{fund}/toggle_close',[App\Http\Controllers\Admin\FundController::class,'toggleClose'])->name('admin.fund.toggleClose');
+    Route::post('expend/{expend}/toggle_submit',[App\Http\Controllers\Admin\ExpendController::class,'toggleSubmit'])->name('admin.expend.toggleSubmit');
     Route::post('expend/{expend}/toggle_lock',[App\Http\Controllers\Admin\ExpendController::class,'toggleLock'])->name('admin.expend.toggleLock');
     Route::post('expend/{expend}/toggle_close',[App\Http\Controllers\Admin\ExpendController::class,'toggleClose'])->name('admin.expend.toggleClose');
 });
