@@ -14,79 +14,86 @@
             <table width="100%" border="1">
               <tr>
                 <th>#</th>
+                <th width="500px">fund item split id</th>
                 <th>Description</th>
-                <th>amount</th>
-                <th>fund item split id</th>
+                <th>code</th>
+                <th width="150px">amount</th>
               </tr>
               <tr v-for="(item, idx) in expend.items">
                 <td>{{ idx+1 }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.amount }}</td>
-                <td>{{ getFundItemSplit(item.fund_item_split_id) }}</td>
+                <td>
+                  <div>{{ getFundItemSplit(item.fund_item_split_id) }}</div>
+                  <a-select v-model:value="item.account_code" :options="categoryItemAccountsByExpendItem(item)" :style="{width:'500px'}"/>
+                </td>
+                <td>
+                  <a-input v-model:value="item.description" />
+                </td>
+                <td>
+                  {{item.fund_item_split_id}}
+                </td>
+                <td>
+                  <a-input v-model:value="item.amount" />
+                </td>
               </tr>
             </table>
           </div>
         </div>
         <a-button type="primary" @click="onSaveExpendItems">Save</a-button>
         <a-divider/>
-        
+
         <div class="container mx-auto pt-5">
           <div class="bg-white relative shadow rounded-lg md:p-5">
-            <div class="flex items-center gap-5 p-5">
-              <table width="100%">
-                <tr>
-                  <td width="50px">
-                    <a-select v-model:value="selectedSplit.itemId" :style="{width:'200px'}" :options="categoryItems" :fieldNames="{value:'id',label:'name_zh'}"/>
-                  </td>
-                <td>
-                  <a-input v-model:value="selectedSplit.description" width="100%"/>
-                </td>
-                <td width="100px">
-                  <a-input v-model:value="selectedSplit.amount" width="100%"/>
-                </td>
-                <td width="20px">
-                  <a-button type="primary" @click="onAddSplitItem()">Add</a-button>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td colspan="3">{{ selectedSplit.name }}</td>
-              </tr>
-              </table>
-            </div>
+            <a-button @click="onAddSplitItem2()">Pre Add</a-button>
             <table width="100%" border="1">
-            <tr>
-              <th>#</th>
-              <th>Description</th>
-              <th>Amount</th>
-              <th>Available</th>
-            </tr>
-            <tr v-for="(item, idx) in fund.items.filter(item=>item.category_item_id==selectedSplit.itemId)">
-              <td>{{ selectedSplit.itemId }}.{{ idx+1 }}</td>
-              <td>
-                <template v-if="item.splits.length==1">
-                  {{ item.splits[0].description }}
-                  <input type="radio" v-model="selectedSplit.splitId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedSplit(item.splits[0])">Select</input>
-                </template>
-                <template v-else>
-                  <table width="100%" border="1">
-                    <tr v-for="split in item.splits">
+                  <tr>
+                    <th colspan="2">#</th>
+                    <th width="100px">selection</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Available</th>
+                  </tr>
+                  <template v-for="(catItem, catItemIdx) in categoryItems">
+                    <tr>
+                      <td width="50px">{{ catItemIdx+1 }}</td>
+                      <td width="50px"></td>
+                      <td colspan="3">{{ catItem.name_zh }}</td>
+                    </tr> 
+                    <tr v-for="(item, idx) in fund.items.filter(item=>item.category_item_id==catItem.id)">
+                      <td></td> 
+                      <td>{{ catItemIdx+1 }}.{{ idx+1 }}</td>
+                        <template v-if="item.splits.length==1">
+                          <td>
+                            <input type="radio" v-model="selectedSplit.splitId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedSplit(catItem, item.splits[0])">Select</input>
+                          </td>
+                          <td>
+                            {{ item.splits[0].description }}
+                          </td>
+                        </template>
+                        <template v-else>
+                          <td colspan="2">
+                            <table width="100%" border="1">
+                              <tr v-for="split in item.splits">
+                                <td width="100px">
+                                  <input type="radio" v-model="selectedSplit.splitId" :value="split.id" style="width:30px" @change="onChnageSelectedSplit(catItem, split)">Select</input>
+                                </td>
+                                <td>
+                                  {{ split.description }}
+                                </td>
+                                <td>{{ split.amount }}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </template>
                       <td>
-                        {{ split.description }}
+                          {{ item.amount }}
                       </td>
-                      <td>{{ split.amount }}</td>
+                      <td>
+                        {{ budgetAvailable(item) }}
+                      </td>
                     </tr>
-                  </table>
-                </template>
-              </td>
-              <td>
-                  {{ item.amount }}
-              </td>
-              <td>
-                {{ budgetAvailable(item) }}
-              </td>
-            </tr>
-            </table>
+                  </template>
+                </table>
+
           </div>
         </div>
       </div>
@@ -109,7 +116,7 @@
     data() {
       return {
         selectedSplit:{
-          itemId:null,
+          catItemId:null,
           splitId:null,
           name:null,
           description:null,
@@ -118,7 +125,55 @@
     },
     created() {
     },
+    computed:{
+      fundItemSplits(){
+        const fundItems = this.fund.items.filter(i => i.category_item_id == this.selectedSplit.catItemId)
+        let splits=[];
+        fundItems.forEach(item=>{
+          if(item.splits.length==1){
+            splits.push({value:item.splits[0].id,label:item.splits[0].description})
+          }else{
+            item.splits.forEach(split=>{
+              splits.push({value:split.id,label:split.description})
+            })
+          }
+        })
+
+        return splits;
+      },
+    },
     methods: {
+      categoryItemAccountsByExpendItem(expendItem){
+        console.log('categoryItemAccounts2')
+        // console.log(expendItem)
+        let categoryItemId=null;
+        this.expend.fund.items.forEach(fundItem=>{
+          if(categoryItemId) return ;
+          fundItem.splits.forEach(split=>{
+            if(split.id==expendItem.fund_item_split_id){
+              categoryItemId=fundItem.category_item_id;
+            }
+          })
+        })
+        const accounts = this.categoryItems.find(i => i.id == categoryItemId)?.accounts || [];
+          return accounts.map(account => ({
+            value: account.account_code,
+            label: account.name_zh + ' ' + account.account_code
+          })
+        );
+        return accounts;
+
+      },
+      categoryItemAccountsByCatItemId(catItemId){
+        const accounts = this.categoryItems.find(i => i.id == catItemId)?.accounts || [];
+          return accounts.map(account => ({
+            value: account.account_code,
+            label: account.name_zh + ' ' + account.account_code
+          })
+        );
+        return accounts;
+          //return this.categoryItems.find(i=>i.id==this.selectedSplit.catItemId).accounts;
+      },
       storeRecord() {
         this.$refs.modalRef
           .validateFields()
@@ -152,11 +207,7 @@
         );
       },
       validateAmount(){
-        console.log('validating amount');
         const split=this.availableSplits.find(a=>a.id==this.modal.data.fund_item_split_id)
-        console.log(split.available)  
-        console.log(this.modal.data.amount);
-
         const value=split.available-this.modal.data.amount
         return new Promise((resolve, reject)=>{
           if (value<0) {
@@ -171,9 +222,6 @@
       },
       onChangeAmount(){
         const split=this.availableSplits.find(a=>a.id==this.modal.data.fund_item_split_id)
-        console.log(split.available)  
-        console.log(this.modal.data.amount);
-        console.log(split.available-this.modal.data.amount)  
       },
       getFundItemSplit(fundItemSplitId){
         const item=this.availableSplits.find(a=>a.id==fundItemSplitId)
@@ -187,29 +235,36 @@
         }
         
       },
-      onChnageSelectedSplit(split){
-        this.selectedSplit.name=split.description
+      onChnageSelectedSplit(catItem, split){
+        this.selectedSplit.id=split.id
+        this.selectedSplit.catItemId=catItem.id
+        this.selectedSplit.description=split.description
+        console.log(this.selectedSplit)
+      },
+      onAddSplitItem2(){
+        let accounts=this.categoryItemAccountsByCatItemId(this.selectedSplit.catItemId);
+        console.log(accounts[0])
+        this.expend.items.push({
+          'expend_id':this.expend.id,
+          'fund_item_split_id':this.selectedSplit.splitId,
+          'category_item_id':this.selectedSplit.catItemId,
+          'account_code':accounts[0].value,
+          'description':'--',
+          'amount':0
+        });
+
       },
       onAddSplitItem(){
         console.log(this.selectedSplit);
         this.expend.items.push({
           'expend_id':this.expend.id,
-          'fund_item_split_id':this.selectedSplit.itemId,
+          'fund_item_split_id':this.selectedSplit.catItemId,
           'description':this.selectedSplit.description,
           'amount':this.selectedSplit.amount
 
         });
-        // this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedSplit, {
-        //     onSuccess: (page) => {
-        //       console.log(page)
-        //     },
-        //     onError: (err) => {
-        //       console.log(err)
-        //     },
-        //   });
       },
       onSaveExpendItems(){
-        console.log(this.expend);
         this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.expend.items, {
             onSuccess: (page) => {
               console.log(page)

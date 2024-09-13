@@ -9,7 +9,7 @@ use App\Models\Fund;
 use App\Models\Category;
 use App\Models\CategoryItemAccount;
 use App\Models\FundItem;
-use App\Models\FundItemAccount;
+use App\Models\FundItemSplit;
 
 class FundItemController extends Controller
 {
@@ -23,7 +23,6 @@ class FundItemController extends Controller
             'category'=>Category::with('items')->find($fund->category_id),
             'fund'=>$fund,
         ]);
-        
     }
 
     /**
@@ -47,13 +46,13 @@ class FundItemController extends Controller
 
         foreach($items as $i=>$item){
             $item['sequence']=$i;
-            $accounts=$item['accounts'];
+            $splits=$item['splits'];
             if(isset($item['id'])){
                 $fundItem=FundItem::find($item['id']);
-                $fundItem->accounts()->whereNotIn('id',array_column($accounts,'id'))->delete();
+                $fundItem->splits()->whereNotIn('id',array_column($splits,'id'))->delete();
             }
 
-            unset($item['accounts']);
+            unset($item['splits']);
             if(isset($item['id'])){
                 unset($item['created_at']);
                 unset($item['updated_at']);
@@ -68,17 +67,17 @@ class FundItemController extends Controller
             }
             
 
-            foreach($accounts as $a){
+            foreach($splits as $a){
                 if(isset($a['id'])){
                     unset($a['created_at']);
                     unset($a['updated_at']);
-                    FundItemAccount::where('id',$a['id'])->update($a);
+                    FundItemSplit::where('id',$a['id'])->update($a);
                 }else{
                     // $cia=CategoryItemAccount::find($a['category_item_account_id']);
                     // $a['user_define']=$cia->user_define;
                     // $a['account_code']=$cia->account_code;
                     //$a['fund_item_id']=$fundItem->id;
-                    $fundItem->accounts()->create($a);
+                    $fundItem->splits()->create($a);
                 }
             }
         }

@@ -18,6 +18,9 @@
               <template v-if="column.dataIndex == 'operation'">
                 <!-- <a-button :href="route('admin.fund.expends.edit',{fund:record.fund_id,expend:record.id})" >Edit</a-button> -->
               </template>
+              <template v-else-if="column.dataIndex == 'account'">
+                {{ record.account_code }}
+              </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
               </template>
@@ -38,14 +41,14 @@
           :rules="rules"
           :validate-messages="validateMessages"
         >
-          <a-form-item label="Account" name="fund_item_account_id">
-            <a-select v-model:value="modal.data.fund_item_account_id" :options="accounts"/>
+          <a-form-item label="Account" name="fund_item_split_id">
+            <a-select v-model:value="modal.data.fund_item_split_id" :options="splits"/>
           </a-form-item>
           <a-form-item label="Description" name="description">
             <a-input v-model:value="modal.data.description" />
           </a-form-item>
           <a-form-item label="Amount" name="amount" >
-            <a-input v-model:value="modal.data.amount" :disabled="modal.data.fund_item_account_id==null || modal.data.description==null"/>
+            <a-input v-model:value="modal.data.amount" :disabled="modal.data.fund_item_split_id==null || modal.data.description==null"/>
           </a-form-item>
           <a-form-item label="Remark" name="remark">
             <a-textarea v-model:value="modal.data.remark" />
@@ -83,10 +86,10 @@
       AdminLayout,
       ExpendHeader
     },
-    props: ["expend","availableAccounts"],
+    props: ["expend","availableSplits"],
     data() {
       return {
-        accounts:[],
+        splits:[],
         modal: {
           isOpen: false,
           data: {},
@@ -99,13 +102,17 @@
             i18n: "description",
             dataIndex: "description",
           },{
+            title: "Account",
+            i18n: "account",
+            dataIndex: "account",
+          },{
             title: "Amount",
             i18n: "amount",
             dataIndex: "amount",
           },
         ],
         rules: {
-          fund_item_account_id: { required: true },
+          fund_item_split_id: { required: true },
           description: { required: true },
           amount: { required: true, validator: this.validateAmount, trigger: 'blur'},
         },
@@ -128,12 +135,12 @@
       };
     },
     created() {
-      this.accounts=this.availableAccounts.map(a=> ({
+      this.splits=this.availableSplits.map(a=> ({
           value:a.id,
           label:a.account_code+' '+a.description+' ('+a.available+')'
         })
       )
-      console.log(this.accounts);
+      console.log(this.splits);
     },
     methods: {
       createRecord(){
@@ -184,14 +191,14 @@
       },
       validateAmount(){
         console.log('validating amount');
-        const account=this.availableAccounts.find(a=>a.id==this.modal.data.fund_item_account_id)
-        console.log(account.available)  
+        const split=this.availableSplits.find(a=>a.id==this.modal.data.fund_item_split_id)
+        console.log(split.available)  
         console.log(this.modal.data.amount);
 
-        const value=account.available-this.modal.data.amount
+        const value=split.available-this.modal.data.amount
         return new Promise((resolve, reject)=>{
           if (value<0) {
-            reject(new Error('Budget limit exceeded. remains:'+account.available));
+            reject(new Error('Budget limit exceeded. remains:'+split.available));
             // } else if (value.length < 3) {
             //   callback(new Error('Username must be at least 3 characters long.'));
           } else {
@@ -201,10 +208,10 @@
         })
       },
       onChangeAmount(){
-        const account=this.availableAccounts.find(a=>a.id==this.modal.data.fund_item_account_id)
-        console.log(account.available)  
+        const split=this.availableSplits.find(a=>a.id==this.modal.data.fund_item_split_id)
+        console.log(split.available)  
         console.log(this.modal.data.amount);
-        console.log(account.available-this.modal.data.amount)  
+        console.log(split.available-this.modal.data.amount)  
       }
     },
   };

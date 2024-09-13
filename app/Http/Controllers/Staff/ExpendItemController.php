@@ -19,11 +19,15 @@ class ExpendItemController extends Controller
         $expend->items;
         $fund=$expend->fund;
         $fund->items;
-        //dd($fund->items);
+        $categroy=Category::latestVersion('FDCT',$expend->year);
+        if(empty($categroy)){
+            return redirect()->route('dashboard');
+        }
+        
         //dd(Category::where('version',$expend->year)->first());
         $availableSplits=$fund->availableSplits();
         return Inertia::render('Staff/ExpendItems',[
-            'categoryItems'=>Category::find($fund->category_id)->items,
+            'categoryItems'=>$categroy->items,
             'fund'=>$fund,
             'expend'=>$expend,
             'availableSplits'=>$availableSplits

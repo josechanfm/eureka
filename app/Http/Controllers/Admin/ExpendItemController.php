@@ -18,10 +18,9 @@ class ExpendItemController extends Controller
         $expend->items;
         $fund=$expend->fund;
         $fund->acccounts;
-        $availableAccounts=$fund->availableAccounts();
         return Inertia::render('Admin/ExpendItems',[
             'expend'=>$expend,
-            'availableAccounts'=>$availableAccounts
+            'availableSplits'=>$fund->availableSplits()
             //'items'=>$expend->items
         ]);
     }

@@ -100,7 +100,6 @@
           title: "Modal",
           mode: "",
         },
-          teacherStateLabels: {},
         columns: [
           {
             title: "Year",
@@ -130,7 +129,8 @@
           },
         ],
         rules: {
-          title: { required: true },
+          year:{ required: true },
+          title:{ required: true },
         },
         validateMessages: {
           required: "${label} is required!",

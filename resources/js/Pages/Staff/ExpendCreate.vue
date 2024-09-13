@@ -47,10 +47,7 @@
         //   repayments:{}
         // },
         rules: {
-          entity: { required: true },
-          declarant: { required: true},
-          birm: { required: true },
-          project_code: { required: true },
+          year: { required: true },
           title:{ required: true }
         },
         validateMessages: {
