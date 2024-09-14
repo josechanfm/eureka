@@ -69,7 +69,7 @@
                       <td>{{ catItemIdx+1 }}.{{ idx+1 }}</td>
                         <template v-if="item.splits.length==1">
                           <td>
-                            <input type="radio" v-model="selectedSplit.splitId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedSplit(catItem, item.splits[0])">Select</input>
+                            <input type="radio" v-model="selectedSplit.splitId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedSplit(catItem, item.splits[0])">{{ $t('select') }}</input>
                           </td>
                           <td>
                             {{ item.splits[0].description }}
@@ -80,7 +80,7 @@
                             <table width="100%" border="1">
                               <tr v-for="split in item.splits">
                                 <td width="100px">
-                                  <input type="radio" v-model="selectedSplit.splitId" :value="split.id" style="width:30px" @change="onChnageSelectedSplit(catItem, split)">Select</input>
+                                  <input type="radio" v-model="selectedSplit.splitId" :value="split.id" style="width:30px" @change="onChnageSelectedSplit(catItem, split)">{{ $t('select') }}</input>
                                 </td>
                                 <td>
                                   {{ split.description }}

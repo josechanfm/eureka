@@ -19,7 +19,9 @@ const showingNavigationDropdown = ref(false);
 
 const page = usePage();
 //loadLanguageAsync(page.props.value.lang);
-loadLanguageAsync('zh');
+loadLanguageAsync(document.querySelector('html').getAttribute('lang'));
+//console.log(document.querySelector('html').getAttribute('lang'));
+console.log(page.props)
 
 const switchToTeam = (team) => {
     router.put(route('current-team.update'), {
@@ -87,11 +89,11 @@ const logout = () => {
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.show')">
-                                            Chinese
+                                        <DropdownLink href="/language/zh">
+                                            {{ $t('chinese') }}
                                         </DropdownLink>
-                                        <DropdownLink :href="route('profile.show')">
-                                            English
+                                        <DropdownLink href="/language/en">
+                                            {{ $t('english') }}
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
