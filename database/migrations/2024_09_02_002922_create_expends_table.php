@@ -24,9 +24,7 @@ return new class extends Migration
             $table->foreignId('owner_id');
             $table->foreignId('creator_id')->nullable();
             $table->foreignId('updater_id')->nullable();
-            $table->boolean('is_submitted')->default(false);
-            $table->boolean('is_locked')->default(false);
-            $table->boolean('is_closed')->default(false);
+            $table->char('status',2)->default(false);
             $table->timestamps();
         });
     }

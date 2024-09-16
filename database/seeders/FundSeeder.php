@@ -31,6 +31,7 @@ class FundSeeder extends Seeder
             'duration'=>'36',
             'grant'=>'6',
             'grants'=>["10,000","20,000","30,000","40,000","50,000","60,000"],
+            'is_submitted'=>false,
             'is_closed'=>false,
             'owner_id'=>1,
             'repayments'=>[]
@@ -45,7 +46,7 @@ class FundSeeder extends Seeder
                     'category_item_id'=>$item->id,
                     'sequence'=>$i,
                     'description'=>$item->name_zh,
-                    'amount'=>rand(1000,50000)
+                    'amount'=>100000+($i*10000)
                 ]);
     
                 $fundItem->splits()->create([
@@ -59,14 +60,16 @@ class FundSeeder extends Seeder
         //$categoryItemAccount=CategoryItemAccount::find(1);
         $fundItem->splits()->create([
             'sequence'=>2,
-            'description'=>'Additional item'
+            'description'=>'Additional item',
+            'amount'=>'1000',
            //'description'=>$categoryItemAccount->name_zh.' B',
         ]);
         $fundItem=FundItem::find(7);
         $categoryItemAccount=CategoryItemAccount::find(7);
         $fundItem->splits()->create([
             'sequence'=>2,
-            'description'=>'Additional item'
+            'description'=>'Additional item',
+            'amount'=>'2000',
            //'description'=>$categoryItemAccount->name_zh.' B',
         ]);
     }

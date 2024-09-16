@@ -18,6 +18,10 @@ class FundItemController extends Controller
      */
     public function index(Fund $fund)
     {
+        // if($fund->is_closed){
+        //     return redirect()->route('staff.funds.index');
+        // }
+        $this->authorize('view',$fund);
         $fund->items;
         return Inertia::render('Staff/FundItemCreate',[
             'category'=>Category::with('items')->find($fund->category_id),
@@ -38,6 +42,7 @@ class FundItemController extends Controller
      */
     public function store(Request $request, Fund $fund)
     {
+        $this->authorize('view',$fund);
         $items=$request->all();
         //dd(array_column($items,'id'));
 

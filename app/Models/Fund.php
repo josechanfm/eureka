@@ -10,7 +10,7 @@ class Fund extends Model
     use HasFactory;
     protected $fillable=['category_id','entity','declarant','birm','project_code','title','responsible','amount','type','duration','grant','grants','repayment','repayments','created_by','updated_by'];
     protected $casts=['grants'=>'array','repayments'=>'array','is_closed'=>'boolean'];
-
+    
     public function category(){
         return $this->belongsTo(Category::class)->with('items');
     }

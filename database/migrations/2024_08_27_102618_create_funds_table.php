@@ -31,6 +31,7 @@ return new class extends Migration
             $table->foreignId('creator_id')->nullable();
             $table->foreignId('updater_id')->nullable();
             $table->text('remark')->nullable();
+            $table->boolean('is_submitted')->default(false);
             $table->boolean('is_closed')->default(false);
             $table->timestamps();
         });

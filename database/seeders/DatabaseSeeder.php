@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ConfigSeeder::class,
             CategorySeeder::class,
-            FundSeeder::class
+            FundSeeder::class,
+            ExpendSeeder::class
         ]);
     }
 }

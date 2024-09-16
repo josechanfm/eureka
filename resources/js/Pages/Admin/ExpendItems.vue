@@ -2,8 +2,7 @@
     <AdminLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ $t('welcome') }}
-          ..
+          {{ $t('expend_items') }}
         </h2>
       </template>
       <div class="container mx-auto pt-5">
@@ -11,68 +10,30 @@
           <ExpendHeader :expend="expend"/>
         </div>
         <a-divider/>
-
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
           <a-table :dataSource="expend.items" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
-              <template v-if="column.dataIndex == 'operation'">
+              <template v-if="['account_code'].includes(column.dataIndex)">
+                <template v-if="editableData.id==record.id">
+                  <a-input v-model:value="editableData.account_code"/>
+                </template>
+                <template v-else>
+                  {{ text }}
+                </template>
+              </template>
+              <template v-else-if="column.dataIndex == 'operation'">
+                <template v-if="editableData.id==record.id">
+                  <a-button @click="onSaveRecord(record)">Save</a-button>
+                </template>
+                <template v-else>
+                  <a-button @click="onEditRecord(record)">Edit</a-button>
+                </template>
                 <!-- <a-button :href="route('admin.fund.expends.edit',{fund:record.fund_id,expend:record.id})" >Edit</a-button> -->
-              </template>
-              <template v-else-if="column.dataIndex == 'account'">
-                {{ record.account_code }}
-              </template>
-              <template v-else>
-                {{ record[column.dataIndex] }}
               </template>
             </template>
           </a-table>
         </div>
       </div>
-
-            <!-- Modal Start-->
-            <a-modal v-model:open="modal.isOpen" :title="modal.title" width="60%">
-        <a-form
-          ref="modalRef"
-          :model="modal.data"
-          name="Teacher"
-          :label-col="{ span: 8 }"
-          :wrapper-col="{ span: 16 }"
-          autocomplete="off"
-          :rules="rules"
-          :validate-messages="validateMessages"
-        >
-          <a-form-item label="Account" name="fund_item_split_id">
-            <a-select v-model:value="modal.data.fund_item_split_id" :options="splits"/>
-          </a-form-item>
-          <a-form-item label="Description" name="description">
-            <a-input v-model:value="modal.data.description" />
-          </a-form-item>
-          <a-form-item label="Amount" name="amount" >
-            <a-input v-model:value="modal.data.amount" :disabled="modal.data.fund_item_split_id==null || modal.data.description==null"/>
-          </a-form-item>
-          <a-form-item label="Remark" name="remark">
-            <a-textarea v-model:value="modal.data.remark" />
-          </a-form-item>
-        </a-form>
-        <template #footer>
-          <a-button
-            v-if="modal.mode == 'EDIT'"
-            key="Update"
-            type="primary"
-            @click="updateRecord()"
-            >Update</a-button
-          >
-          <a-button
-            v-if="modal.mode == 'CREATE'"
-            key="Store"
-            type="primary"
-            @click="storeRecord()"
-            >Add</a-button
-          >
-        </template>
-      </a-modal>
-      <!-- Modal End-->
-
     </AdminLayout>
   </template>
   
@@ -90,11 +51,9 @@
     data() {
       return {
         splits:[],
-        modal: {
-          isOpen: false,
-          data: {},
-          title: "Modal",
-          mode: "",
+        editableData:{
+          id:null,
+          account_code:null,
         },
         columns: [
           {
@@ -102,9 +61,9 @@
             i18n: "description",
             dataIndex: "description",
           },{
-            title: "Account",
-            i18n: "account",
-            dataIndex: "account",
+            title: "Account Code",
+            i18n: "account_code",
+            dataIndex: "account_code",
           },{
             title: "Reference",
             i18n: "reference",
@@ -113,24 +72,13 @@
             title: "Amount",
             i18n: "amount",
             dataIndex: "amount",
+          },{
+            title: "Operation",
+            i18n: "operation",
+            dataIndex: "operation",
           },
         ],
-        rules: {
-          fund_item_split_id: { required: true },
-          description: { required: true },
-          amount: { required: true, validator: this.validateAmount, trigger: 'blur'},
-        },
-        validateMessages: {
-          required: "${label} is required!",
-          types: {
-            email: "${label} is not a valid email!",
-            number: "${label} is not a valid number!",
-          },
-          number: {
-            range: "${label} must be between ${min} and ${max}",
-          },
-        },
-      
+     
         labelCol: {
           style: {
             width: "150px",
@@ -144,47 +92,15 @@
           label:a.account_code+' '+a.description+' ('+a.available+')'
         })
       )
-      console.log(this.splits);
     },
     methods: {
-      createRecord(){
-        this.modal.data = {}
-        this.modal.data.expend_id = this.expend.id
-        this.modal.mode = "CREATE"
-        this.modal.title = "create"
-        this.modal.isOpen = true
+      onEditRecord(record){
+        this.editableData={...record}
       },
-      editRecord(record){
-        this.modal.data = {...record}
-        this.modal.mode = "CREATE"
-        this.modal.title = "create"
-        this.modal.isOpen = true
-      },
-      storeRecord() {
-        this.$refs.modalRef
-          .validateFields()
-          .then(() => {
-            this.$inertia.post(route("admin.expend.items.store",this.expend.id), this.modal.data, {
-              onSuccess: (page) => {
-                this.modal.data = {};
-                this.modal.isOpen = false;
-              },
-              onError: (err) => {
-                console.log(err);
-              },
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      },
-      updateRecord() {
-        console.log(this.modal.data);
+      onSaveRecord(record){
         this.$inertia.patch(
-          route("admin.expend.items.update", this.modal.data.id),this.modal.data,{
+          route("admin.expend.items.update", {expend:this.expend.id, item:this.editableData.id}),this.editableData,{
             onSuccess: (page) => {
-              this.modal.data = {};
-              this.modal.isOpen = false;
               console.log(page);
             },
             onError: (error) => {
@@ -192,31 +108,8 @@
             },
           }
         );
+        this.editableData={id:null, account_code:null}
       },
-      validateAmount(){
-        console.log('validating amount');
-        const split=this.availableSplits.find(a=>a.id==this.modal.data.fund_item_split_id)
-        console.log(split.available)  
-        console.log(this.modal.data.amount);
-
-        const value=split.available-this.modal.data.amount
-        return new Promise((resolve, reject)=>{
-          if (value<0) {
-            reject(new Error('Budget limit exceeded. remains:'+split.available));
-            // } else if (value.length < 3) {
-            //   callback(new Error('Username must be at least 3 characters long.'));
-          } else {
-            resolve();
-          }
-
-        })
-      },
-      onChangeAmount(){
-        const split=this.availableSplits.find(a=>a.id==this.modal.data.fund_item_split_id)
-        console.log(split.available)  
-        console.log(this.modal.data.amount);
-        console.log(split.available-this.modal.data.amount)  
-      }
     },
   };
   </script>

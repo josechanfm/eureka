@@ -8,15 +8,23 @@ use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Fund;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class FundController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        // Apply the policy for all resource actions
+        $this->authorizeResource(Fund::class, 'fund');
+    }
     public function index()
     {
         //dd(auth()->user());
+        //$funds = Gate::allows('viewAny', Fund::class) ? Fund::all() : Fund::where('owner_id', auth()->id())->get();
+
         return Inertia::render('Staff/Funds',[
             'funds'=>Fund::whereBelongsTo(auth()->user(), 'ownedBy')->where('is_closed',false)->orderBy('created_at','DESC')->get()
         ]);
@@ -72,6 +80,10 @@ class FundController extends Controller
      */
     public function show(Fund $fund)
     {
+        if($fund->is_closed){
+            return redirect()->route('staff.funds.index');
+        }
+
         //$fund->items;
         foreach($fund->items as $item){
             $item->total=$item->accounts->sum('amount');
@@ -90,6 +102,9 @@ class FundController extends Controller
      */
     public function edit(Fund $fund)
     {
+        if($fund->is_closed){
+            return redirect()->route('staff.funds.index');
+        }
         return Inertia::render('Staff/FundCreate',[
             'categories'=>Category::all(),
             'fund'=>$fund
@@ -102,6 +117,9 @@ class FundController extends Controller
      */
     public function update(Request $request, Fund $fund)
     {
+        if($fund->is_closed){
+            return redirect()->route('staff.funds.index');
+        }
         $fund->update($request->all());
         return redirect()->route('staff.fund.items.index',$fund->id);
     }

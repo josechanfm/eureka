@@ -48,8 +48,7 @@ class ExpendItemController extends Controller
      */
     public function store(Expend $expend, Request $request)
     {
-        
-        $toLock=$request->toLock;
+        //$toSubmit=$request->toSubmit;
         $items=$request->items;
         foreach($items as $i=>$item){
             unset($items[$i]['created_at']);
@@ -64,9 +63,8 @@ class ExpendItemController extends Controller
                 ExpendItem::create($item);
             }
         }
-        if($toLock){
-            $expend->is_submitted=true;
-            $expend->save();
+        if($request->toSubmit){
+            $expend->setSubmitted();
         }
         return redirect()->back();
     }

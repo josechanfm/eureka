@@ -39,7 +39,7 @@
           </div>
         </div>
         <div>
-          <span v-if="!expend.is_submitted">
+          <span v-if="expend.status<='S2'">
             <a-button type="primary" @click="onSaveExpendItems(false)">Save</a-button>
             <a-button type="primary" @click="onSaveExpendItems(true)">Save and Submit</a-button>
           </span>
@@ -47,7 +47,7 @@
         </div>
         <a-divider/>
 
-        <div class="container mx-auto pt-5" v-if="!expend.is_submitted">
+        <div class="container mx-auto pt-5" v-if="expend.status<='S2'">
           <div class="bg-white relative shadow rounded-lg md:p-5">
             <a-button @click="onAddSplitItem2()">Pre Add</a-button>
             <table width="100%" border="1">
@@ -270,9 +270,9 @@
 
         });
       },
-      onSaveExpendItems(toLock=false){
+      onSaveExpendItems(toSubmit=false){
         this.$inertia.post(route("staff.expend.items.store",this.expend.id), 
-        {toLock:toLock, items:this.expend.items},
+        {toSubmit:toSubmit, items:this.expend.items},
         {
             onSuccess: (page) => {
               console.log(page)

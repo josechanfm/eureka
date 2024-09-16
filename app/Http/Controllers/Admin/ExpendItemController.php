@@ -62,9 +62,12 @@ class ExpendItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Expend $expend, ExpendItem $item, Request $request )
     {
-        //
+        //dd($expend, $item, $request->all());
+        $item->account_code=$request->account_code;
+        $item->save();
+        return redirect()->back();
     }
 
     /**

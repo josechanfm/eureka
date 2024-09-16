@@ -14,21 +14,37 @@
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button @click="toggleSubmit(record)" :disabled="record.is_locked">
-                  <span v-if="record.is_submitted">Submitted</span>
-                  <span v-else>Unsubmited</span>
-                </a-button>
-                <a-button @click="toggleLock(record)" :disabled="!record.is_submitted || record.is_closed">
-                  <span v-if="record.is_locked">Unlock</span>
-                  <span v-else>Lock</span>
-                </a-button>
-                <a-button @click="toggleClose(record)" :disabled="!record.is_locked">
-                  <span v-if="record.is_closed">Reopen</span>
-                  <span v-else>Close</span>
-                </a-button>
                 <a-button :href="route('admin.expend.items.index',record.id)" >Items</a-button>
                 <a-button @click="viewRecord(record)" v-if="record.is_locked || record.is_closed">View</a-button>
                 <a-button @click="editRecord(record)" v-else>Edit</a-button>
+              </template>
+              <template v-else-if="column.dataIndex == 'status'">
+                <template v-if="record.status=='S2'">
+                  Revise
+                  <a-button :disabled="true">Return</a-button>
+                  <a-button :disabled="true">Accepte</a-button>
+                </template>
+                <template v-else-if="record.status=='S3'">
+                  Submitted
+                  <a-button @click="onChangeStatus(record,'RETURN')">Return</a-button>
+                  <a-button @click="onChangeStatus(record,'ACCEPT')">Accept</a-button><!-- to archive-->
+                </template>
+                <template v-else-if="record.status=='S4'">
+                  Accepted
+                  <a-button @click="onChangeStatus(record,'REVIEW')">Review</a-button>
+                  <a-button @click="onChangeStatus(record,'PROPOSE')">Propose</a-button><!-- to archive-->
+                </template>
+                <template v-else-if="record.status=='S5'">
+                  Proposed
+                  <a-button @click="onChangeStatus(record,'REWORK')">Rework</a-button>
+                  <a-button @click="onChangeStatus(record,'ARCHIVE')">Archive</a-button><!-- to archive-->
+                </template>
+                <template v-else-if="record.status=='S6'">
+                  Archived
+                </template>
+                <template v-else>
+                  Preparing
+                </template>
               </template>
               <template v-else-if="column.dataIndex == 'reference'">
                 {{ '000'+record.id }}
@@ -96,11 +112,12 @@
   <script>
   import AdminLayout from "@/Layouts/AdminLayout.vue";
   import FundHeader from "@/Pages/Staff/FundHeader.vue";
-  
+  import { message } from 'ant-design-vue';
+
   export default {
     components: {
       AdminLayout,
-      FundHeader
+      FundHeader,
     },
     props: ["fund","expends"],
     data() {
@@ -134,6 +151,10 @@
             title: "Reference",
             i18n: "reference",
             dataIndex: "reference",
+          },{
+            title: "Status",
+            i18n: "status",
+            dataIndex: "status",
           },{
             title: "Operation",
             i18n: "operation",
@@ -219,15 +240,21 @@
           }
         );
       },
-      toggleSubmit(record){
-        this.$inertia.post(route('admin.expend.toggleSubmit',record.id));
+      onChangeStatus(record, status){
+        console.log(status);
+        this.$inertia.post(route('admin.expend.changeStatus',record.id),
+          {status:status},
+          {
+            onSuccess: (page) => {
+            },
+            onError: (error) => {
+              console.log(error);
+              if(error.message){
+                message.error(error.message)
+              }
+            },
+          });
       },
-      toggleLock(record){
-        this.$inertia.post(route('admin.expend.toggleLock',record.id));
-      },
-      toggleClose(record){
-        this.$inertia.post(route('admin.expend.toggleClose',record.id));
-      }
     },
   };
   </script>

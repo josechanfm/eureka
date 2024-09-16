@@ -79,26 +79,41 @@ class ExpendController extends Controller
     {
         //
     }
-
-    public function toggleSubmit(Expend $expend){
-        $expend->is_submitted=!$expend->is_submitted;
-        $expend->save();
-    }
-    public function toggleLock(Expend $expend){
-        $expend->is_locked=!$expend->is_locked;
-        $expend->save();
-
+    public function genReferenceCode($expend){
         $codePrefix=substr('0000'.$expend->id,-4);
         foreach($expend->items as $i=>$item){
             $item->reference_code=$codePrefix.'-'.substr('00'.($i+1),-2);
             $item->save();
         };
-
     }
-    public function toggleClose(Expend $expend){
-        $expend->is_closed=!$expend->is_closed;
+    public function changeStatus(Expend $expend, Request $request){
+        switch($request->status){
+            case 'RETURN':
+                $expend->status='S2';
+                break;
+            case 'REVIEW':
+                $expend->status='S3';
+                break;
+            case 'ACCEPT':
+                $expend->status='S4';
+                break;
+            case 'PROPOSE':
+                if($expend->items()->where('account_code','GF')->where('account_code','')->orWhereNull('account_code')->get()->count()>=0){
+                    return redirect()->back()->withErrors(['message'=>'Account Code Not completed!']);
+                    break;
+                }
+                $expend->status='S5';
+                $this->genReferenceCode($expend);
+                break;
+            case 'REWORK':
+                $expend->status='S4';
+                break;
+            case 'ARCHIVE':
+                $expend->status='S6';
+                break;
+        }
         $expend->save();
-       
+        return redirect()->back();
     }
 
 }

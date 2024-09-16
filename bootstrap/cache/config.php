@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:kQaSdBWb/8H1vshjns/kJFl23ZZSru+KUJXi4S3J1NI=',
+    'key' => 'base64:plig6a+APzY47H+kcGMqhFJMDHMpQmZ6AH5A8U8CgU4=',
     'cipher' => 'AES-256-CBC',
     'maintenance' => 
     array (
@@ -222,8 +222,8 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp8\\htdocs\\fundify\\storage\\framework/cache/data',
-        'lock_path' => 'C:\\xampp8\\htdocs\\fundify\\storage\\framework/cache/data',
+        'path' => '/var/www/html/fundify/storage/framework/cache/data',
+        'lock_path' => '/var/www/html/fundify/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -317,8 +317,8 @@
         'host' => '127.0.0.1',
         'port' => '3306',
         'database' => 'fundify',
-        'username' => 'root',
-        'password' => '',
+        'username' => 'dbadmin',
+        'password' => 'password',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -337,8 +337,8 @@
         'host' => '127.0.0.1',
         'port' => '3306',
         'database' => 'fundify',
-        'username' => 'root',
-        'password' => '',
+        'username' => 'dbadmin',
+        'password' => 'password',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -352,8 +352,8 @@
         'host' => '127.0.0.1',
         'port' => '3306',
         'database' => 'fundify',
-        'username' => 'root',
-        'password' => '',
+        'username' => 'dbadmin',
+        'password' => 'password',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -396,13 +396,13 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp8\\htdocs\\fundify\\storage\\app',
+        'root' => '/var/www/html/fundify/storage/app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp8\\htdocs\\fundify\\storage\\app/public',
+        'root' => '/var/www/html/fundify/storage/app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,
@@ -422,7 +422,7 @@
     ),
     'links' => 
     array (
-      'C:\\xampp8\\htdocs\\fundify\\public\\storage' => 'C:\\xampp8\\htdocs\\fundify\\storage\\app/public',
+      '/var/www/html/fundify/public/storage' => '/var/www/html/fundify/storage/app/public',
     ),
   ),
   'fortify-options' => 
@@ -604,14 +604,14 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp8\\htdocs\\fundify\\storage\\logs/laravel.log',
+        'path' => '/var/www/html/fundify/storage/logs/laravel.log',
         'level' => 'debug',
         'replace_placeholders' => true,
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp8\\htdocs\\fundify\\storage\\logs/laravel.log',
+        'path' => '/var/www/html/fundify/storage/logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
         'replace_placeholders' => true,
@@ -676,7 +676,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp8\\htdocs\\fundify\\storage\\logs/laravel.log',
+        'path' => '/var/www/html/fundify/storage/logs/laravel.log',
       ),
     ),
   ),
@@ -752,7 +752,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp8\\htdocs\\fundify\\resources\\views/vendor/mail',
+        0 => '/var/www/html/fundify/resources/views/vendor/mail',
       ),
     ),
   ),
@@ -919,7 +919,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp8\\htdocs\\fundify\\storage\\framework/sessions',
+    'files' => '/var/www/html/fundify/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -940,9 +940,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp8\\htdocs\\fundify\\resources\\views',
+      0 => '/var/www/html/fundify/resources/views',
     ),
-    'compiled' => 'C:\\xampp8\\htdocs\\fundify\\storage\\framework\\views',
+    'compiled' => '/var/www/html/fundify/storage/framework/views',
   ),
   'inertia' => 
   array (
@@ -956,7 +956,7 @@
       'ensure_pages_exist' => true,
       'page_paths' => 
       array (
-        0 => 'C:\\xampp8\\htdocs\\fundify\\resources\\js/Pages',
+        0 => '/var/www/html/fundify/resources/js/Pages',
       ),
       'page_extensions' => 
       array (
@@ -1053,7 +1053,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'C:\\xampp8\\htdocs\\fundify',
+    'remote_sites_path' => '/var/www/html/fundify',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',
