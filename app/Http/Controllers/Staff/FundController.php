@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\Fund;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use App\Exports\FundExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FundController extends Controller
 {
@@ -24,7 +26,6 @@ class FundController extends Controller
     {
         //dd(auth()->user());
         //$funds = Gate::allows('viewAny', Fund::class) ? Fund::all() : Fund::where('owner_id', auth()->id())->get();
-
         return Inertia::render('Staff/Funds',[
             'funds'=>Fund::whereBelongsTo(auth()->user(), 'ownedBy')->where('is_closed',false)->orderBy('created_at','DESC')->get()
         ]);
@@ -130,5 +131,10 @@ class FundController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function export(Fund $fund){
+        return Excel::download(new FundExport($fund), 'fund.xlsx');
+
     }
 }

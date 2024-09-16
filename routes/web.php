@@ -44,7 +44,7 @@ Route::middleware([
     Route::resource('fund/{fund}/items',App\Http\Controllers\Staff\FundItemController::class)->names('staff.fund.items');
     Route::resource('fund/{fund}/expends',App\Http\Controllers\Staff\ExpendController::class)->names('staff.fund.expends');
     Route::resource('expend/{expend}/items',App\Http\Controllers\Staff\ExpendItemController::class)->names('staff.expend.items');
-
+    Route::get('fund/{fund}/export',[App\Http\Controllers\Staff\FundController::class,'export'])->name('staff.fund.export');
 
 });
 Route::group([

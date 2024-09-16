@@ -14,6 +14,7 @@
                 <a-button :href="route('staff.fund.expends.index',record.id)" >{{ $t('expends') }}</a-button>
                 <a-button :href="route('staff.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
                 <a-button :href="route('staff.fund.items.index',record.id)" >{{ $t('funding_items') }}</a-button>
+                <a-button :href="route('staff.fund.export',record.id)">Export</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
