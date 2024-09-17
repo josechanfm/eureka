@@ -1,4 +1,10 @@
 {
+"dashboard":"Dashboard",
+"register":"Register",
+"login":"Login",
+"logout":"Logout",
+"admin":"DAF",
+"category":"Category",
 "add":"Add",
 "create":"Create",
 "update":"Update",

@@ -1,4 +1,10 @@
 {
+"dashboard":"主頁",
+"register":"注冊",
+"login":"登入",
+"logout":"登出",
+"admin":"財務部",
+"category":"科研分類",
 "add":"添加",
 "create":"新增",
 "update":"更新",
