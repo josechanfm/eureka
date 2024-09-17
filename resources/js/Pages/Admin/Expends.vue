@@ -131,8 +131,33 @@
           mode: "",
         },
           teacherStateLabels: {},
-        columns: [
-          {
+        rules: {
+          title: { required: true },
+        },
+        validateMessages: {
+          required: "${label} is required!",
+          types: {
+            email: "${label} is not a valid email!",
+            number: "${label} is not a valid number!",
+          },
+          number: {
+            range: "${label} must be between ${min} and ${max}",
+          },
+        },
+        labelCol: {
+          style: {
+            width: "150px",
+          },
+        },
+      };
+    },
+    created() {
+      
+    },
+    computed:{
+      columns(){
+        return[
+        {
             title: this.$t('expend_title'),
             i18n: "title",
             dataIndex: "title",
@@ -162,29 +187,8 @@
             dataIndex: "operation",
             key: "operation",
           },
-        ],
-        rules: {
-          title: { required: true },
-        },
-        validateMessages: {
-          required: "${label} is required!",
-          types: {
-            email: "${label} is not a valid email!",
-            number: "${label} is not a valid number!",
-          },
-          number: {
-            range: "${label} must be between ${min} and ${max}",
-          },
-        },
-        labelCol: {
-          style: {
-            width: "150px",
-          },
-        },
-      };
-    },
-    created() {
-      
+        ]
+      }
     },
     methods: {
       createRecord(){

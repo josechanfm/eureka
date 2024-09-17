@@ -48,20 +48,6 @@
           title: "Modal",
           mode: "",
         },
-        teacherStateLabels: {},
-        columns: [
-          {
-            title: this.$t('project_title'),
-            i18n: "title",
-            dataIndex: "title",
-          },
-          {
-            title: this.$t('operation'),
-            i18n: "operation",
-            dataIndex: "operation",
-            key: "operation",
-          },
-        ],
         labelCol: {
           style: {
             width: "150px",
@@ -70,8 +56,22 @@
       };
     },
     created() {
-      
-
+    },
+    computed:{
+      columns(){
+        return [
+          {
+            title: this.$t('project_title'),
+            i18n: "title",
+            dataIndex: "title",
+          },{
+            title: this.$t('operation'),
+            i18n: "operation",
+            dataIndex: "operation",
+            key: "operation",
+          },
+        ]
+      }
     },
     mounted(){
 

@@ -11,12 +11,12 @@
         </div>
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto text-right">
-          <a-button type="primary" @click="createRecord()">Create</a-button>
+          <a-button type="primary" @click="createRecord()">{{ $t('create') }}</a-button>
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('staff.expend.items.index',record.id)" >Items</a-button>
-                <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">Edit</a-button>
+                <a-button :href="route('staff.expend.items.index',record.id)" >{{ $t('expense_item') }}</a-button>
+                <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">{{ $t('edit') }}</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -100,34 +100,6 @@
           title: "Modal",
           mode: "",
         },
-        columns: [
-          {
-            title: "Year",
-            i18n: "year",
-            dataIndex: "year",
-          },{
-            title: "Title",
-            i18n: "title",
-            dataIndex: "title",
-          },{
-            title: "Propsal Number",
-            i18n: "proposal_number",
-            dataIndex: "proposal_number",
-          },{
-            title: "Propsal At",
-            i18n: "proposed_at",
-            dataIndex: "proposed_at",
-          },{
-            title: "Propssed By",
-            i18n: "proposed_by",
-            dataIndex: "proposed_by",
-          },{
-            title: "Operation",
-            i18n: "operation",
-            dataIndex: "operation",
-            key: "operation",
-          },
-        ],
         rules: {
           year:{ required: true },
           title:{ required: true },
@@ -153,6 +125,38 @@
       let yearStart=new Date().getFullYear();
       for(let i=0;i<5;i++){
         this.years.push({value:yearStart+i})
+      }
+    },
+    computed:{
+      columns(){
+        return[
+        {
+            title: this.$t('year'),
+            i18n: "year",
+            dataIndex: "year",
+          },{
+            title:  this.$t('budget_proposal'),
+            i18n: "title",
+            dataIndex: "title",
+          },{
+            title: this.$t('proposal_number'),
+            i18n: "proposal_number",
+            dataIndex: "proposal_number",
+          },{
+            title: this.$t('proposed_at'),
+            i18n: "proposed_at",
+            dataIndex: "proposed_at",
+          },{
+            title: this.$t('proposed_by'),
+            i18n: "proposed_by",
+            dataIndex: "proposed_by",
+          },{
+            title: this.$t('operation'),
+            i18n: "operation",
+            dataIndex: "operation",
+            key: "operation",
+          },
+        ]
       }
     },
     methods: {

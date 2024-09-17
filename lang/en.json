@@ -1,4 +1,5 @@
 {
+"add":"Add",
 "create":"Create",
 "update":"Update",
 "edit":"Edit",
@@ -18,6 +19,7 @@
 "preparing":"Preparing",
 "Return":"Return",
 "accept":"Accept",
+"revise":"Revise",
 "review":"Review",
 "rework":"Rework",
 "propose":"propose",
@@ -35,7 +37,7 @@
 "project_type":"Funding Form",
 "project_duration":"Sudy Period",
 "project_grant":"Form of Disbursement",
-"project_repayment":"Form of Repayment",
+"project_replayment":"Form of Repayment",
 "project_phase1":"Phase 1",
 "project_phase2":"Phase 2",
 "project_phase3":"Phase 3",
@@ -61,7 +63,6 @@
 "expends":"Budget",
 "expend_title":"Budget Title",
 "year":"Year",
-"month":"Month",
 "proposal_number":"Proposal No.",
 "proposed_at":"Proposed At",
 "proposed_by":"Proposed By",
@@ -70,6 +71,7 @@
 "expend_item_title":"Expend Item",
 "expend_item_description":"Expend Description",
 "reference_code":"Reference Code",
+"account_code":"Account Code",
 "amount":"Amount",
 "available":"Available",
 "budget_reserved":"Buget Reserved",
@@ -78,5 +80,5 @@
 "grand_total":"Grand Total",
 "budget_summary":"Budget Summary",
 "budget_proposal":"Budget Proposal",
-    "thank_you":"Thank Your"
+"thank_you":"Thank Your"
 }

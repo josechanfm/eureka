@@ -55,8 +55,24 @@
           id:null,
           account_code:null,
         },
-        columns: [
-          {
+        labelCol: {
+          style: {
+            width: "150px",
+          },
+        },
+      };
+    },
+    created() {
+      this.splits=this.availableSplits.map(a=> ({
+          value:a.id,
+          label:a.account_code+' '+a.description+' ('+a.available+')'
+        })
+      )
+    },
+    computed:{
+      columns(){
+        return[
+        {
             title: this.$t('expend_item_description'),
             i18n: "description",
             dataIndex: "description",
@@ -77,21 +93,8 @@
             i18n: "operation",
             dataIndex: "operation",
           },
-        ],
-     
-        labelCol: {
-          style: {
-            width: "150px",
-          },
-        },
-      };
-    },
-    created() {
-      this.splits=this.availableSplits.map(a=> ({
-          value:a.id,
-          label:a.account_code+' '+a.description+' ('+a.available+')'
-        })
-      )
+        ]
+      }
     },
     methods: {
       onEditRecord(record){

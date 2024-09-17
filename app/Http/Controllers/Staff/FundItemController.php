@@ -22,6 +22,7 @@ class FundItemController extends Controller
         //     return redirect()->route('staff.funds.index');
         // }
         $this->authorize('view',$fund);
+        //dd($fund->items);
         $fund->items;
         return Inertia::render('Staff/FundItemCreate',[
             'category'=>Category::with('items')->find($fund->category_id),
