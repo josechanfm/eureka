@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Expend;
 use App\Models\Fund;
 
+
 class ExpendController extends Controller
 {
     /**
@@ -84,4 +85,5 @@ class ExpendController extends Controller
     {
         //
     }
+    
 }

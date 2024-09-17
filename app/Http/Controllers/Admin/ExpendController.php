@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Expend;
 use App\Models\Fund;
+use App\Exports\ExpendExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpendController extends Controller
 {
@@ -115,5 +117,11 @@ class ExpendController extends Controller
         $expend->save();
         return redirect()->back();
     }
+
+    public function export(Expend $expend){
+        $fileName='Expend_'.($expend->proposal_number??'expend_items').'.xlsx';
+        return Excel::download(new ExpendExport($expend), $fileName);
+    }
+
 
 }

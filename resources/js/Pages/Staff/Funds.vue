@@ -14,7 +14,6 @@
                 <a-button :href="route('staff.fund.expends.index',record.id)" >{{ $t('expends') }}</a-button>
                 <a-button :href="route('staff.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
                 <a-button :href="route('staff.fund.items.index',record.id)" >{{ $t('funding_items') }}</a-button>
-                <a-button :href="route('staff.fund.export',record.id)">Export</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -46,12 +45,12 @@
         teacherStateLabels: {},
         columns: [
           {
-            title: "Title",
+            title: this.$t('project_title'),
             i18n: "title",
             dataIndex: "title",
           },
           {
-            title: "Operation",
+            title: this.$t('operation'),
             i18n: "operation",
             dataIndex: "operation",
             key: "operation",

@@ -44,7 +44,6 @@ Route::middleware([
     Route::resource('fund/{fund}/items',App\Http\Controllers\Staff\FundItemController::class)->names('staff.fund.items');
     Route::resource('fund/{fund}/expends',App\Http\Controllers\Staff\ExpendController::class)->names('staff.fund.expends');
     Route::resource('expend/{expend}/items',App\Http\Controllers\Staff\ExpendItemController::class)->names('staff.expend.items');
-    Route::get('fund/{fund}/export',[App\Http\Controllers\Staff\FundController::class,'export'])->name('staff.fund.export');
 
 });
 Route::group([
@@ -70,5 +69,8 @@ Route::group([
     Route::post('expend/{expend}/toggle_lock',[App\Http\Controllers\Admin\ExpendController::class,'toggleLock'])->name('admin.expend.toggleLock');
     Route::post('expend/{expend}/toggle_close',[App\Http\Controllers\Admin\ExpendController::class,'toggleClose'])->name('admin.expend.toggleClose');
     Route::post('expend/{expend}/change_status',[App\Http\Controllers\Admin\ExpendController::class,'changeStatus'])->name('admin.expend.changeStatus');
+    Route::get('fund/{fund}/export',[App\Http\Controllers\Admin\FundController::class,'export'])->name('admin.fund.export');
+    Route::get('expend/{expend}/export',[App\Http\Controllers\Admin\ExpendController::class,'export'])->name('admin.expend.export');
+
 });
 

@@ -14,10 +14,10 @@
             <table width="100%" border="1">
               <tr>
                 <th>#</th>
-                <th width="500px">fund item split id</th>
-                <th>Description</th>
-                <th>code</th>
-                <th width="150px">amount</th>
+                <th width="500px">{{ $t('expend_item_title') }}</th>
+                <th>{{ $t('expend_item_description') }}</th>
+                <th>{{ $t('reference_code') }}</th>
+                <th width="150px">{{ $t('amount') }}</th>
               </tr>
               <tr v-for="(item, idx) in expend.items">
                 <td>{{ idx+1 }}</td>
@@ -40,23 +40,23 @@
         </div>
         <div>
           <span v-if="expend.status<='S2'">
-            <a-button type="primary" @click="onSaveExpendItems(false)">Save</a-button>
-            <a-button type="primary" @click="onSaveExpendItems(true)">Save and Submit</a-button>
+            <a-button type="primary" @click="onSaveExpendItems(false)">{{ $t('save') }}</a-button>
+            <a-button type="primary" @click="onSaveExpendItems(true)">{{ $t('save_submit') }}</a-button>
           </span>
-          <a-button :href="route('staff.fund.expends.index',fund.id)">Back</a-button>
+          <a-button :href="route('staff.fund.expends.index',fund.id)">{{ $t('back') }}</a-button>
         </div>
         <a-divider/>
 
         <div class="container mx-auto pt-5" v-if="expend.status<='S2'">
           <div class="bg-white relative shadow rounded-lg md:p-5">
-            <a-button @click="onAddSplitItem2()">Pre Add</a-button>
+            <a-button @click="onAddSplitItem2()">{{ $t('add') }}</a-button>
             <table width="100%" border="1">
                   <tr>
                     <th colspan="2">#</th>
-                    <th width="100px">selection</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Available</th>
+                    <th width="100px">{{ $t('selection') }}</th>
+                    <th>{{ $t('funding_description') }}</th>
+                    <th>{{ $t('amount') }}</th>
+                    <th>{{ $t('available') }}</th>
                   </tr>
                   <template v-for="(catItem, catItemIdx) in categoryItems">
                     <tr>
@@ -91,10 +91,10 @@
                           </td>
                         </template>
                       <td>
-                          {{ item.amount }}
+                          {{ item.amount.toLocaleString() }}
                       </td>
                       <td>
-                        {{ budgetAvailable(item) }}
+                        {{ budgetAvailable(item).toLocaleString() }}
                       </td>
                     </tr>
                   </template>

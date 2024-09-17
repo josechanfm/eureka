@@ -35,7 +35,7 @@
           <a-form-item :label="$t('project_type')" name="type">
             <a-radio-group v-model:value="fund.type" button-style="solid">
               <a-radio-button value="P">{{ $t('compensated') }}</a-radio-button>
-              <a-radio-button value="U">{{ $t('non-compensated') }}</a-radio-button>
+              <a-radio-button value="U">{{ $t('non_compensated') }}</a-radio-button>
             </a-radio-group>
           </a-form-item>
           <a-form-item :label="$t('project_duration')" name="duration">

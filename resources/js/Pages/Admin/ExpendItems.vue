@@ -2,7 +2,7 @@
     <AdminLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ $t('expend_items') }}
+          {{ $t('expense_item') }}
         </h2>
       </template>
       <div class="container mx-auto pt-5">
@@ -23,10 +23,10 @@
               </template>
               <template v-else-if="column.dataIndex == 'operation'">
                 <template v-if="editableData.id==record.id">
-                  <a-button @click="onSaveRecord(record)">Save</a-button>
+                  <a-button @click="onSaveRecord(record)">{{ $t('save') }}</a-button>
                 </template>
                 <template v-else>
-                  <a-button @click="onEditRecord(record)">Edit</a-button>
+                  <a-button @click="onEditRecord(record)">{{ $t('edit') }}</a-button>
                 </template>
                 <!-- <a-button :href="route('admin.fund.expends.edit',{fund:record.fund_id,expend:record.id})" >Edit</a-button> -->
               </template>
@@ -57,23 +57,23 @@
         },
         columns: [
           {
-            title: "Description",
+            title: this.$t('expend_item_description'),
             i18n: "description",
             dataIndex: "description",
           },{
-            title: "Account Code",
+            title: this.$t('account_code'),
             i18n: "account_code",
             dataIndex: "account_code",
           },{
-            title: "Reference",
+            title: this.$t('reference_code'),
             i18n: "reference",
             dataIndex: "reference_code",
           },{
-            title: "Amount",
+            title: this.$t('amount'),
             i18n: "amount",
             dataIndex: "amount",
           },{
-            title: "Operation",
+            title: this.$t('operation'),
             i18n: "operation",
             dataIndex: "operation",
           },

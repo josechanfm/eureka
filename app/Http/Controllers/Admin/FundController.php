@@ -8,7 +8,8 @@ use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\CategoryItem;
 use App\Models\Fund;
-use Illuminate\Support\Facades\DB;
+use App\Exports\FundExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class FundController extends Controller
@@ -100,4 +101,9 @@ class FundController extends Controller
        
     }
 
+
+    public function export(Fund $fund){
+        return Excel::download(new FundExport($fund), 'fund.xlsx');
+
+    }
 }

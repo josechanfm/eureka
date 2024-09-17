@@ -2,7 +2,7 @@
   <AdminLayout title="Dashboard">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ $t('welcome') }}
+        {{ $t('budget_summary') }}
       </h2>
     </template>
 
@@ -10,18 +10,18 @@
       <div class="bg-white relative shadow rounded-lg overflow-x-auto">
         <FundHeader :fund="fund"/>
       </div>
+      <a-button :href="route('admin.funds.index')">{{ $t('back') }}</a-button>
       <a-divider/>
-      catItems
       <div class="bg-white relative shadow rounded-lg overflow-x-auto">
         <div class="p-5">
            <table width="100%">
             <thead>
               <tr>
                 <th>#</th>
-                <th>預算</th>
-                <th style="text-align:center">支助金額</th>
-                <th style="text-align:center">預算撥備總額</th>
-                <th style="text-align:center">預算餘額</th>
+                <th>{{ $t('funding_description') }}</th>
+                <th style="text-align:center">{{ $t('amount') }}</th>
+                <th style="text-align:center">{{ $t('budget_reserved') }}</th>
+                <th style="text-align:center">{{ $t('available') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -65,14 +65,14 @@
                           </template>
                   </template>
                   <tr>
-                            <td colspan="2" style="text-align:right">Sub total:</td>
+                            <td colspan="2" style="text-align:right">{{ $t('sub_total') }}:</td>
                             <td style="text-align:right">{{ subTotal(fund.items, catItem).toLocaleString() }}</td>
                             <td style="text-align:right">{{ subBudgeted(fund.items, catItem).toLocaleString() }}</td>
                             <td style="text-align:right">{{ (subTotal(fund.items, catItem) - subBudgeted(fund.items, catItem)).toLocaleString() }}</td>
                           </tr>
               </template>
               <tr>
-                <td colspan="2" style="text-align: right;">Grand Total:</td>
+                <td colspan="2" style="text-align: right;">{{ $t('grand_total') }}:</td>
                 <td style="text-align:right">{{ grandTotal(fund.items).toLocaleString() }}</td>
                 <td style="text-align:right">{{ grandBudegeted(fund.items).toLocaleString() }}</td>
                 <td style="text-align:right">{{ (grandTotal(fund.items)-grandBudegeted(fund.items)).toLocaleString() }}</td>

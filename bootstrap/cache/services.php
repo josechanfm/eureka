@@ -46,6 +46,7 @@
     42 => 'App\\Providers\\FortifyServiceProvider',
     43 => 'App\\Providers\\JetstreamServiceProvider',
     44 => 'Spatie\\Permission\\PermissionServiceProvider',
+    45 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
   ),
   'eager' => 
   array (
@@ -80,6 +81,7 @@
     28 => 'App\\Providers\\FortifyServiceProvider',
     29 => 'App\\Providers\\JetstreamServiceProvider',
     30 => 'Spatie\\Permission\\PermissionServiceProvider',
+    31 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
   ),
   'deferred' => 
   array (

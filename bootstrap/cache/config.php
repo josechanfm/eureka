@@ -47,6 +47,7 @@
       26 => 'App\\Providers\\FortifyServiceProvider',
       27 => 'App\\Providers\\JetstreamServiceProvider',
       28 => 'Spatie\\Permission\\PermissionServiceProvider',
+      29 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
     ),
     'aliases' => 
     array (
@@ -91,6 +92,7 @@
       'Validator' => 'Illuminate\\Support\\Facades\\Validator',
       'View' => 'Illuminate\\Support\\Facades\\View',
       'Vite' => 'Illuminate\\Support\\Facades\\Vite',
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
     ),
   ),
   'auth' => 

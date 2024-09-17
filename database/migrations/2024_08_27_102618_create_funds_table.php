@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('amount')->nullable();
             $table->string('type')->nullable();
             $table->string('duration')->nullable();
-            $table->string('grant')->nullable();
-            $table->string('repayment')->nullable();
+            $table->tinyInteger('grant')->nullable();
+            $table->tinyInteger('repayment')->nullable();
             $table->string('grants')->default('[]');
             $table->string('repayments')->nullable('[]');
             $table->foreignId('owner_id')->nullable();

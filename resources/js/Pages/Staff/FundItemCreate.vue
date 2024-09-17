@@ -17,11 +17,12 @@
           <!-- <a-form-item label="支助項目分類" name="category">
             <a-select v-model:value="items.fund_category_id" :options="fundCategory.items" :fieldNames="{value:'id',label:'name_zh'}"/>
           </a-form-item> -->
-          <table width="100%">
+          <table width="100%" border="1">
             <tr>
               <th>{{ $t('sequence') }}</th>
-              <th>{{ $t('funding_item') }}</th>
-              <th>{{ $t('funding_amount') }}</th>
+              <th>{{ $t('funding_items') }}</th>
+              <th></th>
+              <th>{{ $t('amount') }}</th>
               <th></th>
             </tr>
             <template v-for="(catItem, i) in category.items">

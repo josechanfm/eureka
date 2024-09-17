@@ -2,7 +2,7 @@
     <AdminLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ $t('welcome') }}
+          {{ $t('budget_proposal') }}
         </h2>
       </template>
       <div class="container mx-auto pt-5">
@@ -14,36 +14,37 @@
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('admin.expend.items.index',record.id)" >Items</a-button>
-                <a-button @click="viewRecord(record)" v-if="record.is_locked || record.is_closed">View</a-button>
-                <a-button @click="editRecord(record)" v-else>Edit</a-button>
+                <a-button :href="route('admin.expend.items.index',record.id)" >{{ $t('expense_item') }}</a-button>
+                <a-button @click="viewRecord(record)" v-if="record.is_locked || record.is_closed">{{ $t('view') }}</a-button>
+                <a-button @click="editRecord(record)" v-else>{{ $t('edit') }}</a-button>
+                <a-button :href="route('admin.expend.export',record.id)">{{ $t('export') }}</a-button>
               </template>
               <template v-else-if="column.dataIndex == 'status'">
                 <template v-if="record.status=='S2'">
-                  Revise
-                  <a-button :disabled="true">Return</a-button>
-                  <a-button :disabled="true">Accepte</a-button>
+                  {{ $t('revise') }}
+                  <a-button :disabled="true">{{ $t('return') }}</a-button>
+                  <a-button :disabled="true">{{ $t('accept') }}</a-button>
                 </template>
                 <template v-else-if="record.status=='S3'">
-                  Submitted
-                  <a-button @click="onChangeStatus(record,'RETURN')">Return</a-button>
-                  <a-button @click="onChangeStatus(record,'ACCEPT')">Accept</a-button><!-- to archive-->
+                  {{ $t('submitted') }}
+                  <a-button @click="onChangeStatus(record,'RETURN')">{{ $t('return') }}</a-button>
+                  <a-button @click="onChangeStatus(record,'ACCEPT')">{{ $t('accept') }}</a-button><!-- to archive-->
                 </template>
                 <template v-else-if="record.status=='S4'">
-                  Accepted
-                  <a-button @click="onChangeStatus(record,'REVIEW')">Review</a-button>
-                  <a-button @click="onChangeStatus(record,'PROPOSE')">Propose</a-button><!-- to archive-->
+                  {{ $t('accpeted') }}
+                  <a-button @click="onChangeStatus(record,'REVIEW')">{{ $t('review') }}</a-button>
+                  <a-button @click="onChangeStatus(record,'PROPOSE')">{{ $t('propose') }}</a-button><!-- to archive-->
                 </template>
                 <template v-else-if="record.status=='S5'">
-                  Proposed
-                  <a-button @click="onChangeStatus(record,'REWORK')">Rework</a-button>
-                  <a-button @click="onChangeStatus(record,'ARCHIVE')">Archive</a-button><!-- to archive-->
+                  {{ $t('proposed') }}
+                  <a-button @click="onChangeStatus(record,'REWORK')">{{ $t('rework') }}</a-button>
+                  <a-button @click="onChangeStatus(record,'ARCHIVE')">{{ $t('archive') }}</a-button><!-- to archive-->
                 </template>
                 <template v-else-if="record.status=='S6'">
-                  Archived
+                  {{ $t('archieved') }}
                 </template>
                 <template v-else>
-                  Preparing
+                  {{ $t('preparing') }}
                 </template>
               </template>
               <template v-else-if="column.dataIndex == 'reference'">
@@ -68,40 +69,40 @@
           :rules="rules"
           :validate-messages="validateMessages"
         >
-          <a-form-item label="Title" name="title">
+          <a-form-item :label="$t('budget_proposal')" name="title">
             <a-input v-model:value="modal.data.title" />
           </a-form-item>
-          <a-form-item label="Proposal No." name="proposal_number">
+          <a-form-item :label="$t('proposal_number')" name="proposal_number">
             <a-input v-model:value="modal.data.proposal_number" />
           </a-form-item>
-          <a-form-item label="Proposed at" name="proposed_at">
+          <a-form-item :label="$t('proposed_at')" name="proposed_at">
             <a-date-picker v-model:value="modal.data.proposed_at" :format="dateFormat" :valueFormat="dateFormat"/>
           </a-form-item>
-          <a-form-item label="Proposed by" name="proposed_by">
+          <a-form-item :label="$t('proposed_by')" name="proposed_by">
             <a-input v-model:value="modal.data.proposed_by"/>
           </a-form-item>
-          <a-form-item label="Approved at" name="approved_at">
+          <a-form-item :label="$t('approved_at')" name="approved_at">
             <a-date-picker v-model:value="modal.data.approved_at" :format="dateFormat" :valueFormat="dateFormat"/>
           </a-form-item>
-          <a-form-item label="Remark" name="remark">
+          <a-form-item :label="$t('remark')" name="remark">
             <a-textarea v-model:value="modal.data.remark" />
           </a-form-item>
         </a-form>
         <template #footer>
-          <a-button @click="modal.isOpen=false">Close</a-button>
+          <a-button @click="modal.isOpen=false">{{ $t('close') }}</a-button>
           <a-button
             v-if="modal.mode == 'EDIT'"
             key="Update"
             type="primary"
             @click="updateRecord()"
-            >Update</a-button
+            >{{ $t('update') }}</a-button
           >
           <a-button
             v-if="modal.mode == 'CREATE'"
             key="Store"
             type="primary"
             @click="storeRecord()"
-            >Add</a-button
+            >{{ $t('add') }}</a-button
           >
         </template>
       </a-modal>
@@ -132,31 +133,31 @@
           teacherStateLabels: {},
         columns: [
           {
-            title: "Title",
+            title: this.$t('expend_title'),
             i18n: "title",
             dataIndex: "title",
           },{
-            title: "Propsal Number",
+            title: this.$t('proposal_number'),
             i18n: "proposal_number",
             dataIndex: "proposal_number",
           },{
-            title: "Propsal At",
+            title: this.$t('proposed_at'),
             i18n: "proposed_at",
             dataIndex: "proposed_at",
           },{
-            title: "Propssed By",
+            title: this.$t('proposed_by'),
             i18n: "proposed_by",
             dataIndex: "proposed_by",
           },{
-            title: "Reference",
+            title: this.$t('reference_code'),
             i18n: "reference",
             dataIndex: "reference",
           },{
-            title: "Status",
+            title: this.$t('status'),
             i18n: "status",
             dataIndex: "status",
           },{
-            title: "Operation",
+            title: this.$t('operation'),
             i18n: "operation",
             dataIndex: "operation",
             key: "operation",

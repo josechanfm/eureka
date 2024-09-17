@@ -8,8 +8,6 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { GlobalOutlined } from '@ant-design/icons-vue';
-import { loadLanguageAsync } from "laravel-vue-i18n";
-import { usePage } from "@inertiajs/vue3";
 
 defineProps({
     title: String,
@@ -17,11 +15,7 @@ defineProps({
 
 const showingNavigationDropdown = ref(false);
 
-const page = usePage();
-//loadLanguageAsync(page.props.value.lang);
-loadLanguageAsync(document.querySelector('html').getAttribute('lang'));
-//console.log(document.querySelector('html').getAttribute('lang'));
-console.log(page.props)
+
 
 const switchToTeam = (team) => {
     router.put(route('current-team.update'), {
@@ -89,10 +83,10 @@ const logout = () => {
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink href="/language/zh">
+                                        <DropdownLink as="a" href="/language/zh">
                                             {{ $t('chinese') }}
                                         </DropdownLink>
-                                        <DropdownLink href="/language/en">
+                                        <DropdownLink as="a" href="/language/en">
                                             {{ $t('english') }}
                                         </DropdownLink>
                                     </template>
