@@ -10,7 +10,6 @@
     @apply bg-blue-300 w-7
 
 }
-
 .ant-btn-danger{
     @apply bg-red-300 w-7;
 }

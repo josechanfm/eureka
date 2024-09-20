@@ -58,8 +58,7 @@ const logout = () => {
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <div class="ms-3 relative">
-
+                            <div class="ms-3 relative"  v-role="['admin']">
                                 <a-button type="link" :href="route('admin.funds.index')" v-role="['admin']">{{ $t('admin') }}</a-button>
                                 <a-button type="link" :href="route('admin.categories.index')">{{ $t('category') }}</a-button>
                             </div>
