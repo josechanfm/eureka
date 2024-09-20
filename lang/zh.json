@@ -43,7 +43,7 @@
 "project_type":"資助形式",
 "project_duration":"研究期限",
 "project_grant":"資助發放形式",
-"project_replayment":"資助償還形式",
+"project_repayment":"資助償還形式",
 "project_phase1":"第一期",
 "project_phase2":"第二期",
 "project_phase3":"第三期",
@@ -69,6 +69,8 @@
 "expends":"預算支出",
 "expend_title":"預算支出標題",
 "year":"年份",
+"month":"月",
+"month_number":"個月",
 "proposal_number":"建議書編號",
 "proposed_at":"建議遞交日",
 "proposed_by":"建議遞交者",
@@ -82,9 +84,8 @@
 "available":"可用",
 "budget_reserved":"預算撥備",
 "selection":"選項",
-"sub_total":"小計",
-"grand_total":"總計",
 "budget_summary":"預算總覽",
 "budget_proposal":"預算支出建議書",
+
 "thank_you":"感謝"
 }

@@ -25,32 +25,35 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Fortify::authenticateUsing(function ($request) {
-
-            // if(str_contains($request->username,'@')){
-            //     $username=substr($request->username,0,strpos($request->username,'@'));
-            // }else{
-            //     $username=$request->username;
-            // }
-            $username=$request->username;
+            if(str_contains($request->username,'@')){
+                $arr=explode('@',$request->username);
+                if($arr[1]!='mpu.edu.mo'){
+                    return false;
+                }
+                $username=$arr[0];//substr($request->username,0,strpos($request->username,'@'));
+            }else{
+                $username=$request->username;
+            }
+            //$username=$request->username;
             $password=$request->password;
-
+            config(['fortify.guard' => 'web']);
+            Auth::shouldUse(config('fortify.guard'));
             $validated = Auth::validate([
                 'username' => $username,
                 'password' => $password
             ]);
             if(!$validated){
+                //dd($username, $password);
                 config(['fortify.username' => 'username']);
                 config(['fortify.guard' => 'ldap_web']);
                 Auth::shouldUse(config('fortify.guard'));
                 $validated = Auth::validate([
-                    'samaccountname' => 'josechan',
+                    'samaccountname' => $username,
                     'password' => $password
                 ]);
-                dd($request->all(),$validated);
                 config(['fortify.guard' => 'web']);
                 Auth::shouldUse(config('fortify.guard'));
             }
-
             return $validated ? Auth::getLastAttempted() : null;
         });
 

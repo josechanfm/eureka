@@ -7,13 +7,25 @@
       </template>
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-button type="primary" class="float-right m-5" :href="route('staff.funds.create')">Create</a-button>
+          <a-button type="primary" class="float-right m-5" :href="route('staff.funds.create',{id:selectedCategory})">{{ $t('create') }}</a-button>
+          <a-select v-model:value="selectedCategory" :options="categories" :fieldNames="{value:'id',label:'title_zh'}" class="float-right m-5" style="width:200px"/>
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
                 <a-button :href="route('staff.fund.expends.index',record.id)" >{{ $t('expends') }}</a-button>
-                <a-button :href="route('staff.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
+                <a-button :href="route('staff.funds.edit',record.id)" >
+                  <span v-if="record.is_submitted">
+                    {{ $t('view') }}
+                  </span>
+                  <span v-else>
+                    {{ $t('edit') }}  
+                  </span>
+                </a-button>
                 <a-button :href="route('staff.fund.items.index',record.id)" >{{ $t('funding_items') }}</a-button>
+              </template>
+              <template v-else-if="column.dataIndex=='is_submitted'">
+                <span v-if="record.is_submitted">{{ $t('submitted') }}</span>
+                <span v-else>{{ $t('preparing') }}</span>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -33,9 +45,10 @@
     components: {
       AdminLayout,
     },
-    props: ["funds"],
+    props: ["categories","funds"],
     data() {
       return {
+        selectedCategory:this.categories[0].id,
         modal: {
           isOpen: false,
           data: {},
@@ -59,6 +72,10 @@
             title: this.$t('project_title'),
             i18n: "title",
             dataIndex: "title",
+          },{
+            title: this.$t('is_submitted'),
+            i18n: "is_submitted",
+            dataIndex: "is_submitted",
           },{
             title: this.$t('operation'),
             i18n: "operation",

@@ -1,43 +1,72 @@
-
 <script setup>
 defineProps({
-    fund:Object
+    fund: Object
 });
 </script>
 <template>
     <div class="p-5">
-        <table>
-            <tr><th>{{ $t('project_code') }}:</th><td>{{ fund.project_code }}</td></tr>
-            <tr><th>{{ $t('project_title') }}:</th><td>{{ fund.title }}</td></tr>
-            <tr><th>{{ $t('project_responsible') }}:</th><td>{{ fund.responsible }}</td></tr>
-            <tr><th>{{ $t('project_amount') }}:</th><td>{{ fund.amount }}</td></tr>
-            <tr><th>{{ $t('project_type') }}:</th><td>
-                <span v-if="fund.type=='P'">{{ $t('compensated') }}</span>
-                <span v-if="fund.type=='U'">{{ $t('non_compensated') }}</span>
-            </td></tr>
-            <tr><th>{{ $t('project_duration') }}:</th><td>{{ fund.duration }}</td></tr>
-            <tr><th>{{ $t('project_grant') }}:</th><td>{{ fund.grant }}{{ $t('month') }}</td></tr>
-            <tr><th>{{ $t('project_phase1') }}:</th><td>{{ fund.grants[0] }}</td></tr>
-            <tr><th>{{ $t('project_phase2') }}:</th><td>{{ fund.grants[1] }}</td></tr>
-            <tr><th>{{ $t('project_phase3') }}:</th><td>{{ fund.grants[2] }}</td></tr>
-            <tr><th>{{ $t('project_phase4') }}:</th><td>{{ fund.grants[3] }}</td></tr>
-            <tr><th>{{ $t('project_phase5') }}:</th><td>{{ fund.grants[4] }}</td></tr>
-            <tr><th>{{ $t('project_phase6') }}:</th><td>{{ fund.grants[5] }}</td></tr>
-            <template v-if="fund.type=='P'">
-                <tr><th>{{ $t('project_repayment') }}:</th><td>{{ fund.repayment }}</td></tr>
-                <tr><th>{{ $t('project_phase1') }}:</th><td>{{ fund.repayments[0] }}</td></tr>
-                <tr><th>{{ $t('project_phase2') }}:</th><td>{{ fund.repayments[1] }}</td></tr>
-                <tr><th>{{ $t('project_phase3') }}:</th><td>{{ fund.repayments[2] }}</td></tr>
-                <tr><th>{{ $t('project_phase4') }}:</th><td>{{ fund.repayments[3] }}</td></tr>
-                <tr><th>{{ $t('project_phase5') }}:</th><td>{{ fund.repayments[4] }}</td></tr>
-                <tr><th>{{ $t('project_phase6') }}:</th><td>{{ fund.repayments[5] }}</td></tr>
-            </template>
+        <table class="min-w-full bg-white border border-gray-200">
+            <tbody>
+                <tr class="border-b hover:bg-gray-50">
+                    <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_code') }}:</th>
+                    <td class="py-1 px-4">{{ fund.project_code }}</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50">
+                    <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_title') }}:</th>
+                    <td class="py-1 px-4">{{ fund.title }}</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50">
+                    <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_responsible') }}:</th>
+                    <td class="py-1 px-4">{{ fund.responsible }}</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50">
+                    <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_amount') }}:</th>
+                    <td class="py-1 px-4">{{ fund.amount }}</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50">
+                    <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_type') }}:</th>
+                    <td class="py-1 px-4">
+                        <span v-if="fund.type == 'P'">{{ $t('compensated') }}</span>
+                        <span v-if="fund.type == 'U'">{{ $t('non_compensated') }}</span>
+                    </td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50">
+                    <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_duration') }}:</th>
+                    <td class="py-1 px-4">{{ fund.duration }}</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50">
+                    <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_grant') }}:</th>
+                    <td class="py-1 px-4">{{ fund.grant }}{{ $t('month') }}</td>
+                </tr>
+                <template v-for="(grant, idx) in fund.grants">
+                    <tr class="border-b hover:bg-gray-50">
+                        <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_phase'+(idx+1)) }}:</th>
+                        <td class="py-1 px-4">{{ grant }}</td>
+                    </tr>
+                </template>
+                <template v-if="fund.type == 'P'">
+                    <tr class="border-b hover:bg-gray-50">
+                        <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_repayment') }}:</th>
+                        <td class="py-1 px-4">{{ fund.repayment }}</td>
+                    </tr>
+                    <template v-for="(repay, idx) in fund.repayments">
+                        <tr class="border-b hover:bg-gray-50">
+                            <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_phase'+(idx+1)) }}:</th>
+                            <td class="py-1 px-4">{{ repay }}</td>
+                        </tr>   
+                    </template>
+                </template>
+            </tbody>
         </table>
     </div>
 </template>
+
 <style scoped>
-th{
+th {
+
     text-align: left;
-    width:150px;
+
+    width: 150px;
+
 }
 </style>

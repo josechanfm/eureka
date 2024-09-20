@@ -43,13 +43,9 @@ class FundItemController extends Controller
      */
     public function store(Request $request, Fund $fund)
     {
+        
         $this->authorize('view',$fund);
-        $items=$request->all();
-        //dd(array_column($items,'id'));
-
-        //dd($items);
-        //$accountIds=array_column($accounts,'id');
-
+        $items=$request->items;
         foreach($items as $i=>$item){
             $item['sequence']=$i;
             $splits=$item['splits'];
@@ -67,7 +63,6 @@ class FundItemController extends Controller
                 $fundItem->update($item);
                 $fundItem->save();
             }else{
-                
                 $fundItem=$fund->items()->create($item);
                 //$fundItem=FundItem::find($item['id']);
             }
@@ -79,12 +74,12 @@ class FundItemController extends Controller
                     unset($a['updated_at']);
                     FundItemSplit::where('id',$a['id'])->update($a);
                 }else{
-                    // $cia=CategoryItemAccount::find($a['category_item_account_id']);
-                    // $a['user_define']=$cia->user_define;
-                    // $a['account_code']=$cia->account_code;
-                    //$a['fund_item_id']=$fundItem->id;
                     $fundItem->splits()->create($a);
                 }
+            }
+            if($request->toSubmit){
+                $fund->is_submitted=$request->toSubmit;
+                $fund->save();
             }
         }
         return redirect()->back();

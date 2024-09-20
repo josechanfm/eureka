@@ -8,6 +8,7 @@
 
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
+          <a-typography-title class="text-center">{{ category.title_zh }}</a-typography-title>
           <a-form
           :model="fund"
           name="fund"
@@ -118,7 +119,7 @@
           </a-row>
           <div class="flex flex-row item-center justify-center gap-5 pt-5">
             <a-button :href="route('staff.funds.index')">{{ $t('back') }}</a-button>
-            <a-button type="primary" html-type="submit">{{ $t('submit') }}</a-button>
+            <a-button type="primary" html-type="submit" v-if="fund.is_submitted==false">{{ $t('submit') }}</a-button>
             <a-button :href="route('staff.fund.items.index',fund.id)" v-if="fund.id">{{ $t('funding_items') }}</a-button>
           </div>
         </a-form>
@@ -135,7 +136,7 @@
     components: {
       AdminLayout,
     },
-    props: ["categories",'fund'],
+    props: ["category",'fund'],
     data() {
       return {
         // fund:{

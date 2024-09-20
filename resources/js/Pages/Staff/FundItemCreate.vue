@@ -18,117 +18,124 @@
             <a-select v-model:value="items.fund_category_id" :options="fundCategory.items" :fieldNames="{value:'id',label:'name_zh'}"/>
           </a-form-item> -->
           <table width="100%" border="1">
-            <tr>
-              <th>{{ $t('sequence') }}</th>
-              <th>{{ $t('funding_items') }}</th>
-              <th></th>
-              <th>{{ $t('amount') }}</th>
-              <th></th>
-            </tr>
-            <template v-for="(catItem, i) in category.items">
+            <thead>
               <tr>
-                <td colspan="5">
-                  {{ i + 1 }}. {{ catItem.name_zh }}
-                  <a-button @click="onAddCategoryItem(catItem)" type="info" size="small">+</a-button>
-                </td>
+                <th>{{ $t('sequence') }}</th>
+                <th>{{ $t('funding_items') }}</th>
+                <th></th>
+                <th>{{ $t('amount') }}</th>
+                <th></th>
               </tr>
-              <template v-for="(item, itemIdx) in fund.items.filter(i => i.category_item_id == catItem.id)">
-                <template v-if="item.splits.length==1">
-                  <tr>
-                    <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
-                    <td>
-                      <a-input v-model:value="item.splits[0].description"/>
-                    </td>
-                    <td width="60px">
-                      <a-tooltip>
-                        <template #title>{{ $t('multiple_item') }}</template>
-                          <a-button @click="onMultipleSplits(item, catItem)" type="info" size="small">*</a-button>
-                      </a-tooltip>
-                    </td>
-                    <td width="200px">
-                      <a-input-number 
-                        v-model:value="item.amount" 
-                        :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                        :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                        :style="{width:'100%'}"
-                      />
-                    </td>
-                    <td width="60px">
-                      <a-tooltip>
-                          <template #title>{{ $t('add_budget_item') }}</template>
-                          <a-button @click="onAddItem(catItem, item)" type="info" size="small">+</a-button>
-                      </a-tooltip>
-                      <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
-                              @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
-                        <a-button type="danger" size="small">-</a-button>
-                      </a-popconfirm>
-                    </td>
-                  </tr>
-                </template>
-                <template v-else>
-                  <tr>
-                    <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
-                    <td colspan="2">
-                      <table width="100%">
-                        <tr v-for="(split, splitIdx) in item.splits">
-                          <td>
-                            <a-input v-model:value="split.description"/>
-                          </td>
-                          <td width="150px">
-                            <a-input-number
-                              v-model:value="split.amount" 
-                              :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                              :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                              :style="{width:'100%'}"
-                            />
-                          </td>
-                          <td width="60px">
-                            <a-tooltip>
-                              <template #title>{{ $t('add_budget_item') }}</template>
-                              <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="info"
-                                size="small">+</a-button>
-                            </a-tooltip>
-                              <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
-                                @confirm="onRemoveItemSplit(splitIdx, item, catItem)" @cancel="() => { }">
-                                <a-tooltip>
-                                  <template #title>{{ $t('remove_budget_item') }}</template>
-                                  <a-button type="danger" size="small">-</a-button>
-                                </a-tooltip>
-                            </a-popconfirm>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td width="150px">
-                      <a-input-number 
-                        v-model:value="item.amount"
-                        :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                        :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                        :style="{width:'100%'}"
-                      />
-                    </td>
-                    <td>
-                      <a-button @click="onAddItem(catItem, item)" type="info" size="small">+</a-button>
+            </thead>
+            <tbody>
+              <template v-for="(catItem, i) in category.items">
+                <tr>
+                  <td colspan="5">
+                    {{ i + 1 }}. {{ catItem.name_zh }}
+                    <a-button @click="onAddCategoryItem(catItem)" type="info" size="small">+</a-button>
+                  </td>
+                </tr>
+                <template v-for="(item, itemIdx) in fund.items.filter(i => i.category_item_id == catItem.id)">
+                  <template v-if="item.splits.length==1">
+                    <tr>
+                      <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
+                      <td>
+                        <a-input v-model:value="item.splits[0].description"/>
+                      </td>
+                      <td width="60px">
+                        <a-tooltip>
+                          <template #title>{{ $t('multiple_item') }}</template>
+                            <a-button @click="onMultipleSplits(item, catItem)" type="info" size="small">*</a-button>
+                        </a-tooltip>
+                      </td>
+                      <td width="200px">
+                        <a-input-number 
+                          v-model:value="item.amount" 
+                          :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                          :style="{width:'100%'}"
+                        />
+                      </td>
+                      <td width="60px">
+                        <a-tooltip>
+                            <template #title>{{ $t('add_budget_item') }}</template>
+                            <a-button @click="onAddItem(catItem, item)" type="info" size="small">+</a-button>
+                        </a-tooltip>
                         <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
-                          @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
-                          <a-tooltip>
-                            <template #title>{{ $t('remove_budget_item') }}</template>
-                            <a-button type="danger" size="small">-</a-button>
-                          </a-tooltip>
+                                @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
+                          <a-button type="danger" size="small">-</a-button>
                         </a-popconfirm>
-                    </td>
-                  </tr>
+                      </td>
+                    </tr>
+                  </template>
+                  <template v-else>
+                    <tr>
+                      <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
+                      <td colspan="2">
+                        <table width="100%">
+                          <tr v-for="(split, splitIdx) in item.splits">
+                            <td>
+                              <a-input v-model:value="split.description"/>
+                            </td>
+                            <td width="150px">
+                              <a-input-number
+                                v-model:value="split.amount" 
+                                :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                                :style="{width:'100%'}"
+                              />
+                            </td>
+                            <td width="60px">
+                              <a-tooltip>
+                                <template #title>{{ $t('add_budget_item') }}</template>
+                                <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="info"
+                                  size="small">+</a-button>
+                              </a-tooltip>
+                                <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
+                                  @confirm="onRemoveItemSplit(splitIdx, item, catItem)" @cancel="() => { }">
+                                  <a-tooltip>
+                                    <template #title>{{ $t('remove_budget_item') }}</template>
+                                    <a-button type="danger" size="small">-</a-button>
+                                  </a-tooltip>
+                              </a-popconfirm>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                      <td width="150px">
+                        <a-input-number 
+                          v-model:value="item.amount"
+                          :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                          :style="{width:'100%'}"
+                        />
+                      </td>
+                      <td>
+                        <a-button @click="onAddItem(catItem, item)" type="info" size="small">+</a-button>
+                          <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
+                            @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
+                            <a-tooltip>
+                              <template #title>{{ $t('remove_budget_item') }}</template>
+                              <a-button type="danger" size="small">-</a-button>
+                            </a-tooltip>
+                          </a-popconfirm>
+                      </td>
+                    </tr>
+                  </template>
                 </template>
+                <tr>
+                  <td colspan="4" style="text-align: right;">{{ $t('sub_total') }}</td>
+                  <td colspan="2">{{ subTotal(catItem) }}</td>
+                </tr>
               </template>
-              <tr>
-                <td colspan="4" style="text-align: right;">{{ $t('sub_total') }}</td>
-                <td colspan="2">{{ subTotal(catItem) }}</td>
-              </tr>
-            </template>
+            </tbody>
           </table>
           <div class="flex flex-row item-center justify-center gap-5 pt-5">
             <a-button :href="route('staff.funds.index')">{{ $t('back') }}</a-button>
-            <a-button type="primary" html-type="submit">{{ $t('submit') }}</a-button>
+            <template v-if="fund.is_submitted==false">
+              <a-button type="primary" html-type="submit">{{ $t('submit') }}</a-button>
+              <a-button @click="onFinish(true)" v-if="fund.id">{{ $t('save_submit') }}</a-button>
+            </template>
           </div>
         </a-form>
       </div>
@@ -248,8 +255,9 @@ export default {
         }]
       })
     },
-    onFinish() {
-      this.$inertia.post(route("staff.fund.items.store", this.fund.id), this.fund.items, {
+    onFinish(submit=false) {
+      this.fund.is_submitted=submit;
+      this.$inertia.post(route("staff.fund.items.store", this.fund.id), {toSubmit:submit, items:this.fund.items}, {
         onSuccess: (page) => {
           console.log(page);
         },

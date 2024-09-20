@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Fund;
-use App\Models\User;
+use App\Models\Config;
 
 class FundController extends Controller
 {
@@ -24,6 +25,7 @@ class FundController extends Controller
         //dd(auth()->user());
         //$funds = Gate::allows('viewAny', Fund::class) ? Fund::all() : Fund::where('owner_id', auth()->id())->get();
         return Inertia::render('Staff/Funds',[
+            'categories'=>Category::where('active',true)->get(),
             'funds'=>Fund::whereBelongsTo(auth()->user(), 'ownedBy')->where('is_closed',false)->orderBy('created_at','DESC')->get()
         ]);
     }
@@ -31,13 +33,23 @@ class FundController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        //dd($request->all());
+        $result=$request->validate([
+            'id' => [
+                'required',
+                'integer',
+                Rule::exists('categories')->where(function($query){
+                    return $query->where('active',true);
+                })
+            ]
+        ]);
         $fund=Fund::make(['category_id'=>1,'grants'=>[],'repayments'=>[]]);
         //dd('create fund',$fund);
 
         return Inertia::render('Staff/FundCreate',[
-            'categories'=>Category::all(),
+            'category'=>Category::find($request->id),
             'fund'=>$fund
             // 'fund'=>(Object)[
             //     'category_id'=>1,
@@ -52,13 +64,9 @@ class FundController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $data=$request->all();
-        // $data['grants']=json_encode($request->grants);
-        // $data['repayments']=json_encode($request->repayments);
         $fund=Fund::create($data);
         $categoryItems=Category::find($request->category_id)->items;
-
         foreach($categoryItems as $item){
             $fundItem=$fund->items()->create([
                 'category_item_id'=>$item->id,
@@ -69,7 +77,6 @@ class FundController extends Controller
                 'account_code'=>$item->accounts[0]->account_code
             ]);
         }
-
         return redirect()->route('staff.fund.items.index',$fund->id);
     }
 
@@ -104,7 +111,7 @@ class FundController extends Controller
             return redirect()->route('staff.funds.index');
         }
         return Inertia::render('Staff/FundCreate',[
-            'categories'=>Category::all(),
+            'category'=>$fund->category,
             'fund'=>$fund
         ]);
 

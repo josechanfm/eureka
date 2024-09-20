@@ -43,7 +43,7 @@
 "project_type":"Funding Form",
 "project_duration":"Sudy Period",
 "project_grant":"Form of Disbursement",
-"project_replayment":"Form of Repayment",
+"project_repayment":"Form of Repayment",
 "project_phase1":"Phase 1",
 "project_phase2":"Phase 2",
 "project_phase3":"Phase 3",
@@ -69,6 +69,8 @@
 "expends":"Budget",
 "expend_title":"Budget Title",
 "year":"Year",
+"month":"Month",
+"month_number":"Months",
 "proposal_number":"Proposal No.",
 "proposed_at":"Proposed At",
 "proposed_by":"Proposed By",
@@ -82,9 +84,8 @@
 "available":"Available",
 "budget_reserved":"Buget Reserved",
 "selection":"Selection",
-"sub_total":"Sub Total",
-"grand_total":"Grand Total",
 "budget_summary":"Budget Summary",
 "budget_proposal":"Budget Proposal",
+
 "thank_you":"Thank Your"
 }
