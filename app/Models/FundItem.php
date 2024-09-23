@@ -20,6 +20,6 @@ class FundItem extends Model
     }
 
     public function splits(){
-        return $this->hasMany(FundItemSplit::class);
+        return $this->hasMany(FundItemSplit::class)->orderBy('sequence');
     }
 }

@@ -13,7 +13,7 @@
 
       <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
         <a-form :model="fund.items" name="fund" :label-col="labelCol" autocomplete="off" :rules="rules"
-          :validate-messages="validateMessages" @finish="onFinish" enctype="multipart/form-data">
+          :validate-messages="validateMessages" @finish="onFinish(false)" enctype="multipart/form-data">
           <!-- <a-form-item label="支助項目分類" name="category">
             <a-select v-model:value="items.fund_category_id" :options="fundCategory.items" :fieldNames="{value:'id',label:'name_zh'}"/>
           </a-form-item> -->
@@ -43,7 +43,7 @@
                         <a-input v-model:value="item.splits[0].description"/>
                       </td>
                       <td width="60px">
-                        <a-tooltip>
+                        <a-tooltip placement="bottom">
                           <template #title>{{ $t('multiple_item') }}</template>
                             <a-button @click="onMultipleSplits(item, catItem)" type="item-add" size="small">*</a-button>
                         </a-tooltip>
@@ -57,11 +57,11 @@
                         />
                       </td>
                       <td width="60px">
-                        <a-tooltip>
+                        <a-tooltip placement="bottom">
                             <template #title>{{ $t('add_budget_item') }}</template>
                             <a-button @click="onAddItem(catItem, item)" type="item-add" size="small">+</a-button>
                         </a-tooltip>
-                        <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
+                        <a-popconfirm :title="$t('funding_remove_item')" ok-text="Yes" cancel-text="No"
                                 @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
                           <a-button type="item-delete" size="small">-</a-button>
                         </a-popconfirm>
@@ -86,14 +86,14 @@
                               />
                             </td>
                             <td width="60px">
-                              <a-tooltip>
+                              <a-tooltip placement="bottom">
                                 <template #title>{{ $t('add_budget_item') }}</template>
                                 <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="item-add"
                                   size="small">+</a-button>
                               </a-tooltip>
-                                <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
+                                <a-popconfirm :title="$t('funding_remove_split')" ok-text="Yes" cancel-text="No"
                                   @confirm="onRemoveItemSplit(splitIdx, item, catItem)" @cancel="() => { }">
-                                  <a-tooltip>
+                                  <a-tooltip placement="bottom">
                                     <template #title>{{ $t('remove_budget_item') }}</template>
                                     <a-button type="item-delete" size="small">-</a-button>
                                   </a-tooltip>
@@ -114,7 +114,7 @@
                         <a-button @click="onAddItem(catItem, item)" type="item-add" size="small">+</a-button>
                           <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
                             @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
-                            <a-tooltip>
+                            <a-tooltip placement="bottom">
                               <template #title>{{ $t('remove_budget_item') }}</template>
                               <a-button type="item-delete" size="small">-</a-button>
                             </a-tooltip>
@@ -134,7 +134,15 @@
             <a-button :href="route('staff.funds.index')">{{ $t('back') }}</a-button>
             <template v-if="fund.is_submitted==false">
               <a-button type="primary" html-type="submit">{{ $t('submit') }}</a-button>
-              <a-button @click="onFinish(true)" v-if="fund.id">{{ $t('save_submit') }}</a-button>
+              <a-popconfirm ok-text="Yes" cancel-text="No"
+                  @confirm="onFinish(true)" @cancel="() => { }">
+                  <template #title>
+                      <div v-html="$t('save_submit_popup')"/>
+                  </template>
+                  <a-button>{{ $t('save_submit') }}</a-button>
+              </a-popconfirm>
+
+              
             </template>
           </div>
         </a-form>
@@ -215,8 +223,6 @@ export default {
       })
     },
     onAddItem(catItem, fundItem) {
-      console.log(catItem)
-      console.log(fundItem)
       this.fund.items.splice(this.fund.items.indexOf(fundItem) + 1, 0, {
         "fund_id": fundItem.fund_id,
         "category_item_id": catItem.id,
@@ -230,14 +236,12 @@ export default {
           }
         ]
       })
-      console.log(this.fund.items);
     },
     onRemoveItem(itemIdx, catItem, fundItem) {
       this.fund.items.splice(this.fund.items.indexOf(fundItem), 1)
     },
     onAddItemSplit(splitIdx, item, catItem) {
-      //item.accounts.splice(accountIdx + 1, 0, { 'category_item_account_id': catItem.accounts[0].id })
-      item.splits.push({
+      item.splits.splice(splitIdx + 1, 0, {
         'description':'new item',
         'amount':0
       })
@@ -256,7 +260,6 @@ export default {
       })
     },
     onFinish(submit=false) {
-      this.fund.is_submitted=submit;
       this.$inertia.post(route("staff.fund.items.store", this.fund.id), {toSubmit:submit, items:this.fund.items}, {
         onSuccess: (page) => {
           console.log(page);

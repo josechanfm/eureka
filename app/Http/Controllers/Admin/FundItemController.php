@@ -41,9 +41,8 @@ class FundItemController extends Controller
     {
         $items=$request->all();
         $fundItems=FundItem::whereNotIn('id',array_column($items,'id'))->delete();
-        //dd($fundItems);
-
-        //dd($items);
+        // dd($fundItems);
+        // dd($items);
         foreach($items as $item){
             $accounts=$item['accounts'];
             unset($item['accounts']);

@@ -15,7 +15,7 @@ class Fund extends Model
         return $this->belongsTo(Category::class)->with('items');
     }
     public function items(){
-        return $this->hasMany(FundItem::class)->with('splits');
+        return $this->hasMany(FundItem::class)->with('splits')->orderBy('sequence');
     }
     public function splits(){
         return $this->hasManyThrough(FundItemSplit::class, FundItem::class);

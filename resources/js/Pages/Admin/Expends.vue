@@ -2,7 +2,7 @@
     <AdminLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ $t('budget_proposal') }}
+          {{ $t('expend_proposal') }}
         </h2>
       </template>
       <div class="container mx-auto pt-5">
@@ -16,7 +16,7 @@
               <template v-if="column.dataIndex == 'operation'">
                 <a-button @click="viewRecord(record)" v-if="record.is_locked || record.is_closed">{{ $t('view') }}</a-button>
                 <a-button @click="editRecord(record)" v-else>{{ $t('edit') }}</a-button>
-                <a-button :href="route('admin.expend.items.index',record.id)" type="edit">{{ $t('expense_item') }}</a-button>
+                <a-button :href="route('admin.expend.items.index',record.id)" type="edit">{{ $t('expened_item') }}</a-button>
                 <a-button :href="route('admin.expend.export',record.id)">{{ $t('export') }}</a-button>
               </template>
               <template v-else-if="column.dataIndex == 'status'">
@@ -69,7 +69,7 @@
           :rules="rules"
           :validate-messages="validateMessages"
         >
-          <a-form-item :label="$t('budget_proposal')" name="title">
+          <a-form-item :label="$t('expend_proposal')" name="title">
             <a-input v-model:value="modal.data.title" />
           </a-form-item>
           <a-form-item :label="$t('proposal_number')" name="proposal_number">

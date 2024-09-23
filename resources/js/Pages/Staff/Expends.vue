@@ -18,7 +18,7 @@
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
                 <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">{{ $t('edit') }}</a-button>
-                <a-button :href="route('staff.expend.items.index',record.id)" type="info">{{ $t('expense_item') }}</a-button>
+                <a-button :href="route('staff.expend.items.index',record.id)" type="info">{{ $t('expend_item') }}</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -137,7 +137,7 @@
             i18n: "year",
             dataIndex: "year",
           },{
-            title:  this.$t('budget_proposal'),
+            title:  this.$t('expend_proposal'),
             i18n: "title",
             dataIndex: "title",
           },{

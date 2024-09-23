@@ -2,7 +2,7 @@
     <AdminLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ $t('expense_item') }}
+          {{ $t('expend_item') }}
         </h2>
       </template>
       <div class="container mx-auto pt-5">

@@ -12,8 +12,8 @@
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
                 <a-button :href="route('admin.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
-                <a-button :href="route('admin.fund.expends.index',record.id)" type="edit">{{ $t('expense_item') }}</a-button>
-                <a-button :href="route('admin.funds.show',record.id)" >{{ $t('budget_summary') }}</a-button>
+                <a-button :href="route('admin.fund.expends.index',record.id)" type="edit">{{ $t('expend_item') }}</a-button>
+                <a-button :href="route('admin.funds.show',record.id)" >{{ $t('expend_summary') }}</a-button>
                 <a-button :href="route('admin.fund.export',record.id)">{{ $t('export') }}</a-button>
                 <a-button @click="toggleClose(record)">
                   <span v-if="record.is_closed">{{ $t('reopen') }}</span>

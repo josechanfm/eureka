@@ -2,7 +2,7 @@
   <AdminLayout title="Dashboard">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ $t('budget_summary') }}
+        {{ $t('expend_summary') }}
       </h2>
     </template>
 
@@ -20,7 +20,7 @@
                 <th>#</th>
                 <th>{{ $t('funding_description') }}</th>
                 <th style="text-align:center">{{ $t('amount') }}</th>
-                <th style="text-align:center">{{ $t('budget_reserved') }}</th>
+                <th style="text-align:center">{{ $t('expend_reserved') }}</th>
                 <th style="text-align:center">{{ $t('available') }}</th>
               </tr>
             </thead>

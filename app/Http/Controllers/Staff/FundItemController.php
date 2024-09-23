@@ -46,6 +46,9 @@ class FundItemController extends Controller
         
         $this->authorize('view',$fund);
         $items=$request->items;
+        //delete removed items
+        $fund->items()->whereNotIn('id',array_column($items,'id'))->delete();
+
         foreach($items as $i=>$item){
             $item['sequence']=$i;
             $splits=$item['splits'];
@@ -68,7 +71,8 @@ class FundItemController extends Controller
             }
             
 
-            foreach($splits as $a){
+            foreach($splits as $j=>$a){
+                $a['sequence']=$j;
                 if(isset($a['id'])){
                     unset($a['created_at']);
                     unset($a['updated_at']);
