@@ -6,10 +6,27 @@
     display: none;
 }
 
-.ant-btn-info{
-    @apply bg-blue-300 w-7
-
+.ant-btn-item-add{
+    @apply bg-blue-300;
 }
-.ant-btn-danger{
-    @apply bg-red-300 w-7;
+.ant-btn-item-delete{
+    @apply bg-red-300;
+}
+.ant-btn-info{
+    @apply bg-blue-500 text-white
+}
+.ant-btn-create{
+    @apply bg-blue-500
+}
+.ant-btn-save{
+    @apply bg-red-300
+}
+.ant-btn-edit{
+    @apply bg-orange-500
+}
+.ant-btn-view{
+    @apply bg-green-500
+}
+.ant-btn-delete{
+    @apply bg-red-300;
 }

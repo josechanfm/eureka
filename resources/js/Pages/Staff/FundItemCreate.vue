@@ -6,7 +6,7 @@
       </h2>
     </template>
     <div class="container mx-auto pt-5">
-      <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+      <div class="bg-white relative shadow rounded-lg overflow-x-auto border-blue-500 border-solid">
         <FundHeader :fund="fund"/>
       </div>
       <a-divider/>
@@ -32,7 +32,7 @@
                 <tr>
                   <td colspan="5">
                     {{ i + 1 }}. {{ catItem.name_zh }}
-                    <a-button @click="onAddCategoryItem(catItem)" type="info" size="small">+</a-button>
+                    <a-button @click="onAddCategoryItem(catItem)" type="item-add" size="small">+</a-button>
                   </td>
                 </tr>
                 <template v-for="(item, itemIdx) in fund.items.filter(i => i.category_item_id == catItem.id)">
@@ -45,7 +45,7 @@
                       <td width="60px">
                         <a-tooltip>
                           <template #title>{{ $t('multiple_item') }}</template>
-                            <a-button @click="onMultipleSplits(item, catItem)" type="info" size="small">*</a-button>
+                            <a-button @click="onMultipleSplits(item, catItem)" type="item-add" size="small">*</a-button>
                         </a-tooltip>
                       </td>
                       <td width="200px">
@@ -59,11 +59,11 @@
                       <td width="60px">
                         <a-tooltip>
                             <template #title>{{ $t('add_budget_item') }}</template>
-                            <a-button @click="onAddItem(catItem, item)" type="info" size="small">+</a-button>
+                            <a-button @click="onAddItem(catItem, item)" type="item-add" size="small">+</a-button>
                         </a-tooltip>
                         <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
                                 @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
-                          <a-button type="danger" size="small">-</a-button>
+                          <a-button type="item-delete" size="small">-</a-button>
                         </a-popconfirm>
                       </td>
                     </tr>
@@ -88,14 +88,14 @@
                             <td width="60px">
                               <a-tooltip>
                                 <template #title>{{ $t('add_budget_item') }}</template>
-                                <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="info"
+                                <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="item-add"
                                   size="small">+</a-button>
                               </a-tooltip>
                                 <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
                                   @confirm="onRemoveItemSplit(splitIdx, item, catItem)" @cancel="() => { }">
                                   <a-tooltip>
                                     <template #title>{{ $t('remove_budget_item') }}</template>
-                                    <a-button type="danger" size="small">-</a-button>
+                                    <a-button type="item-delete" size="small">-</a-button>
                                   </a-tooltip>
                               </a-popconfirm>
                             </td>
@@ -111,12 +111,12 @@
                         />
                       </td>
                       <td>
-                        <a-button @click="onAddItem(catItem, item)" type="info" size="small">+</a-button>
+                        <a-button @click="onAddItem(catItem, item)" type="item-add" size="small">+</a-button>
                           <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
                             @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
                             <a-tooltip>
                               <template #title>{{ $t('remove_budget_item') }}</template>
-                              <a-button type="danger" size="small">-</a-button>
+                              <a-button type="item-delete" size="small">-</a-button>
                             </a-tooltip>
                           </a-popconfirm>
                       </td>

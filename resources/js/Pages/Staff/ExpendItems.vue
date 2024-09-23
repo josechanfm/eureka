@@ -6,7 +6,7 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+        <div class="bg-white relative shadow rounded-lg overflow-x-auto border-orange-500 border-solid">
           <ExpendHeader :expend="expend"/>
         </div>
         <div class="container mx-auto pt-5">
@@ -38,68 +38,69 @@
             </table>
           </div>
         </div>
-        <div>
+        <div class="pt-5">
           <span v-if="expend.status<='S2'">
             <a-button type="primary" @click="onSaveExpendItems(false)">{{ $t('save') }}</a-button>
-            <a-button type="primary" @click="onSaveExpendItems(true)">{{ $t('save_submit') }}</a-button>
+            <a-button type="primary" @click="onSaveExpendItems(true)" class="ml-2">{{ $t('save_submit') }}</a-button>
           </span>
-          <a-button :href="route('staff.fund.expends.index',fund.id)">{{ $t('back') }}</a-button>
+          <a-button :href="route('staff.fund.expends.index',fund.id)" class="ml-2">{{ $t('back') }}</a-button>
         </div>
         <a-divider/>
 
         <div class="container mx-auto pt-5" v-if="expend.status<='S2'">
           <div class="bg-white relative shadow rounded-lg md:p-5">
-            <a-button @click="onAddSplitItem2()">{{ $t('add') }}</a-button>
-            <table width="100%" border="1">
-                  <tr>
-                    <th colspan="2">#</th>
-                    <th width="100px">{{ $t('selection') }}</th>
-                    <th>{{ $t('funding_description') }}</th>
-                    <th>{{ $t('amount') }}</th>
-                    <th>{{ $t('available') }}</th>
-                  </tr>
-                  <template v-for="(catItem, catItemIdx) in categoryItems">
+            <a-button @click="onAddSplitItem2()" type="primary">{{ $t('add') }}</a-button>
+            <div class="pt-5">
+              <table width="100%" border="1">
                     <tr>
-                      <td width="50px">{{ catItemIdx+1 }}</td>
-                      <td width="50px"></td>
-                      <td colspan="3">{{ catItem.name_zh }}</td>
-                    </tr> 
-                    <tr v-for="(item, idx) in fund.items.filter(item=>item.category_item_id==catItem.id)">
-                      <td></td> 
-                      <td>{{ catItemIdx+1 }}.{{ idx+1 }}</td>
-                        <template v-if="item.splits.length==1">
-                          <td>
-                            <input type="radio" v-model="selectedSplit.splitId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedSplit(catItem, item.splits[0])">{{ $t('select') }}</input>
-                          </td>
-                          <td>
-                            {{ item.splits[0].description }}
-                          </td>
-                        </template>
-                        <template v-else>
-                          <td colspan="2">
-                            <table width="100%" border="1">
-                              <tr v-for="split in item.splits">
-                                <td width="100px">
-                                  <input type="radio" v-model="selectedSplit.splitId" :value="split.id" style="width:30px" @change="onChnageSelectedSplit(catItem, split)">{{ $t('select') }}</input>
-                                </td>
-                                <td>
-                                  {{ split.description }}
-                                </td>
-                                <td>{{ split.amount }}</td>
-                              </tr>
-                            </table>
-                          </td>
-                        </template>
-                      <td>
-                          {{ item.amount.toLocaleString() }}
-                      </td>
-                      <td>
-                        {{ budgetAvailable(item).toLocaleString() }}
-                      </td>
+                      <th colspan="2">#</th>
+                      <th width="100px">{{ $t('selection') }}</th>
+                      <th>{{ $t('funding_description') }}</th>
+                      <th>{{ $t('amount') }}</th>
+                      <th>{{ $t('available') }}</th>
                     </tr>
-                  </template>
-                </table>
-
+                    <template v-for="(catItem, catItemIdx) in categoryItems">
+                      <tr>
+                        <td width="50px">{{ catItemIdx+1 }}</td>
+                        <td width="50px"></td>
+                        <td colspan="3">{{ catItem.name_zh }}</td>
+                      </tr> 
+                      <tr v-for="(item, idx) in fund.items.filter(item=>item.category_item_id==catItem.id)">
+                        <td></td> 
+                        <td>{{ catItemIdx+1 }}.{{ idx+1 }}</td>
+                          <template v-if="item.splits.length==1">
+                            <td>
+                              <input type="radio" v-model="selectedSplit.splitId" :value="item.splits[0].id" style="width:30px" @change="onChnageSelectedSplit(catItem, item.splits[0])">{{ $t('select') }}</input>
+                            </td>
+                            <td>
+                              {{ item.splits[0].description }}
+                            </td>
+                          </template>
+                          <template v-else>
+                            <td colspan="2">
+                              <table width="100%" border="1">
+                                <tr v-for="split in item.splits">
+                                  <td width="100px">
+                                    <input type="radio" v-model="selectedSplit.splitId" :value="split.id" style="width:30px" @change="onChnageSelectedSplit(catItem, split)">{{ $t('select') }}</input>
+                                  </td>
+                                  <td>
+                                    {{ split.description }}
+                                  </td>
+                                  <td>{{ split.amount }}</td>
+                                </tr>
+                              </table>
+                            </td>
+                          </template>
+                        <td>
+                            {{ item.amount.toLocaleString() }}
+                        </td>
+                        <td>
+                          {{ budgetAvailable(item).toLocaleString() }}
+                        </td>
+                      </tr>
+                    </template>
+              </table>
+            </div>
           </div>
         </div>
       </div>

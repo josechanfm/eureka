@@ -11,14 +11,15 @@
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
+                <a-button :href="route('admin.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
+                <a-button :href="route('admin.fund.expends.index',record.id)" type="edit">{{ $t('expense_item') }}</a-button>
+                <a-button :href="route('admin.funds.show',record.id)" >{{ $t('budget_summary') }}</a-button>
+                <a-button :href="route('admin.fund.export',record.id)">{{ $t('export') }}</a-button>
                 <a-button @click="toggleClose(record)">
                   <span v-if="record.is_closed">{{ $t('reopen') }}</span>
                   <span v-else>{{ $t('archive') }}</span>
                 </a-button>
-                <a-button :href="route('admin.fund.expends.index',record.id)" >{{ $t('expense_item') }}</a-button>
-                <a-button :href="route('admin.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
-                <a-button :href="route('admin.funds.show',record.id)" >{{ $t('budget_summary') }}</a-button>
-                <a-button :href="route('admin.fund.export',record.id)">{{ $t('export') }}</a-button>
+
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}

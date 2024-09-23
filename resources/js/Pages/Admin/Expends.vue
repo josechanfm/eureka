@@ -6,7 +6,7 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+        <div class="bg-white relative shadow rounded-lg overflow-x-auto border-blue-500 border-solid">
           <FundHeader :fund="fund" />
         </div>
         <a-divider/>
@@ -14,9 +14,9 @@
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('admin.expend.items.index',record.id)" >{{ $t('expense_item') }}</a-button>
                 <a-button @click="viewRecord(record)" v-if="record.is_locked || record.is_closed">{{ $t('view') }}</a-button>
                 <a-button @click="editRecord(record)" v-else>{{ $t('edit') }}</a-button>
+                <a-button :href="route('admin.expend.items.index',record.id)" type="edit">{{ $t('expense_item') }}</a-button>
                 <a-button :href="route('admin.expend.export',record.id)">{{ $t('export') }}</a-button>
               </template>
               <template v-else-if="column.dataIndex == 'status'">
@@ -89,7 +89,7 @@
           </a-form-item>
         </a-form>
         <template #footer>
-          <a-button @click="modal.isOpen=false">{{ $t('close') }}</a-button>
+          <a-button @click="modal.isOpen=false">{{ $t('back') }}</a-button>
           <a-button
             v-if="modal.mode == 'EDIT'"
             key="Update"

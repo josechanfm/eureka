@@ -12,8 +12,7 @@
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('staff.fund.expends.index',record.id)" >{{ $t('expends') }}</a-button>
-                <a-button :href="route('staff.funds.edit',record.id)" >
+                <a-button :href="route('staff.funds.edit',record.id)">
                   <span v-if="record.is_submitted">
                     {{ $t('view') }}
                   </span>
@@ -21,7 +20,8 @@
                     {{ $t('edit') }}  
                   </span>
                 </a-button>
-                <a-button :href="route('staff.fund.items.index',record.id)" >{{ $t('funding_items') }}</a-button>
+                <a-button :href="route('staff.fund.items.index',record.id)" type="info">{{ $t('funding_items') }}</a-button>
+                <a-button :href="route('staff.fund.expends.index',record.id)" type="edit" class="ml-5">{{ $t('expends') }}</a-button>
               </template>
               <template v-else-if="column.dataIndex=='is_submitted'">
                 <span v-if="record.is_submitted">{{ $t('submitted') }}</span>
@@ -73,8 +73,8 @@
             i18n: "title",
             dataIndex: "title",
           },{
-            title: this.$t('is_submitted'),
-            i18n: "is_submitted",
+            title: this.$t('submitted'),
+            i18n: "submitted",
             dataIndex: "is_submitted",
           },{
             title: this.$t('operation'),

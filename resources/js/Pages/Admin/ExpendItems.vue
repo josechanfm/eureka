@@ -23,7 +23,7 @@
               </template>
               <template v-else-if="column.dataIndex == 'operation'">
                 <template v-if="editableData.id==record.id">
-                  <a-button @click="onSaveRecord(record)">{{ $t('save') }}</a-button>
+                  <a-button @click="onSaveRecord(record)" type="save">{{ $t('save') }}</a-button>
                 </template>
                 <template v-else>
                   <a-button @click="onEditRecord(record)">{{ $t('edit') }}</a-button>

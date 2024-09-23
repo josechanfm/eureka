@@ -6,17 +6,19 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+        <div class="bg-white relative shadow rounded-lg overflow-x-auto  border-orange-500 border-solid">
           <FundHeader :fund="fund"/>
         </div>
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto text-right">
-          <a-button type="primary" @click="createRecord()">{{ $t('create') }}</a-button>
+          <div class="p-5">
+            <a-button type="primary" @click="createRecord()">{{ $t('create') }}</a-button>
+          </div>
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('staff.expend.items.index',record.id)" >{{ $t('expense_item') }}</a-button>
                 <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">{{ $t('edit') }}</a-button>
+                <a-button :href="route('staff.expend.items.index',record.id)" type="info">{{ $t('expense_item') }}</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -37,25 +39,25 @@
           :rules="rules"
           :validate-messages="validateMessages"
         >
-          <a-form-item label="Year" name="year">
+          <a-form-item :label="$t('year')" name="year">
             <a-select v-model:value="modal.data.year" :options="years"/>
           </a-form-item>
-          <a-form-item label="Title" name="title">
+          <a-form-item :label="$t('expend_title')" name="title">
             <a-input v-model:value="modal.data.title" />
           </a-form-item>
-          <a-form-item label="Proposal No." name="proposal_number">
+          <a-form-item :label="$t('proposal_number')" name="proposal_number">
             <a-input v-model:value="modal.data.proposal_number" />
           </a-form-item>
-          <a-form-item label="Proposed at" name="proposed_at">
+          <a-form-item :label="$t('proposed_at')" name="proposed_at">
             <a-date-picker v-model:value="modal.data.proposed_at" :format="dateFormat" :valueFormat="dateFormat"/>
           </a-form-item>
-          <a-form-item label="Proposed by" name="proposed_by">
+          <a-form-item :label="$t('proposed_by')" name="proposed_by">
             <a-input v-model:value="modal.data.proposed_by"/>
           </a-form-item>
-          <a-form-item label="Approved at" name="approved_at">
+          <a-form-item :label="$t('approved_at')" name="approved_at">
             <a-date-picker v-model:value="modal.data.approved_at" :format="dateFormat" :valueFormat="dateFormat"/>
           </a-form-item>
-          <a-form-item label="Remark" name="remark">
+          <a-form-item :label="$t('remark')" name="remark">
             <a-textarea v-model:value="modal.data.remark" />
           </a-form-item>
         </a-form>
@@ -65,14 +67,14 @@
             key="Update"
             type="primary"
             @click="updateRecord()"
-            >Update</a-button
+            >{{ $t('update') }}</a-button
           >
           <a-button
             v-if="modal.mode == 'CREATE'"
             key="Store"
             type="primary"
             @click="storeRecord()"
-            >Add</a-button
+            >{{ $t('add') }}</a-button
           >
         </template>
       </a-modal>
@@ -164,13 +166,13 @@
         this.modal.data = {}
         this.modal.data.fund_id=this.fund.id
         this.modal.mode = "CREATE"
-        this.modal.title = "Create"
+        this.modal.title = this.$t('create')
         this.modal.isOpen = true
       },
       editRecord(record){
         this.modal.data = {...record}
         this.modal.mode = "EDIT"
-        this.modal.title = "Edit"
+        this.modal.title = this.$t('edit')
         this.modal.isOpen = true
       },
       storeRecord() {
