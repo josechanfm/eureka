@@ -133,7 +133,7 @@
           <div class="flex flex-row item-center justify-center gap-5 pt-5">
             <a-button :href="route('staff.funds.index')">{{ $t('back') }}</a-button>
             <template v-if="fund.is_submitted==false">
-              <a-button type="primary" html-type="submit">{{ $t('submit') }}</a-button>
+              <a-button type="primary" html-type="submit">{{ $t('save') }}</a-button>
               <a-popconfirm ok-text="Yes" cancel-text="No"
                   @confirm="onFinish(true)" @cancel="() => { }">
                   <template #title>

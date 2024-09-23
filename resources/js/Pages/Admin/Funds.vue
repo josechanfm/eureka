@@ -11,6 +11,7 @@
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
+                <a-button :href="route('admin.funds.index')" :disabled="record.is_submitted==false || record.expends_count>0 || record.is_close==true">{{ $t('return') }}</a-button>
                 <a-button :href="route('admin.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
                 <a-button :href="route('admin.fund.expends.index',record.id)" type="edit">{{ $t('expend_item') }}</a-button>
                 <a-button :href="route('admin.funds.show',record.id)" >{{ $t('expend_summary') }}</a-button>
@@ -19,7 +20,6 @@
                   <span v-if="record.is_closed">{{ $t('reopen') }}</span>
                   <span v-else>{{ $t('archive') }}</span>
                 </a-button>
-
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -38,7 +38,6 @@
   export default {
     components: {
       AdminLayout,
-      
     },
     props: ["funds"],
     data() {

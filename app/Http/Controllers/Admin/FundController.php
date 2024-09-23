@@ -21,7 +21,7 @@ class FundController extends Controller
     {
         //dd(auth()->user());
         return Inertia::render('Admin/Funds',[
-            'funds'=>Fund::all()
+            'funds'=>Fund::withCount('expends')->get()
         ]);
     }
 
