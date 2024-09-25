@@ -15,8 +15,6 @@ defineProps({
 
 const showingNavigationDropdown = ref(false);
 
-
-
 const switchToTeam = (team) => {
     router.put(route('current-team.update'), {
         team_id: team.id,
@@ -33,9 +31,7 @@ const logout = () => {
 <template>
     <div>
         <Head :title="title" />
-
         <Banner />
-
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
@@ -48,7 +44,6 @@ const logout = () => {
                                     <ApplicationMark class="block h-9 w-auto" />
                                 </Link>
                             </div>
-
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
@@ -56,19 +51,16 @@ const logout = () => {
                                 </NavLink>
                             </div>
                         </div>
-
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <div class="ms-3 relative"  v-role="['admin']">
                                 <a-button type="link" :href="route('admin.funds.index')" v-role="['admin']">{{ $t('admin') }}</a-button>
                                 <a-button type="link" :href="route('admin.categories.index')">{{ $t('category') }}</a-button>
                             </div>
-
                             <div class="ms-3 relative">
                                 <form method="POST" @submit.prevent="logout">
                                     <a-button type="submit" html-type="submit">{{ $t('logout') }}</a-button>
                                 </form>
                             </div>
-
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
                                 <Dropdown align="right" width="48">

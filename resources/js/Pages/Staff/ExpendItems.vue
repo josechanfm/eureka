@@ -232,7 +232,7 @@
       },
       getFundItemSplit(fundItemSplitId){
         const item=this.availableSplits.find(a=>a.id==fundItemSplitId)
-        return item.description
+        return item?item.description:''
       },
       budgetAvailable(item){
         if(item.splits.length==1){
