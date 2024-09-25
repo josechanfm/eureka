@@ -1,5 +1,5 @@
 <template>
-    <AdminLayout title="Dashboard">
+    <StaffLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ $t('my_project') }}
@@ -125,16 +125,16 @@
         </a-form>
         </div>
       </div>
-    </AdminLayout>
+    </StaffLayout>
   </template>
   
   <script>
-  import AdminLayout from "@/Layouts/AdminLayout.vue";
+  import StaffLayout from "@/Layouts/StaffLayout.vue";
   import { defineComponent, reactive } from "vue";
 
   export default {
     components: {
-      AdminLayout,
+      StaffLayout,
     },
     props: ["category",'fund'],
     data() {

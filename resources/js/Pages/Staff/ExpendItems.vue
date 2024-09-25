@@ -1,5 +1,5 @@
 <template>
-    <AdminLayout title="Dashboard">
+    <StaffLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ $t('my_project') }}
@@ -106,17 +106,17 @@
       </div>
 
 
-    </AdminLayout>
+    </StaffLayout>
   </template>
   
 
   <script>
-  import AdminLayout from "@/Layouts/AdminLayout.vue";
+  import StaffLayout from "@/Layouts/StaffLayout.vue";
   import ExpendHeader from "@/Pages/Staff/ExpendHeader.vue";
 
   export default {
     components: {
-      AdminLayout,
+      StaffLayout,
       ExpendHeader
     },
     props: ["categoryItems","fund","expend","availableSplits"],

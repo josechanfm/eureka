@@ -54,7 +54,6 @@ const logout = () => {
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <div class="ms-3 relative"  v-role="['admin']">
                                 <a-button type="link" :href="route('admin.funds.index')" v-role="['admin']">{{ $t('admin') }}</a-button>
-                                <a-button type="link" :href="route('admin.categories.index')">{{ $t('category') }}</a-button>
                             </div>
                             <div class="ms-3 relative">
                                 <form method="POST" @submit.prevent="logout">
@@ -131,7 +130,7 @@ const logout = () => {
                                 </div>
                                 <div class="font-medium text-sm text-gray-500">
                                     {{ $page.props.auth.user.email }}
-                                </div>
+                                </div>  
                             </div>
                         </div>
                         <div class="flex items-center px-4">
@@ -148,8 +147,6 @@ const logout = () => {
                             </div>
                         </div>
 
-
-
                         <div class="mt-3 space-y-1">
                             <!-- Authentication -->
                             <form method="POST" @submit.prevent="logout">
@@ -163,7 +160,7 @@ const logout = () => {
             </nav>
 
             <!-- Page Heading -->
-            <header v-if="$slots.header" class="bg-amber-100 shadow">
+            <header v-if="$slots.header" class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
