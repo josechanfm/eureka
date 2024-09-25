@@ -29,7 +29,7 @@
                   <a-input v-model:value="item.description" />
                 </td>
                 <td>
-                  {{item.fund_item_split_id}}
+                  {{item.reference_code}}
                 </td>
                 <td>
                   <a-input v-model:value="item.amount" />
