@@ -128,6 +128,10 @@
                   <td colspan="2">{{ subTotal(catItem) }}</td>
                 </tr>
               </template>
+              <tr>
+                <td colspan="4" style="text-align: right;">{{ $t('grand_total') }}</td>
+                <td colspan="2">{{ grandTotal() }}</td>
+              </tr>
             </tbody>
           </table>
           <div class="flex flex-row item-center justify-center gap-5 pt-5">
@@ -207,6 +211,10 @@ export default {
     subTotal(catItem){
       const items=this.fund.items.filter(i=>i.category_item_id==catItem.id)
       const amounts = items.map(i => i.amount);
+      return amounts.reduce((sum,a)=>sum+a,0).toLocaleString();
+    },
+    grandTotal(){
+      const amounts = this.fund.items.map(i => i.amount);
       return amounts.reduce((sum,a)=>sum+a,0).toLocaleString();
     },
     isDisabled(id){

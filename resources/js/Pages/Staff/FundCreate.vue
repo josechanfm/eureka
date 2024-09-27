@@ -57,25 +57,25 @@
             </a-form-item>
             </a-col>
             <a-col :span="12">
-              <a-form-item :label="$t('project_phase1')" name="grants0">
-                <a-input v-model:value="fund.grants[0]"  v-if="fund.grant>=1"/>
+              <a-form-item :label="$t('project_phase1')" name="grants0"  v-if="fund.grant>=1">
+                <a-input v-model:value="fund.grants[0]"/>
               </a-form-item>
-              <a-form-item :label="$t('project_phase2')" name="grants1">
-                <a-input v-model:value="fund.grants[1]"  v-if="fund.grant>=2"/>
+              <a-form-item :label="$t('project_phase2')" name="grants1" v-if="fund.grant>=2">
+                <a-input v-model:value="fund.grants[1]"/>
               </a-form-item>
-              <a-form-item :label="$t('project_phase3')" name="grants2">
-                <a-input v-model:value="fund.grants[2]"  v-if="fund.grant>=3"/>
+              <a-form-item :label="$t('project_phase3')" name="grants2" v-if="fund.grant>=3">
+                <a-input v-model:value="fund.grants[2]"/>
               </a-form-item>
            </a-col>
            <a-col :span="12">
-            <a-form-item :label="$t('project_phase4')" name="grants3">
-                <a-input v-model:value="fund.grants[3]"  v-if="fund.grant>=4"/>
+            <a-form-item :label="$t('project_phase4')" name="grants3" v-if="fund.grant>=4">
+                <a-input v-model:value="fund.grants[3]"/>
               </a-form-item>
-              <a-form-item :label="$t('project_phase5')" name="grants4">
-                <a-input v-model:value="fund.grants[4]" v-if="fund.grant>=5"/>
+              <a-form-item :label="$t('project_phase5')" name="grants4" v-if="fund.grant>=5">
+                <a-input v-model:value="fund.grants[4]"/>
               </a-form-item>
-              <a-form-item :label="$t('project_phase6')" name="grants5" >
-                <a-input v-model:value="fund.grants[5]" v-if="fund.grant>=6"/>
+              <a-form-item :label="$t('project_phase6')" name="grants5" v-if="fund.grant>=6">
+                <a-input v-model:value="fund.grants[5]"/>
               </a-form-item>
            </a-col>
           </a-row>
@@ -95,25 +95,25 @@
               </a-form-item>
             </a-col>
             <a-col :span="12">
-              <a-form-item :label="$t('project_phase1')" name="repayments0">
-                <a-input v-model:value="fund.repayments[0]" v-if="fund.repayment>=1"/>
+              <a-form-item :label="$t('project_phase1')" name="repayments0" v-if="fund.repayment>=1">
+                <a-input v-model:value="fund.repayments[0]"/>
               </a-form-item>
-              <a-form-item :label="$t('project_phase2')" name="repayments1">
-                <a-input v-model:value="fund.repayments[1]" v-if="fund.repayment>=2"/>
+              <a-form-item :label="$t('project_phase2')" name="repayments1" v-if="fund.repayment>=2">
+                <a-input v-model:value="fund.repayments[1]"/>
               </a-form-item>
-              <a-form-item :label="$t('project_phase3')" name="repayments2">
-                <a-input v-model:value="fund.repayments[2]" v-if="fund.repayment>=3"/>
+              <a-form-item :label="$t('project_phase3')" name="repayments2" v-if="fund.repayment>=3">
+                <a-input v-model:value="fund.repayments[2]"/>
               </a-form-item>
             </a-col>
             <a-col :span="12">
-              <a-form-item :label="$t('project_phase4')" name="repayments3">
+              <a-form-item :label="$t('project_phase4')" name="repayments3" v-if="fund.repayment>=4">
                 <a-input v-model:value="fund.repayments[3]" v-if="fund.repayment>=4"/>
               </a-form-item>
-              <a-form-item :label="$t('project_phase5')" name="repayments4">
-                <a-input v-model:value="fund.repayments[4]" v-if="fund.repayment>=5"/>
+              <a-form-item :label="$t('project_phase5')" name="repayments4" v-if="fund.repayment>=5">
+                <a-input v-model:value="fund.repayments[4]"/>
               </a-form-item>
-              <a-form-item :label="$t('project_phase6')" name="repayments5">
-                <a-input v-model:value="fund.repayments[5]" v-if="fund.repayment>=6"/>
+              <a-form-item :label="$t('project_phase6')" name="repayments5" v-if="fund.repayment>=6">
+                <a-input v-model:value="fund.repayments[5]"/>
               </a-form-item>
            </a-col>
           </a-row>

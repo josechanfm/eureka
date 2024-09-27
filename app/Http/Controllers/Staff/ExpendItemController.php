@@ -98,8 +98,8 @@ class ExpendItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Expend $expend, ExpendItem $item)
     {
-        //
+        dd($item);
     }
 }

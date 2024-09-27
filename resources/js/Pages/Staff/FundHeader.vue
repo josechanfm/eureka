@@ -38,21 +38,21 @@ defineProps({
                     <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_grant') }}:</th>
                     <td class="py-1 px-4">{{ fund.grant }}{{ $t('month') }}</td>
                 </tr>
-                <template v-for="(grant, idx) in fund.grants">
+                <template v-for="idx in fund.grant">
                     <tr class="border-b hover:bg-gray-50">
-                        <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_phase'+(idx+1)) }}:</th>
-                        <td class="py-1 px-4">{{ grant }}</td>
+                        <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_phase'+(idx)) }}:</th>
+                        <td class="py-1 px-4">{{ fund.grants[idx] }}</td>
                     </tr>
                 </template>
                 <template v-if="fund.type == 'P'">
                     <tr class="border-b hover:bg-gray-50">
                         <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_repayment') }}:</th>
-                        <td class="py-1 px-4">{{ fund.repayment }}</td>
+                        <td class="py-1 px-4">{{ fund.repayment }}{{ $t('month') }}</td>
                     </tr>
-                    <template v-for="(repay, idx) in fund.repayments">
+                    <template v-for="idx in fund.repayment">
                         <tr class="border-b hover:bg-gray-50">
-                            <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_phase'+(idx+1)) }}:</th>
-                            <td class="py-1 px-4">{{ repay }}</td>
+                            <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_phase'+(idx)) }}:</th>
+                            <td class="py-1 px-4">{{ fund.repayments[idx] }}</td>
                         </tr>   
                     </template>
                 </template>

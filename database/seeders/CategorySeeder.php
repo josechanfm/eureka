@@ -22,7 +22,7 @@ class CategorySeeder extends Seeder
             ]
         );
         $data=[
-            ["name_zh"=>"個人津貼(公職校內人員)","account"=>[
+            ["name_zh"=>"本地研究人員津貼費","account"=>[
                 ["name_zh"=>"個人津貼(公職校內人員)","user_define"=>false,"account_code"=>"1-31-02-99-00-00-01.280.Z01"],
                 ["name_zh"=>"個人津貼(公職校外人員)","user_define"=>false,"account_code"=>"1-31-02-99-00-00-99.280.Z01"],
                 ["name_zh"=>"個人津貼(非公職校外人員)","user_define"=>false,"account_code"=>"1-32-02-23-00-00-99.280.Z01"],
