@@ -4,8 +4,8 @@ defineProps({
 });
 </script>
 <template>
-    <div class="bg-white relative shadow rounded-lg overflow-x-auto border-green-500 border-solid">
-        <div class="p-5">
+    <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
+        <div class="border-green-500 border-solid">
             <table class="min-w-full bg-white border border-gray-200">
                 <tbody>
                     <tr class="border-b hover:bg-gray-50">
