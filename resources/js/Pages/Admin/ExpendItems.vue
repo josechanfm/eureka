@@ -6,9 +6,7 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <ExpendHeader :expend="expend"/>
-        </div>
+        <ExpendHeader :expend="expend"/>
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
           <a-table :dataSource="expend.items" :columns="columns">
@@ -20,6 +18,10 @@
                 <template v-else>
                   {{ text }}
                 </template>
+              </template>
+              <template v-else-if="column.dataIndex=='fund_item_split'">
+                {{ record.split.item.description }}<br>
+                {{ record.split.description }}
               </template>
               <template v-else-if="column.dataIndex == 'operation'">
                 <template v-if="editableData.id==record.id">
@@ -72,7 +74,11 @@
     computed:{
       columns(){
         return[
-        {
+          {
+            title: this.$t('funding_description'),
+            i18n: "fund_item_split",
+            dataIndex: "fund_item_split",
+          },{
             title: this.$t('expend_item_description'),
             i18n: "description",
             dataIndex: "description",

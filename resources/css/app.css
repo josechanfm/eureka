@@ -30,3 +30,11 @@
 .ant-btn-delete{
     @apply bg-red-300;
 }
+
+.ant-btn-fund{
+    @apply bg-green-500 text-white
+}
+
+.ant-btn-expend{
+    @apply bg-orange-500 text-white
+}

@@ -143,7 +143,7 @@ export default {
     subTotal(catItem){
       const items=this.fund.items.filter(i=>i.category_item_id==catItem.id)
       const amounts = items.map(i => i.amount);
-      return amounts.reduce((sum,a)=>sum+a,0).toLocaleString();
+      return amounts.reduce((sum,a)=>sum+parseInt(a),0).toLocaleString();
     },
     isDisabled(id){
       if(this.myCategoryItems){

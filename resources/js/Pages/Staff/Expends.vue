@@ -6,9 +6,7 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto  border-orange-500 border-solid">
-          <FundHeader :fund="fund"/>
-        </div>
+        <FundHeader :fund="fund"/>
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto text-right">
           <div class="p-5">
@@ -17,8 +15,9 @@
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
+                <a-button @click="deleteRecord(record)" type="primary" danger :disabled="!record.items.length==0">{{ $t('delete') }}</a-button>
                 <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">{{ $t('edit') }}</a-button>
-                <a-button :href="route('staff.expend.items.index',record.id)" type="info">{{ $t('expend_item') }}</a-button>
+                <a-button :href="route('staff.expend.items.index',record.id)" type="expend">{{ $t('expend_item') }}</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -174,6 +173,18 @@
         this.modal.mode = "EDIT"
         this.modal.title = this.$t('edit')
         this.modal.isOpen = true
+      },
+      deleteRecord(record){
+        console.log('delete record')
+        console.log(record)
+        this.$inertia.delete(route('staff.fund.expends.destroy',{fund:this.fund.id, expend:record.id}),{
+          onSuccess: (page) => {
+            console.log(page)
+          },
+          onError: (err) => {
+            console.log(err);
+          },
+        })
       },
       storeRecord() {
         this.$refs.modalRef

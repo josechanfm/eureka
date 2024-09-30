@@ -6,9 +6,7 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto border-blue-500 border-solid">
           <FundHeader :fund="fund" />
-        </div>
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
           <a-table :dataSource="expends" :columns="columns">
@@ -41,7 +39,7 @@
                   <a-button @click="onChangeStatus(record,'ARCHIVE')">{{ $t('archive') }}</a-button><!-- to archive-->
                 </template>
                 <template v-else-if="record.status=='S6'">
-                  {{ $t('archieved') }}
+                  {{ $t('archived') }}
                 </template>
                 <template v-else>
                   {{ $t('preparing') }}

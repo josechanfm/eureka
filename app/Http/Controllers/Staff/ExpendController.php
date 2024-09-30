@@ -23,7 +23,7 @@ class ExpendController extends Controller
 
         return Inertia::render('Staff/Expends',[
             'fund'=>$fund,
-            'expends'=>Expend::whereBelongsTo($fund)->get()
+            'expends'=>Expend::whereBelongsTo($fund)->with('items')->get()
         ]);
     }
 
@@ -81,9 +81,10 @@ class ExpendController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Fund $fund, Expend $expend)
     {
-        //
+        $expend->delete();
+        return redirect()->route('staff.fund.expends.index',$fund->id);
     }
     
 }

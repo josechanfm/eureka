@@ -25,12 +25,12 @@ class FundExport implements FromCollection, WithHeadings
         $data=[];
         $fundItems=$this->fund->items;
         foreach($categoryItems as $catIdx=>$catItem){
-            $data[]=[
-                'index'=>$catIdx+1,
-                'category'=>$catItem->name_zh,
-                'description'=>'',
-                'amount'=>''
-            ];
+            // $data[]=[
+            //     'index'=>$catIdx+1,
+            //     'category'=>$catItem->name_zh,
+            //     'description'=>'',
+            //     'amount'=>''
+            // ];
 
             foreach($fundItems as $itemIdx=>$fundItem){
                 if($fundItem->category_item_id==$catItem->id){
@@ -39,16 +39,20 @@ class FundExport implements FromCollection, WithHeadings
                             'index'=>($catIdx+1).'.'.($itemIdx+1),
                             'category'=>'',
                             'description'=>$fundItem->splits[0]->description,
-                            'amount'=>$fundItem->amount
+                            'amount'=>$fundItem->amount,
                         ];
                     }else{
                         foreach($fundItem->splits as $splitIdx=>$split){
-                            $data[]=[
+                            $d=[
                                 'index'=>($catIdx+1).'.'.($itemIdx+1).'.'.($splitIdx+1),
                                 'category'=>'',
                                 'description'=>$split->description .'('.$split->amount.')',
-                                'amount'=>$fundItem->amount
+                                'amount'=>'',
                             ];
+                            if($splitIdx+1 == $fundItem->splits->count()){
+                                $d['amount']=$fundItem->amount;
+                            }
+                            $data[]=$d;
                         }
                     }
                 }

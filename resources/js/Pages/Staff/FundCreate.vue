@@ -90,7 +90,6 @@
                 <template v-for="i in 6">
                     <a-select-option :value="i" >{{ $t('repayment_phases', {phase: i}) }}</a-select-option>
                   </template>
-
                 </a-select>
               </a-form-item>
             </a-col>
@@ -120,7 +119,7 @@
           <div class="flex flex-row item-center justify-center gap-5 pt-5">
             <a-button :href="route('staff.funds.index')">{{ $t('back') }}</a-button>
             <a-button type="primary" html-type="submit" v-if="fund.is_submitted==false">{{ $t('save') }}</a-button>
-            <a-button :href="route('staff.fund.items.index',fund.id)" v-if="fund.id">{{ $t('funding_items') }}</a-button>
+            <a-button :href="route('staff.fund.items.index',fund.id)" type="fund" v-if="fund.id">{{ $t('funding_items') }}</a-button>
           </div>
         </a-form>
         </div>

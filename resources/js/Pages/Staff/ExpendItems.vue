@@ -6,45 +6,50 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-        <div class="bg-white relative shadow rounded-lg overflow-x-auto border-orange-500 border-solid">
           <ExpendHeader :expend="expend"/>
-        </div>
         <div class="container mx-auto pt-5">
           <div class="bg-white relative shadow rounded-lg md:p-5">
             <table width="100%" border="1">
-              <tr>
-                <th>#</th>
-                <th width="500px">{{ $t('expend_item_title') }}</th>
-                <th>{{ $t('expend_item_description') }}</th>
-                <th>{{ $t('reference_code') }}</th>
-                <th width="150px">{{ $t('amount') }}</th>
-                <th>{{ $t('operation') }}</th>
-              </tr>
-              <tr v-for="(item, idx) in expend.items">
-                <td>{{ idx+1 }}</td>
-                <td>
-                  <div>{{ getFundItemSplit(item.fund_item_split_id) }}</div>
-                  <a-select v-model:value="item.account_code" :options="categoryItemAccountsByExpendItem(item)" :style="{width:'500px'}"/>
-                </td>
-                <td>
-                  <a-input v-model:value="item.description" />
-                </td>
-                <td>
-                  {{item.reference_code}}
-                </td>
-                <td>
-                  <a-input v-model:value="item.amount" />
-                </td>
-                <td>
-                  <a-popconfirm :title="$t('funding_remove_item')" ok-text="Yes" cancel-text="No"
-                    @confirm="removeItem(idx)" @cancel="() => { }">
-                    <a-button as="link">Delete</a-button>
-                  </a-popconfirm>
-
-
-                  <!-- <inertia-link :href="route('staff.expend.items.destroy',{expend:expend.id,item:item.id})">Delete</inertia-link> -->
-                </td>
-              </tr>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th width="500px">{{ $t('expend_item_title') }}</th>
+                  <th>{{ $t('expend_item_description') }}</th>
+                  <th>{{ $t('reference_code') }}</th>
+                  <th width="150px">{{ $t('amount') }}</th>
+                  <th>{{ $t('operation') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, idx) in expend.items">
+                  <td>{{ idx+1 }}</td>
+                  <td>
+                    <div>{{ getFundItemSplit(item.fund_item_split_id) }}</div>
+                    <a-select v-model:value="item.account_code" :options="categoryItemAccountsByExpendItem(item)" :style="{width:'500px'}"/>
+                  </td>
+                  <td>
+                    <a-input v-model:value="item.description" />
+                  </td>
+                  <td>
+                    {{item.reference_code}}
+                  </td>
+                  <td>
+                    <a-input v-model:value="item.amount" />
+                  </td>
+                  <td>
+                    <a-popconfirm :title="$t('funding_remove_item')" ok-text="Yes" cancel-text="No"
+                      @confirm="removeItem(idx)" @cancel="() => { }">
+                      <a-button size="small" type="primary" danger>{{ $t('delete') }}</a-button>
+                    </a-popconfirm>
+                    <!-- <inertia-link :href="route('staff.expend.items.destroy',{expend:expend.id,item:item.id})">Delete</inertia-link> -->
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align:right">{{ $t('total') }}</td>
+                  <td>{{ grandTotal() }}</td>
+                  <td></td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -296,7 +301,11 @@
       removeItem(itemIdx){
         console.log(itemIdx)
         this.expend.items.splice(itemIdx,1)
-      }
+      },
+      grandTotal(){
+      const amounts = this.expend.items.map(i => i.amount);
+      return amounts.reduce((sum,a)=>sum+parseInt(a),0).toLocaleString();
+    },
 
     },
   };

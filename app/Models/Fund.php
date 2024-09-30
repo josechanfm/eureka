@@ -45,7 +45,7 @@ class Fund extends Model
         $items=$this->items;
         foreach($items as $item){
             foreach($item->splits as $split){
-                $split->total=ExpendItem::where('fund_item_split_id',$split->id)->sum('amount');
+                $split->reserved=ExpendItem::where('fund_item_split_id',$split->id)->sum('amount');
             }
         }
         return $items;

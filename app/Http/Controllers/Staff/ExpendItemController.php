@@ -50,9 +50,13 @@ class ExpendItemController extends Controller
     {
         //$toSubmit=$request->toSubmit;
         $items=$request->items;
+        $expend->items()->whereNotIn('id',array_column($items,'id'))->delete();
+        
         foreach($items as $i=>$item){
             unset($items[$i]['created_at']);
             unset($items[$i]['updated_at']);
+            unset($items[$i]['split']);
+            unset($items[$i]['reserved']);
         }
         foreach($items as $item){
             if(isset($item['id'])){
@@ -90,8 +94,10 @@ class ExpendItemController extends Controller
      */
     public function update(Request $request, Expend $expend, ExpendItem $item)
     {
-        // dd($expend, $item);
-        $item->update($request->all());
+        $data=$request->all();
+        unset($data['split']);
+        unset($data['reserved']);
+        $item->update($data);
         return redirect()->back();
     }
 

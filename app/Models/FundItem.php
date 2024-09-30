@@ -9,10 +9,10 @@ class FundItem extends Model
 {
     use HasFactory;
     protected $fillable=['fund_id','category_item_id','sequence','description','project_code','sequence','amount'];
-    protected $appends=['budgeted'];
+    protected $appends=['reserved'];
 
-    public function getBudgetedAttribute(){
-        return ExpendItem::where('fund_item_split_id',$this->id)->sum('amount');
+    public function getReservedAttribute(){
+        return ExpendItem::whereIn('fund_item_split_id',$this->splits->pluck('id'))->sum('amount');
     }
 
     public function fund(){

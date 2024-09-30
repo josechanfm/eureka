@@ -59,7 +59,9 @@ class FundController extends Controller
     public function show(Fund $fund)
     {
         $categoryItemIds=$fund->items->keyBy('category_item_id')->pluck('category_item_id')->toArray();
-        $fund->summary();
+        //$fund->summary();
+        $fund->items();
+        //dd($fund->items[0]->splits[0]->reserved);
         return Inertia::render('Admin/FundSummary',[
             'categoryItems'=>CategoryItem::whereIn('id',$categoryItemIds)->with('accounts')->get(),
             'fund'=>$fund,

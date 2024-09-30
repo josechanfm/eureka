@@ -6,9 +6,7 @@
       </h2>
     </template>
     <div class="container mx-auto pt-5">
-      <div class="bg-white relative shadow rounded-lg overflow-x-auto border-blue-500 border-solid">
         <FundHeader :fund="fund"/>
-      </div>
       <a-divider/>
 
       <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
@@ -143,7 +141,7 @@
                   <template #title>
                       <div v-html="$t('save_submit_popup')"/>
                   </template>
-                  <a-button>{{ $t('save_submit') }}</a-button>
+                  <a-button type="primary" danger>{{ $t('save_submit') }}</a-button>
               </a-popconfirm>
 
               
@@ -211,11 +209,11 @@ export default {
     subTotal(catItem){
       const items=this.fund.items.filter(i=>i.category_item_id==catItem.id)
       const amounts = items.map(i => i.amount);
-      return amounts.reduce((sum,a)=>sum+a,0).toLocaleString();
+      return amounts.reduce((sum,a)=>sum+parseInt(a),0).toLocaleString();
     },
     grandTotal(){
       const amounts = this.fund.items.map(i => i.amount);
-      return amounts.reduce((sum,a)=>sum+a,0).toLocaleString();
+      return amounts.reduce((sum,a)=>sum+parseInt(a),0).toLocaleString();
     },
     isDisabled(id){
       if(this.myCategoryItems){

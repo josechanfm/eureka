@@ -22,6 +22,15 @@ class Expend extends Model
         $this->save();
         return $this->status;
     }
+    public function canSubmit(){
+        if($this->items()->where('account_code','GF')->count()>0){
+            return false;
+        }
+        if($this->items()->where('account_code','')->orWhereNull('account_code')->count()>0){
+            return false;
+        }
+        return true;
+    }
     // public function setReturned(){
     //     $this->status='S2';
     //     $this->save();

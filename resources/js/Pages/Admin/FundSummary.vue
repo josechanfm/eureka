@@ -40,8 +40,8 @@
                                     <span>{{ sumItemAccounts(item.splits) }}</span>
                                   </td> -->
                       <td style="text-align:right">{{ item.amount.toLocaleString() }}</td>
-                      <td style="text-align:right">{{ item.budgeted }}</td>
-                      <td style="text-align:right">{{ (item.amount - item.budgeted).toLocaleString() }}</td>
+                      <td style="text-align:right">{{ sumItemReserved(item) }}</td>
+                      <td style="text-align:right">{{ (item.amount - item.reserved).toLocaleString() }}</td>
                     </tr>
                   </template>
                   <template v-else>
@@ -55,30 +55,30 @@
                               <td style="text-align:right">
                                 <span v-if="split.amount">{{ split.amount }}</span><span v-else>---</span>
                               </td>
+                              <td>{{ split.reserved }}</td>
                             </tr>
                           </template>
                         </table>
                       </td>
                       <!-- <td style="text-align:right">{{ sumItemAccounts(item.splits) }}b</td> -->
                       <td style="text-align:right">{{ item.amount.toLocaleString() }}</td>
-                      <td style="text-align:right">{{ item.budgeted }}</td>
-                      <td style="text-align:right">{{ (item.amount - item.budgeted).toLocaleString() }}</td>
+                      <td style="text-align:right">{{ sumItemReserved(item) }}</td>
+                      <td style="text-align:right">{{ (item.amount - sumItemReserved(item)).toLocaleString() }}</td>
                     </tr>
                   </template>
                 </template>
                 <tr>
                   <td colspan="2" style="text-align:right">{{ $t('sub_total') }}:</td>
                   <td style="text-align:right">{{ subTotal(fund.items, catItem).toLocaleString() }}</td>
-                  <td style="text-align:right">{{ subBudgeted(fund.items, catItem).toLocaleString() }}</td>
-                  <td style="text-align:right">{{ (subTotal(fund.items, catItem) - subBudgeted(fund.items,
-                    catItem)).toLocaleString() }}</td>
+                  <td style="text-align:right">{{ sumCategoryReserved(fund.items, catItem).toLocaleString() }}</td>
+                  <td style="text-align:right">{{ (subTotal(fund.items, catItem) - sumCategoryReserved(fund.items,catItem)).toLocaleString() }}</td>
                 </tr>
               </template>
               <tr>
                 <td colspan="2" style="text-align: right;">{{ $t('grand_total') }}:</td>
                 <td style="text-align:right">{{ grandTotal(fund.items).toLocaleString() }}</td>
-                <td style="text-align:right">{{ grandBudegeted(fund.items).toLocaleString() }}</td>
-                <td style="text-align:right">{{ (grandTotal(fund.items) - grandBudegeted(fund.items)).toLocaleString() }}
+                <td style="text-align:right">{{ sumGrandReserved(fund.items).toLocaleString() }}</td>
+                <td style="text-align:right">{{ (grandTotal(fund.items) - sumGrandReserved(fund.items)).toLocaleString() }}
                 </td>
               </tr>
             </tbody>
@@ -136,8 +136,6 @@ export default {
   },
   methods: {
     sumItemAccounts(splits) {
-      console.log('sumItemAccounts');
-      console.log(splits);
       return splits.reduce((a, c) => {
         if (c.amount) {
           return a + parseInt(c.amount)
@@ -152,12 +150,18 @@ export default {
     grandTotal(fundItems) {
       return fundItems.reduce((a, c) => a + parseInt(c.amount), 0)
     },
-    subBudgeted(fundItems, catItem) {
-      return fundItems.filter(i => i.category_item_id == catItem.id).reduce((a, c) => a + parseInt(c.budgeted), 0)
+    sumCategoryReserved(fundItems, catItem) {
+      return fundItems.filter(i => i.category_item_id == catItem.id).reduce((a, c) => a + parseInt(c.reserved), 0)
     },
-    grandBudegeted(fundItems) {
-      return fundItems.reduce((a, c) => a + parseInt(c.budgeted), 0)
+    sumGrandReserved(fundItems) {
+      console.log(fundItems)
+      return fundItems.reduce((a, c) => a + parseInt(c.reserved), 0)
     },
+    sumItemReserved(item){
+      return item.splits.reduce((a,c)=>a + parseInt(c.reserved),0);
+      //return fundItems.reduce((a, c) => a + parseInt(c.budgeted), 0)
+
+    }
 
   },
 };

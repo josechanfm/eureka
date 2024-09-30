@@ -76,6 +76,7 @@ class FundItemController extends Controller
                 if(isset($a['id'])){
                     unset($a['created_at']);
                     unset($a['updated_at']);
+                    unset($a['reserved']);
                     FundItemSplit::where('id',$a['id'])->update($a);
                 }else{
                     $fundItem->splits()->create($a);

@@ -77,9 +77,8 @@ class ExpendController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Fund $fund, Expend $expend)
     {
-        //
     }
     public function genReferenceCode($expend){
         $codePrefix=substr('0000'.$expend->id,-4);
@@ -100,7 +99,7 @@ class ExpendController extends Controller
                 $expend->status='S4';
                 break;
             case 'PROPOSE':
-                if($expend->items()->where('account_code','GF')->where('account_code','')->orWhereNull('account_code')->get()->count()>=0){
+                if(!$expend->canSubmit()){
                     return redirect()->back()->withErrors(['message'=>'Account Code Not completed!']);
                     break;
                 }

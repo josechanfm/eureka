@@ -20,8 +20,8 @@
                     {{ $t('edit') }}  
                   </span>
                 </a-button>
-                <a-button :href="route('staff.fund.items.index',record.id)" type="info">{{ $t('funding_items') }}</a-button>
-                <a-button :href="route('staff.fund.expends.index',record.id)" type="edit" class="ml-5">{{ $t('expends') }}</a-button>
+                <a-button :href="route('staff.fund.items.index',record.id)" type="fund">{{ $t('funding_items') }}</a-button>
+                <a-button :href="route('staff.fund.expends.index',record.id)" type="expend" class="ml-5">{{ $t('expends') }}</a-button>
               </template>
               <template v-else-if="column.dataIndex=='is_submitted'">
                 <span v-if="record.is_submitted">{{ $t('submitted') }}</span>
