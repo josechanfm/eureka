@@ -16,7 +16,7 @@
 "submit":"遞交",
 "save":"保存",
 "save_submit":"保存並遞交",
-"save_submit_popup":"遞交後不可修改。<br/>是否確定？",
+"save_submit_popup":"遞交後不可修改。<br>是否確定？",
 "export":"滙出",
 "archive":"歸檔",
 "reopen":"重新打開",
@@ -33,7 +33,7 @@
 "propose":"呈交建議書",
 "status":"狀態",
 "selection":"選項",
-"add_funding_item":"新增支助項目",
+"add_funding_item":"新增資助項目",
 "my_project":"我的項目",
 "project_entity":"申請實體",
 "project_declarant":"聲明人姓名",
@@ -54,9 +54,9 @@
 "project_phase6":"第六期",
 "grant_phases":"資助分 :phase 期發放",
 "repayment_phases":"資助分 :phase 期償還",
-"funding_items":"支助經費",
-"funding_category":"支助項目分類",
-"funding_description":"支助項目描述",
+"funding_items":"資助經費",
+"funding_category":"資助項目分類",
+"funding_description":"資助項目描述",
 "funding_remove_item":"刪除經費項目",
 "funding_remove_split":"刪除經費細項",
 "sequence":"序號",
@@ -90,6 +90,5 @@
 "account_code":"經濟分類編號",
 "amount":"金額",
 "available":"可用",
-
 "thank_you":"感謝"
 }
