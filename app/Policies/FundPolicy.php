@@ -22,7 +22,8 @@ class FundPolicy
      */
     public function view(User $user, Fund $fund): bool
     {
-        return $user->id==$fund->owner_id || $user->role==='admin';
+        return $fund->isMember() || $user->hasAnyRole(['master', 'admin', 'gf', 'dei']);
+        //return $user->id==$fund->owner_id || $user->hasAnyRole(['master', 'admin', 'gf', 'dei']);
     }
 
     /**
@@ -38,7 +39,7 @@ class FundPolicy
      */
     public function update(User $user, Fund $fund): bool
     {
-        return $user->id==$fund->owner_id || $user->role==='admin';
+        return $user->hasAnyRole(['master', 'admin', 'gf', 'dei']);
     }
 
     /**
@@ -46,7 +47,7 @@ class FundPolicy
      */
     public function delete(User $user, Fund $fund): bool
     {
-        return $user->id==$fund->owner_id || $user->role==='admin';
+        return $user->hasAnyRole(['master', 'admin', 'gf', 'dei']);
     }
 
     /**
@@ -54,7 +55,7 @@ class FundPolicy
      */
     public function restore(User $user, Fund $fund): bool
     {
-        return $user->role === 'admin'; // Allow admin to view any fund
+        return $user->hasAnyRole(['master', 'admin', 'gf', 'dei']);
     }
 
     /**
@@ -62,6 +63,6 @@ class FundPolicy
      */
     public function forceDelete(User $user, Fund $fund): bool
     {
-        return $user->role === 'admin'; // Allow admin to view any fund
+        return $user->hasAnyRole(['master', 'admin', 'gf', 'dei']);
     }
 }

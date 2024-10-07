@@ -16,10 +16,35 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $roleMaster=Role::create([
+            'name'=>'master',
+            'guard_name'=>'web'
+        ]);
         $roleAdmin=Role::create([
             'name'=>'admin',
             'guard_name'=>'web'
         ]);
+        $roleGf=Role::create([
+            'name'=>'gf',
+            'guard_name'=>'web'
+        ]);
+        $roleDei=Role::create([
+            'name'=>'dei',
+            'guard_name'=>'web'
+        ]);
+
+        $user=User::create([
+            'username' => 'master',
+            'name' => 'Master',
+            'email' => 'maser@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'personal_team' => true,
+        ]));
+        $user->roles()->attach($roleMaster);
 
         $user=User::create([
             'username' => 'admin',
@@ -35,9 +60,9 @@ class UserSeeder extends Seeder
         $user->roles()->attach($roleAdmin);
 
         $user=User::create([
-            'username' => 'teacher',
-            'name' => 'Teacher',
-            'email' => 'teacher@example.com',
+            'username' => 'gf',
+            'name' => 'Gf',
+            'email' => 'gf@example.com',
             'password' => Hash::make('password'),
         ]);
         $user->ownedTeams()->save(Team::forceCreate([
@@ -45,9 +70,53 @@ class UserSeeder extends Seeder
             'name' => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
+        $user->roles()->attach($roleGf);
 
+        $user=User::create([
+            'username' => 'dei',
+            'name' => 'Dei',
+            'email' => 'dei@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'personal_team' => true,
+        ]));
+        $user->roles()->attach($roleDei);
 
-        
-
+        $user=User::create([
+            'username' => 'member1',
+            'name' => 'Member1',
+            'email' => 'member1@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'personal_team' => true,
+        ]));        
+        $user=User::create([
+            'username' => 'member2',
+            'name' => 'Member2',
+            'email' => 'member2@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'personal_team' => true,
+        ]));
+        $user=User::create([
+            'username' => 'member3',
+            'name' => 'Member3',
+            'email' => 'member3@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'personal_team' => true,
+        ]));        
     }
 }

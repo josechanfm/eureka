@@ -16,27 +16,37 @@
                 <a-button @click="editRecord(record)" v-else>{{ $t('edit') }}</a-button>
                 <a-button :href="route('admin.expend.items.index',record.id)" type="edit">{{ $t('expend_item') }}</a-button>
                 <a-button :href="route('admin.expend.export',record.id)">{{ $t('export') }}</a-button>
+                <div v-role="['admin','dei']">
+                  <template v-if="record.status=='S2'">
+                      <a-button :disabled="true">{{ $t('return') }}</a-button>
+                      <a-button :disabled="true">{{ $t('accept') }}</a-button>
+                  </template>
+                  <template v-else-if="record.status=='S3'">
+                      <a-button @click="onChangeStatus(record,'RETURN')">{{ $t('return') }}</a-button>
+                      <a-button @click="onChangeStatus(record,'ACCEPT')">{{ $t('accept') }}</a-button><!-- to archive-->
+                  </template>
+                  <template v-else-if="record.status=='S4'">
+                      <a-button @click="onChangeStatus(record,'REVIEW')">{{ $t('review') }}</a-button>
+                      <a-button @click="onChangeStatus(record,'PROPOSE')">{{ $t('propose') }}</a-button><!-- to archive-->
+                  </template>
+                  <template v-else-if="record.status=='S5'">
+                      <a-button @click="onChangeStatus(record,'REWORK')">{{ $t('rework') }}</a-button>
+                      <a-button @click="onChangeStatus(record,'ARCHIVE')">{{ $t('archive') }}</a-button><!-- to archive-->
+                  </template>
+                </div>
               </template>
               <template v-else-if="column.dataIndex == 'status'">
                 <template v-if="record.status=='S2'">
                   {{ $t('revise') }}
-                  <a-button :disabled="true">{{ $t('return') }}</a-button>
-                  <a-button :disabled="true">{{ $t('accept') }}</a-button>
                 </template>
                 <template v-else-if="record.status=='S3'">
                   {{ $t('submitted') }}
-                  <a-button @click="onChangeStatus(record,'RETURN')">{{ $t('return') }}</a-button>
-                  <a-button @click="onChangeStatus(record,'ACCEPT')">{{ $t('accept') }}</a-button><!-- to archive-->
                 </template>
                 <template v-else-if="record.status=='S4'">
-                  {{ $t('accpeted') }}
-                  <a-button @click="onChangeStatus(record,'REVIEW')">{{ $t('review') }}</a-button>
-                  <a-button @click="onChangeStatus(record,'PROPOSE')">{{ $t('propose') }}</a-button><!-- to archive-->
+                  {{ $t('accepted') }}
                 </template>
                 <template v-else-if="record.status=='S5'">
                   {{ $t('proposed') }}
-                  <a-button @click="onChangeStatus(record,'REWORK')">{{ $t('rework') }}</a-button>
-                  <a-button @click="onChangeStatus(record,'ARCHIVE')">{{ $t('archive') }}</a-button><!-- to archive-->
                 </template>
                 <template v-else-if="record.status=='S6'">
                   {{ $t('archived') }}
@@ -87,21 +97,23 @@
           </a-form-item>
         </a-form>
         <template #footer>
-          <a-button @click="modal.isOpen=false">{{ $t('back') }}</a-button>
-          <a-button
-            v-if="modal.mode == 'EDIT'"
-            key="Update"
-            type="primary"
-            @click="updateRecord()"
-            >{{ $t('update') }}</a-button
-          >
-          <a-button
-            v-if="modal.mode == 'CREATE'"
-            key="Store"
-            type="primary"
-            @click="storeRecord()"
-            >{{ $t('add') }}</a-button
-          >
+          <a-button @click="modal.isOpen=false" class="mx-5">{{ $t('back') }}</a-button>
+          <span v-role="['admin','dei']">
+            <a-button
+              v-if="modal.mode == 'EDIT'"
+              key="Update"
+              type="primary"
+              @click="updateRecord()"
+              >{{ $t('update') }}</a-button
+            >
+            <a-button
+              v-if="modal.mode == 'CREATE'"
+              key="Store"
+              type="primary"
+              @click="storeRecord()"
+              >{{ $t('add') }}</a-button
+            >
+          </span>
         </template>
       </a-modal>
       <!-- Modal End-->
@@ -179,11 +191,18 @@
             title: this.$t('status'),
             i18n: "status",
             dataIndex: "status",
+            minWidth: "260px",
+            customCell:(text,record,index)=>({
+              style:{minWidth: "260px"}
+            })
           },{
             title: this.$t('operation'),
             i18n: "operation",
             dataIndex: "operation",
-            key: "operation",
+            width: "250px",
+            customCell:(text,record,index)=>({
+              style:{minWidth: "250px"}
+            })
           },
         ]
       }
@@ -193,13 +212,13 @@
         this.modal.data = {}
         this.modal.data.fund_id=this.fund.id
         this.modal.mode = "CREATE"
-        this.modal.title = "Create"
+        this.modal.title = this.$t('create')
         this.modal.isOpen = true
       },
       editRecord(record){
         this.modal.data = {...record}
         this.modal.mode = "EDIT"
-        this.modal.title = "Edit"
+        this.modal.title = this.$t('edit')
         this.modal.isOpen = true
       },
       viewRecord(record){

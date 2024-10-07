@@ -15,8 +15,13 @@
 "back":"Back",
 "submit":"Submit",
 "save":"Save",
-"save_submit":"Save and Submit",
+"save_submit":"Save and Lock",
 "save_submit_popup":"Modification cannot be made after submission. Are you sure?",
+"lock":"Lock",
+"unlock":"Unlock",
+"unlock_popup":"Modification after unlocking, might affect the budget calculation.<br>Are you sure？",
+"yes":"Yes",
+"no":"No",
 "export":"Export",
 "archive":"Archive",
 "reopen":"Re-Open",
@@ -90,6 +95,6 @@
 "account_code":"Account Code",
 "amount":"Amount",
 "available":"Available",
-
+"phase":"Phase",
 "thank_you":"Thank Your"
 }

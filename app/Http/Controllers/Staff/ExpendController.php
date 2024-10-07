@@ -16,11 +16,10 @@ class ExpendController extends Controller
      */
     public function index(Fund $fund)
     {
-        //dd($fund);
-        if($fund->is_closed || $fund->owner_id!=auth()->user()->id){
+
+        if($fund->is_closed || !$fund->isMember()){
             return redirect()->route('staff.funds.index');
         }
-
         return Inertia::render('Staff/Expends',[
             'fund'=>$fund,
             'expends'=>Expend::whereBelongsTo($fund)->with('items')->get()

@@ -9,7 +9,7 @@ class Fund extends Model
 {
     use HasFactory;
     protected $fillable=['category_id','entity','declarant','birm','project_code','title','responsible','amount','type','duration','grant','grants','repayment','repayments','created_by','updated_by'];
-    protected $casts=['grants'=>'array','repayments'=>'array','is_closed'=>'boolean'];
+    protected $casts=['is_submitted'=>'boolean','grants'=>'array','repayments'=>'array','is_closed'=>'boolean'];
     
     public function category(){
         return $this->belongsTo(Category::class)->with('items');
@@ -37,6 +37,12 @@ class Fund extends Model
     }
     public function expendItems(){
         return $this->hasManyThrough(ExpendItem::class, Expend::class);
+    }
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
+    public function isMember(){
+        return in_array(auth()->user()->id,$this->users->pluck('id')->toArray());
     }
     public function ownedBy(){
         return $this->belongsTo(User::class, 'owner_id');

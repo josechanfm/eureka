@@ -7,18 +7,11 @@
       </template>
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-button type="primary" class="float-right m-5" :href="route('staff.funds.create',{id:selectedCategory})">{{ $t('create') }}</a-button>
-          <a-select v-model:value="selectedCategory" :options="categories" :fieldNames="{value:'id',label:'title_zh'}" class="float-right m-5" style="width:200px"/>
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('staff.funds.edit',record.id)">
-                  <span v-if="record.is_submitted">
+                <a-button :href="route('staff.funds.show',record.id)">
                     {{ $t('view') }}
-                  </span>
-                  <span v-else>
-                    {{ $t('edit') }}  
-                  </span>
                 </a-button>
                 <a-button :href="route('staff.fund.items.index',record.id)" type="fund">{{ $t('funding_items') }}</a-button>
                 <a-button :href="route('staff.fund.expends.index',record.id)" type="expend" class="ml-5">{{ $t('expends') }}</a-button>
@@ -48,18 +41,7 @@
     props: ["categories","funds"],
     data() {
       return {
-        selectedCategory:this.categories[0].id,
-        modal: {
-          isOpen: false,
-          data: {},
-          title: "Modal",
-          mode: "",
-        },
-        labelCol: {
-          style: {
-            width: "150px",
-          },
-        },
+        
       };
     },
     created() {

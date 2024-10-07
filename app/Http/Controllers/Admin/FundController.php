@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\CategoryItem;
@@ -19,8 +20,8 @@ class FundController extends Controller
      */
     public function index()
     {
-        //dd(auth()->user());
         return Inertia::render('Admin/Funds',[
+            'categories'=>Category::where('active',true)->get(),
             'funds'=>Fund::withCount('expends')->get()
         ]);
     }
@@ -28,15 +29,29 @@ class FundController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Admin/FundCreate',[
-            'categories'=>Category::all(),
-            'fund'=>(Object)[
-                'fund_category_id'=>1,
-                'grants'=>[],
-                'repayments'=>[]
+        //dd($request->all());
+        $result=$request->validate([
+            'id' => [
+                'required',
+                'integer',
+                Rule::exists('categories')->where(function($query){
+                    return $query->where('active',true);
+                })
             ]
+        ]);
+        $fund=Fund::make(['category_id'=>1,'grants'=>[],'repayments'=>[]]);
+        //dd('create fund',$fund);
+
+        return Inertia::render('Admin/FundForm',[
+            'category'=>Category::find($request->id),
+            'fund'=>$fund
+            // 'fund'=>(Object)[
+            //     'category_id'=>1,
+            //     'grants'=>[],
+            //     'repayments'=>[]
+            // ]
         ]);
     }
 
@@ -73,8 +88,8 @@ class FundController extends Controller
      */
     public function edit(Fund $fund)
     {
-        return Inertia::render('Admin/FundCreate',[
-            'categories'=>Category::all(),
+        return Inertia::render('Admin/FundForm',[
+            'category'=>$fund->category,    
             'fund'=>$fund
         ]);
 
@@ -97,10 +112,14 @@ class FundController extends Controller
         //
     }
 
+    public function toggleSubmit(Fund $fund){
+        $fund->is_submitted=!$fund->is_submitted;
+        $fund->save();
+    }
+
     public function toggleClose(Fund $fund){
         $fund->is_closed=!$fund->is_closed;
         $fund->save();
-       
     }
 
 

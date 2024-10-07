@@ -40,21 +40,23 @@ const logout = () => {
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('home')">
                                     <ApplicationMark class="block h-9 w-auto" />
                                 </Link>
                             </div>
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink :href="route('admin.dashboard')" :active="route().current('dashboard')">
                                     {{ $t('dashboard')}}
                                 </NavLink>
                             </div>
                         </div>
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <div class="ms-3 relative"  v-role="['admin']">
-                                <a-button type="link" :href="route('admin.funds.index')" v-role="['admin']">{{ $t('admin') }}</a-button>
-                                <a-button type="link" :href="route('admin.categories.index')">{{ $t('category') }}</a-button>
+                            <div class="ms-3 relative" >
+                                <a-button type="link" :href="route('master.dashboard')" v-role="'master'">{{ $t('master') }}</a-button>
+                                <a-button type="link" :href="route('admin.categories.index')" v-role="'master'">{{ $t('category') }}</a-button>
+                                <a-button type="link" :href="route('admin.funds.index')" v-role="'gf'">{{ $t('gf') }}</a-button>
+                                <a-button type="link" :href="route('admin.funds.index')" v-role="'dei'">{{ $t('dei') }}</a-button>
                             </div>
                             <div class="ms-3 relative">
                                 <form method="POST" @submit.prevent="logout">
@@ -117,7 +119,7 @@ const logout = () => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('admin.dashboard')" :active="route().current('dashboard')">
                             {{ $t('dashboard')}}
                         </ResponsiveNavLink>
                     </div>
@@ -168,6 +170,9 @@ const logout = () => {
                     <slot name="header" />
                 </div>
             </header>
+
+            <!-- Add this section for the submenu -->
+            <slot name="submenu"></slot>
 
             <!-- Page Content -->
             <main>

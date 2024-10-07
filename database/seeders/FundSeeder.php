@@ -8,7 +8,7 @@ use App\Models\Fund;
 use App\Models\FundItem;
 use App\Models\Category;
 use App\Models\CategoryItemAccount;
-use App\Models\FundItemAccount;
+use App\Models\User;
 
 class FundSeeder extends Seeder
 {
@@ -36,6 +36,7 @@ class FundSeeder extends Seeder
             'owner_id'=>1,
             'repayments'=>[]
         ]);
+        $fund->users()->attach(User::where('username','LIKE',"%member%")->get());
 
         $categoryItems=$category->items;
 

@@ -9,7 +9,7 @@ use App\Models\Fund;
 use App\Models\Category;
 use App\Models\CategoryItemAccount;
 use App\Models\FundItem;
-use App\Models\FundItemAccount;
+use App\Models\FundItemSplit;
 
 class FundItemController extends Controller
 {
@@ -19,7 +19,7 @@ class FundItemController extends Controller
     public function index(Fund $fund)
     {
         $fund->items;
-        return Inertia::render('Admin/FundItemCreate',[
+        return Inertia::render('Admin/FundItemForm',[
             'category'=>Category::with('items')->find(1),
             'fund'=>$fund,
         ]);
@@ -39,13 +39,20 @@ class FundItemController extends Controller
      */
     public function store(Request $request, Fund $fund)
     {
-        $items=$request->all();
-        $fundItems=FundItem::whereNotIn('id',array_column($items,'id'))->delete();
-        // dd($fundItems);
-        // dd($items);
-        foreach($items as $item){
-            $accounts=$item['accounts'];
-            unset($item['accounts']);
+        $this->authorize('view',$fund);
+        $items=$request->items;
+        //delete removed items
+        $fund->items()->whereNotIn('id',array_column($items,'id'))->delete();
+
+        foreach($items as $i=>$item){
+            $item['sequence']=$i;
+            $splits=$item['splits'];
+            if(isset($item['id'])){
+                $fundItem=FundItem::find($item['id']);
+                $fundItem->splits()->whereNotIn('id',array_column($splits,'id'))->delete();
+            }
+
+            unset($item['splits']);
             if(isset($item['id'])){
                 unset($item['created_at']);
                 unset($item['updated_at']);
@@ -59,20 +66,23 @@ class FundItemController extends Controller
             }
             
 
-            foreach($accounts as $a){
+            foreach($splits as $j=>$a){
+                $a['sequence']=$j;
                 if(isset($a['id'])){
                     unset($a['created_at']);
                     unset($a['updated_at']);
-                    FundItemAccount::where('id',$a['id'])->update($a);
+                    unset($a['reserved']);
+                    FundItemSplit::where('id',$a['id'])->update($a);
                 }else{
-                    $cia=CategoryItemAccount::find($a['category_item_account_id']);
-                    $a['account_code']=$cia->account_code;
-                    //$a['fund_item_id']=$fundItem->id;
-                    $fundItem->accounts()->create($a);
+                    $fundItem->splits()->create($a);
                 }
             }
+            if($request->toSubmit){
+                $fund->is_submitted=$request->toSubmit;
+                $fund->save();
+            }
         }
-        return redirect()->route('admin.funds.index',$fund);
+        return redirect()->back();
     }
 
     /**

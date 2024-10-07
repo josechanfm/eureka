@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Fund;
 use App\Models\Category;
-use App\Models\CategoryItemAccount;
+use App\Models\User;
 use App\Models\FundItem;
 use App\Models\FundItemSplit;
 
@@ -18,13 +18,10 @@ class FundItemController extends Controller
      */
     public function index(Fund $fund)
     {
-        // if($fund->is_closed){
-        //     return redirect()->route('staff.funds.index');
-        // }
+        
         $this->authorize('view',$fund);
-        //dd($fund->items);
         $fund->items;
-        return Inertia::render('Staff/FundItemCreate',[
+        return Inertia::render('Staff/FundItemShow',[
             'category'=>Category::with('items')->find($fund->category_id),
             'fund'=>$fund,
         ]);
@@ -43,7 +40,6 @@ class FundItemController extends Controller
      */
     public function store(Request $request, Fund $fund)
     {
-        
         $this->authorize('view',$fund);
         $items=$request->items;
         //delete removed items

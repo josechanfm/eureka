@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Fund;
-use App\Models\Config;
+use App\Models\User;
 
 class FundController extends Controller
 {
@@ -22,11 +22,11 @@ class FundController extends Controller
     }
     public function index()
     {
-        //dd(auth()->user());
         //$funds = Gate::allows('viewAny', Fund::class) ? Fund::all() : Fund::where('owner_id', auth()->id())->get();
         return Inertia::render('Staff/Funds',[
             'categories'=>Category::where('active',true)->get(),
-            'funds'=>Fund::whereBelongsTo(auth()->user(), 'ownedBy')->where('is_closed',false)->orderBy('created_at','DESC')->get()
+            'funds'=>auth()->user()->funds->where('is_closed',false)->where('is_submitted',true)
+            //'funds'=>Fund::whereBelongsTo(auth()->user(), 'ownedBy')->where('is_closed',false)->orderBy('created_at','DESC')->get()
         ]);
     }
 
@@ -85,20 +85,10 @@ class FundController extends Controller
      */
     public function show(Fund $fund)
     {
-        if($fund->is_closed){
-            return redirect()->route('staff.funds.index');
-        }
-
-        //$fund->items;
-        foreach($fund->items as $item){
-            $item->total=$item->accounts->sum('amount');
-        }
-        //dd('fund show',$fund);
-        return Inertia::render('Staff/FundPdf',[
-            'category'=>Category::with('items')->find(1),
-            'fund'=>$fund,
+        return Inertia::render('Staff/FundShow',[
+            'category'=>$fund->category,
+            'fund'=>$fund
         ]);
-
 
     }
 

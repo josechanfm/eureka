@@ -24,12 +24,14 @@
                 {{ record.split.description }}
               </template>
               <template v-else-if="column.dataIndex == 'operation'">
-                <template v-if="editableData.id==record.id">
-                  <a-button @click="onSaveRecord(record)" type="save">{{ $t('save') }}</a-button>
-                </template>
-                <template v-else>
-                  <a-button @click="onEditRecord(record)">{{ $t('edit') }}</a-button>
-                </template>
+                <div v-role="['admin','gf']">
+                  <template v-if="editableData.id==record.id">
+                    <a-button @click="onSaveRecord(record)" type="save">{{ $t('save') }}</a-button>
+                  </template>
+                  <template v-else>
+                    <a-button @click="onEditRecord(record)">{{ $t('edit') }}</a-button>
+                  </template>
+                </div>
                 <!-- <a-button :href="route('admin.fund.expends.edit',{fund:record.fund_id,expend:record.id})" >Edit</a-button> -->
               </template>
             </template>
