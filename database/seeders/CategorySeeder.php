@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Category;
+use App\Models\Config;
 
 class CategorySeeder extends Seeder
 {
@@ -13,14 +14,20 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $category=Category::create(
-            [
-                'type'=>'FDCT',
-                'version'=>'2024',
-                'title_zh'=>'校內項目',
+        $categories=Config::item('fund_categories');
+        foreach($categories as $cat){
+            Category::create([
+                'type'=>$cat['value'],
+                'initial'=>$cat['initial'],
+                'version'=>1,
+                'title_zh'=>$cat['label'],
                 'active'=>true
-            ]
-        );
+            ]);
+        };
+        $category=Category::where('type','FDCT')->first();
+        $category->active=true;
+        $category->save;
+        
         $data=[
             ["name_zh"=>"本地研究人員津貼費","account"=>[
                 ["name_zh"=>"個人津貼(公職校內人員)","user_define"=>false,"account_code"=>"1-31-02-99-00-00-01.280.Z01"],

@@ -19,8 +19,10 @@ class FundItemController extends Controller
     public function index(Fund $fund)
     {
         $fund->items;
+        //dd($fund->category_id);
+        //dd(Category::with('items')->find($fund->category_id));
         return Inertia::render('Admin/FundItemForm',[
-            'category'=>Category::with('items')->find(1),
+            'category'=>Category::with('items')->find($fund->category_id),
             'fund'=>$fund,
         ]);
         

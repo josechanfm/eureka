@@ -18,13 +18,16 @@ class ConfigSeeder extends Seeder
                 [
                     [
                         "value"=> "INTERNAL",
-                        "label"=> "校內項目"
+                        "label"=> "校內項目",
+                        "initial"=>'I'
                     ],[
                         "value"=> "FDCT",
-                        "label"=> "科技發展基金項目"
+                        "label"=> "科技發展基金項目",
+                        "initial"=>'F'
                     ],[
                         "value"=> "DELEGATE",
-                        "label"=> "校外委託項目"
+                        "label"=> "校外委託項目",
+                        "initial"=>'E'
                     ]
                 ]
             ]

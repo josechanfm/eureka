@@ -12,12 +12,12 @@
           <div class="p-5">
             <a-button type="primary" @click="createRecord()">{{ $t('create') }}</a-button>
           </div>
-          <a-table :dataSource="expends" :columns="columns">
+          <a-table :dataSource="budgets" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
                 <a-button @click="deleteRecord(record)" type="primary" danger :disabled="!record.items.length==0">{{ $t('delete') }}</a-button>
                 <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">{{ $t('edit') }}</a-button>
-                <a-button :href="route('staff.expend.items.index',record.id)" type="expend">{{ $t('expend_item') }}</a-button>
+                <a-button :href="route('staff.budget.items.index',record.id)" type="budget">{{ $t('budget_item') }}</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -39,25 +39,25 @@
           :validate-messages="validateMessages"
         >
           <a-form-item :label="$t('year')" name="year">
-            <a-select v-model:value="modal.data.year" :options="years"/>
+            <a-select v-model:value="modal.data.year" :options="years" :disabled="modal.data.status > 'S2'"/>
           </a-form-item>
-          <a-form-item :label="$t('expend_title')" name="title">
-            <a-input v-model:value="modal.data.title" />
+          <a-form-item :label="$t('budget_title')" name="title">
+            <a-input v-model:value="modal.data.title" :disabled="modal.data.status > 'S2'"/>
           </a-form-item>
           <a-form-item :label="$t('proposal_number')" name="proposal_number">
-            <a-input v-model:value="modal.data.proposal_number" />
+            {{ modal.data.proposal_number }}
           </a-form-item>
           <a-form-item :label="$t('proposed_at')" name="proposed_at">
-            <a-date-picker v-model:value="modal.data.proposed_at" :format="dateFormat" :valueFormat="dateFormat"/>
+            {{ modal.data.proposed_at }}
           </a-form-item>
           <a-form-item :label="$t('proposed_by')" name="proposed_by">
-            <a-input v-model:value="modal.data.proposed_by"/>
+            {{  modal.data.proposed_by }}
           </a-form-item>
           <a-form-item :label="$t('approved_at')" name="approved_at">
-            <a-date-picker v-model:value="modal.data.approved_at" :format="dateFormat" :valueFormat="dateFormat"/>
+            {{  modal.data.approved_at }}
           </a-form-item>
           <a-form-item :label="$t('remark')" name="remark">
-            <a-textarea v-model:value="modal.data.remark" />
+            <div v-html="modal.data.remark"/>
           </a-form-item>
         </a-form>
         <template #footer>
@@ -90,7 +90,7 @@
       StaffLayout,
       FundHeader
     },
-    props: ["fund","expends"],
+    props: ["fund","budgets"],
     data() {
       return {
         years:[],
@@ -136,7 +136,7 @@
             i18n: "year",
             dataIndex: "year",
           },{
-            title:  this.$t('expend_proposal'),
+            title:  this.$t('budget_proposal'),
             i18n: "title",
             dataIndex: "title",
           },{
@@ -147,10 +147,6 @@
             title: this.$t('proposed_at'),
             i18n: "proposed_at",
             dataIndex: "proposed_at",
-          },{
-            title: this.$t('proposed_by'),
-            i18n: "proposed_by",
-            dataIndex: "proposed_by",
           },{
             title: this.$t('operation'),
             i18n: "operation",
@@ -177,7 +173,7 @@
       deleteRecord(record){
         console.log('delete record')
         console.log(record)
-        this.$inertia.delete(route('staff.fund.expends.destroy',{fund:this.fund.id, expend:record.id}),{
+        this.$inertia.delete(route('staff.fund.budgets.destroy',{fund:this.fund.id, budget:record.id}),{
           onSuccess: (page) => {
             console.log(page)
           },
@@ -190,7 +186,7 @@
         this.$refs.modalRef
           .validateFields()
           .then(() => {
-            this.$inertia.post(route("staff.fund.expends.store",this.fund.id), this.modal.data, {
+            this.$inertia.post(route("staff.fund.budgets.store",this.fund.id), this.modal.data, {
               onSuccess: (page) => {
                 this.modal.data = {};
                 this.modal.isOpen = false;
@@ -207,7 +203,7 @@
       updateRecord() {
         console.log(this.modal.data);
         this.$inertia.patch(
-          route("staff.fund.expends.update", {fund:this.fund.id,expend:this.modal.data.id}),
+          route("staff.fund.budgets.update", {fund:this.fund.id,budget:this.modal.data.id}),
           this.modal.data,
           {
             onSuccess: (page) => {

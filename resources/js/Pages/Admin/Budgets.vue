@@ -2,17 +2,66 @@
     <AdminLayout title="Dashboard">
       <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ $t('budget_proposal') }}
+          {{ $t('expend_proposal') }}
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-          <!-- <FundHeader :fund="fund" /> -->
+          <FundHeader :fund="fund" />
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-table :dataSource="expends" :columns="columns">
+          <a-table :dataSource="budgets" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('admin.expends.edit',record.id)" type="edit">{{ $t('expend_item') }}</a-button>
+                <a-button @click="viewRecord(record)" v-if="record.is_locked || record.is_closed">{{ $t('view') }}</a-button>
+                <a-button @click="editRecord(record)" v-else>{{ $t('edit') }}</a-button>
+                <a-button :href="route('admin.budget.items.index',record.id)" type="edit">{{ $t('budget_item') }}</a-button>
+                <a-button :href="route('admin.budget.export',record.id)">{{ $t('export') }}</a-button>
+              </template>
+              <template v-else-if="column.dataIndex == 'status'">
+                <!-- Status label -->
+                <template v-if="record.status=='S2'">
+                  {{ $t('revise') }}
+                </template>
+                <template v-else-if="record.status=='S3'">
+                  {{ $t('submitted') }}
+                </template>
+                <template v-else-if="record.status=='S4'">
+                  {{ $t('accepted') }}
+                </template>
+                <template v-else-if="record.status=='S5'">
+                  {{ $t('proposed') }}
+                </template>
+                <template v-else-if="record.status=='S6'">
+                  {{ $t('archived') }}
+                </template>
+                <template v-else>
+                  {{ $t('preparing') }}
+                </template>
+                <!-- //Status label -->
+                <!-- Status Action Button -->
+                <span v-role="['admin','dei']">
+                  <template v-if="record.status=='S2'">
+                      <a-button :disabled="true">{{ $t('return') }}</a-button>
+                      <a-button :disabled="true">{{ $t('accept') }}</a-button>
+                  </template>
+                  <template v-else-if="record.status=='S3'">
+                      <a-button @click="onChangeStatus(record,'RETURN')">{{ $t('return') }}</a-button>
+                      <a-button @click="onChangeStatus(record,'ACCEPT')">{{ $t('accept') }}</a-button><!-- to archive-->
+                  </template>
+                  <template v-else-if="record.status=='S4'">
+                      <a-button @click="onChangeStatus(record,'REVIEW')">{{ $t('review') }}</a-button>
+                      <a-button @click="onChangeStatus(record,'PROPOSE')">{{ $t('propose') }}</a-button><!-- to archive-->
+                  </template>
+                  <template v-else-if="record.status=='S5'">
+                      <a-button @click="onChangeStatus(record,'REWORK')">{{ $t('rework') }}</a-button>
+                      <a-button @click="onChangeStatus(record,'ARCHIVE')">{{ $t('archive') }}</a-button><!-- to archive-->
+                  </template>
+                </span>
+
+                <!-- //Status Action Button -->
+              </template>
+              <template v-else-if="column.dataIndex == 'reference'">
+                {{ '000'+record.id }}
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -33,7 +82,7 @@
           :rules="rules"
           :validate-messages="validateMessages"
         >
-          <a-form-item :label="$t('budget_proposal')" name="title">
+          <a-form-item :label="$t('expend_proposal')" name="title">
             <a-input v-model:value="modal.data.title" />
           </a-form-item>
           <a-form-item :label="$t('proposal_number')" name="proposal_number">
@@ -86,7 +135,7 @@
       AdminLayout,
       FundHeader,
     },
-    props: ["fund","budgets","expends"],
+    props: ["fund","budgets"],
     data() {
       return {
         dateFormat:'YYYY-MM-DD',
@@ -123,18 +172,34 @@
     computed:{
       columns(){
         return[
-          {
+        {
             title: this.$t('expend_title'),
+            i18n: "title",
             dataIndex: "title",
           },{
-            title: this.$t('expend_number'),
-            dataIndex: "expended_number",
+            title: this.$t('proposal_number'),
+            i18n: "proposal_number",
+            dataIndex: "proposal_number",
           },{
-            title: this.$t('expend_date'),
-            dataIndex: "expend_date",
+            title: this.$t('proposed_at'),
+            i18n: "proposed_at",
+            dataIndex: "proposed_at",
           },{
-            title: this.$t('exepnd_amount'),
-            dataIndex: "expend_amount",
+            title: this.$t('proposed_by'),
+            i18n: "proposed_by",
+            dataIndex: "proposed_by",
+          },{
+            title: this.$t('reference_code'),
+            i18n: "reference",
+            dataIndex: "reference",
+          },{
+            title: this.$t('status'),
+            i18n: "status",
+            dataIndex: "status",
+            minWidth: "260px",
+            customCell:(text,record,index)=>({
+              style:{minWidth: "260px"}
+            })
           },{
             title: this.$t('operation'),
             i18n: "operation",

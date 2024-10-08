@@ -27,16 +27,16 @@ class Fund extends Model
         }
         ;
         foreach($splits as $i=>$split){
-            $spends=$this->expendItems->where('fund_item_split_id',$split->id)->sum('amount');
+            $spends=$this->budgetItems->where('fund_item_split_id',$split->id)->sum('amount');
             $splits[$i]->available-=$spends;
         }
         return $splits;
     }
-    public function expends(){
-        return $this->hasMany(Expend::class);
+    public function budgets(){
+        return $this->hasMany(Budget::class);
     }
-    public function expendItems(){
-        return $this->hasManyThrough(ExpendItem::class, Expend::class);
+    public function budgetItems(){
+        return $this->hasManyThrough(BudgetItem::class, Budget::class);
     }
     public function users(){
         return $this->belongsToMany(User::class);
@@ -51,7 +51,7 @@ class Fund extends Model
         $items=$this->items;
         foreach($items as $item){
             foreach($item->splits as $split){
-                $split->reserved=ExpendItem::where('fund_item_split_id',$split->id)->sum('amount');
+                $split->reserved=BudgetItem::where('fund_item_split_id',$split->id)->sum('amount');
             }
         }
         return $items;

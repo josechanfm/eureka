@@ -14,14 +14,14 @@ class FundItemSplit extends Model
     protected $appends=['reserved'];
     
     public function getReservedAttribute(){
-        return ExpendItem::where('fund_item_split_id',$this->id)->sum('amount');
+        return BudgetItem::where('fund_item_split_id',$this->id)->sum('amount');
     }
 
     public function item(){
         return $this->belongsTo(FundItem::class,'fund_item_id');
     }
 
-    public function expendItems(){
-        return $this->hasMany(ExpendItem::class);
+    public function budgetItems(){
+        return $this->hasMany(BudgetItem::class);
     }
 }

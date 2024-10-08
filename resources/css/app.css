@@ -7,34 +7,34 @@
 }
 
 .ant-btn-item-add{
-    @apply bg-blue-300;
+    @apply bg-blue-300 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 .ant-btn-item-delete{
-    @apply bg-red-300;
+    @apply bg-red-300 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 .ant-btn-info{
-    @apply bg-blue-500 text-white
+    @apply bg-blue-500 text-white disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 .ant-btn-create{
-    @apply bg-blue-500
+    @apply bg-blue-500 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 .ant-btn-save{
-    @apply bg-red-300
+    @apply bg-red-300 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 .ant-btn-edit{
-    @apply bg-orange-500
+    @apply bg-orange-500 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 .ant-btn-view{
-    @apply bg-green-500
+    @apply bg-green-500 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 .ant-btn-delete{
-    @apply bg-red-300;
+    @apply bg-red-300 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 
 .ant-btn-fund{
-    @apply bg-green-500 text-white
+    @apply bg-green-500 text-white disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
 }
 
-.ant-btn-expend{
-    @apply bg-orange-500 text-white
+.ant-btn-budget{
+    @apply bg-orange-500 text-white disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
 }

@@ -1,7 +1,7 @@
 
 <script setup>
 defineProps({
-    expend:Object
+    budget:Object
 });
 </script>
 <template>
@@ -11,23 +11,23 @@ defineProps({
                 <tbody>
                     <tr class="border-b hover:bg-gray-50">
                         <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_title') }}</th>
-                        <td>{{ expend.fund.title }}</td>
+                        <td>{{ budget.fund.title }}</td>
                     </tr>
                     <tr class="border-b hover:bg-gray-50">
                         <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_code') }}</th>
-                        <td>{{ expend.fund.project_code }}</td>
+                        <td>{{ budget.fund.project_code }}</td>
                     </tr>
                     <tr class="border-b hover:bg-gray-50">
                         <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_responsible') }}</th>
-                        <td>{{ expend.fund.responsible }}</td>
+                        <td>{{ budget.fund.responsible }}</td>
                     </tr>
                     <tr class="border-b hover:bg-gray-50">
                         <th class="py-1 px-4 font-medium text-gray-700">{{ $t('amount') }}</th>
-                        <td>{{ expend.fund.amount }}</td>
+                        <td>{{ budget.fund.amount }}</td>
                     </tr>
                     <tr class="border-b hover:bg-gray-50">
-                        <th class="py-1 px-4 font-medium text-gray-700">{{ $t('expend_title') }}</th>
-                        <td>{{ expend.title }}</td>
+                        <th class="py-1 px-4 font-medium text-gray-700">{{ $t('budget_title') }}</th>
+                        <td>{{ budget.title }}</td>
                     </tr>
                 </tbody>
             </table>

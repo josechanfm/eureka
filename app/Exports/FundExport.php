@@ -37,20 +37,21 @@ class FundExport implements FromCollection, WithHeadings
                     if($fundItem->splits->count()==1){
                         $data[]=[
                             'index'=>($catIdx+1).'.'.($itemIdx+1),
-                            'category'=>'',
+                            'category'=>$fundItem->categoryItem->name_zh,
                             'description'=>$fundItem->splits[0]->description,
-                            'amount'=>$fundItem->amount,
+                            'amount'=>'',
+                            'total'=>$fundItem->amount,
                         ];
                     }else{
                         foreach($fundItem->splits as $splitIdx=>$split){
                             $d=[
                                 'index'=>($catIdx+1).'.'.($itemIdx+1).'.'.($splitIdx+1),
-                                'category'=>'',
-                                'description'=>$split->description .'('.$split->amount.')',
-                                'amount'=>'',
+                                'category'=>$fundItem->categoryItem->name_zh,
+                                'description'=>$split->description,
+                                'amount'=>$split->amount
                             ];
                             if($splitIdx+1 == $fundItem->splits->count()){
-                                $d['amount']=$fundItem->amount;
+                                $d['total']=$fundItem->amount;
                             }
                             $data[]=$d;
                         }
@@ -69,6 +70,7 @@ class FundExport implements FromCollection, WithHeadings
             'Category',
             'Description',
             'Amount',
+            'Total'
         ];
     }    
 }

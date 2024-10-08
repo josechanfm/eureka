@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             ConfigSeeder::class,
             CategorySeeder::class,
             FundSeeder::class,
-            ExpendSeeder::class
+            BudgetSeeder::class
         ]);
     }
 }

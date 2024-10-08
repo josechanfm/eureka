@@ -14,11 +14,7 @@
                     {{ $t('view') }}
                 </a-button>
                 <a-button :href="route('staff.fund.items.index',record.id)" type="fund">{{ $t('funding_items') }}</a-button>
-                <a-button :href="route('staff.fund.expends.index',record.id)" type="expend" class="ml-5">{{ $t('expends') }}</a-button>
-              </template>
-              <template v-else-if="column.dataIndex=='is_submitted'">
-                <span v-if="record.is_submitted">{{ $t('submitted') }}</span>
-                <span v-else>{{ $t('preparing') }}</span>
+                <a-button :href="route('staff.fund.budgets.index',record.id)" type="budget" class="ml-5">{{ $t('budgets') }}</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -54,10 +50,6 @@
             title: this.$t('project_title'),
             i18n: "title",
             dataIndex: "title",
-          },{
-            title: this.$t('submitted'),
-            i18n: "submitted",
-            dataIndex: "is_submitted",
           },{
             title: this.$t('operation'),
             i18n: "operation",

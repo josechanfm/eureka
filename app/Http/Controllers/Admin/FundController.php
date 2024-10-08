@@ -22,7 +22,7 @@ class FundController extends Controller
     {
         return Inertia::render('Admin/Funds',[
             'categories'=>Category::where('active',true)->get(),
-            'funds'=>Fund::withCount('expends')->get()
+            'funds'=>Fund::withCount('budgets')->get()
         ]);
     }
 

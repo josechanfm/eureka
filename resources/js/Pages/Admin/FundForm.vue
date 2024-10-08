@@ -13,13 +13,11 @@
           :model="fund"
           name="fund"
           :label-col="labelCol"
-
           autocomplete="off"
           :rules="rules"
           :validate-messages="validateMessages"
           @finish="onFinish"
           enctype="multipart/form-data"
-
         >
           <a-form-item :label="$t('project_code')" name="project_code">
             <a-input v-model:value="fund.project_code" />

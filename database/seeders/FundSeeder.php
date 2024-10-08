@@ -17,7 +17,7 @@ class FundSeeder extends Seeder
      */
     public function run(): void
     {
-        $category=Category::find(1);
+        $category=Category::where('type','FDCT')->first();
         $fund=Fund::create([
             'category_id'=>$category->id,
             // 'entity'=>'MPU',
@@ -39,7 +39,6 @@ class FundSeeder extends Seeder
         $fund->users()->attach(User::where('username','LIKE',"%member%")->get());
 
         $categoryItems=$category->items;
-
         foreach($categoryItems as $i=>$item){
             $splits=$item->accounts;
             foreach($splits as $i=>$a){

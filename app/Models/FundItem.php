@@ -12,9 +12,14 @@ class FundItem extends Model
     protected $appends=['reserved'];
 
     public function getReservedAttribute(){
-        return ExpendItem::whereIn('fund_item_split_id',$this->splits->pluck('id'))->sum('amount');
+        $reserve=BudgetItem::whereIn('fund_item_split_id',$this->splits->pluck('id'))->sum('amount');
+        $actural=BudgetItem::whereIn('fund_item_split_id',$this->splits->pluck('id'))->sum('actural');
+        return $reserve-($reserve-$actural);
     }
 
+    public function categoryItem(){
+        return $this->belongsTo(CategoryItem::class);
+    }
     public function fund(){
         return $this->belongsTo(Fund::class);
     }

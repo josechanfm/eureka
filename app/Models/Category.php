@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
     
-    protected $fillable=['type','version','title_zh','title_en','title_pt','remark','active'];
+    protected $fillable=['type','initial','version','title_zh','title_en','title_pt','remark','active'];
 
     public static function latestVersion($type,$year){
         return Category::where('type',$type)->where('version','<=',$year)->where('active',true)->orderBy('version','DESC')->first();

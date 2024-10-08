@@ -13,7 +13,7 @@
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <!-- <a-button :href="route('admin.funds.index')" :disabled="record.is_submitted==false || record.expends_count>0 || record.is_close==true">{{ $t('return') }}</a-button> -->
+                <!-- <a-button :href="route('admin.funds.index')" :disabled="record.is_submitted==false || record.budgets_count>0 || record.is_close==true">{{ $t('return') }}</a-button> -->
                  <template v-if="record.is_submitted">
                   <a-popconfirm :ok-text="$t('yes')" :cancel-text="$t('no')"
                       @confirm="toggleSubmit(record)" @cancel="() => { }">
@@ -22,15 +22,13 @@
                       </template>
                       <a-button type="primary" danger>{{ $t('unlock') }}</a-button>
                   </a-popconfirm>
-
-                  <a-button @click="toggleSubmit(record)" >{{ $t('unlock') }}</a-button>
                  </template>
                  <template v-else>
                   <a-button :href="route('admin.funds.edit',record.id)" >{{ $t('edit') }}</a-button>
                  </template>
                 <a-button :href="route('admin.fund.items.index',record.id)" type="fund">{{ $t('funding_items') }}</a-button>
-                <a-button :href="route('admin.fund.expends.index',record.id)" type="expend">{{ $t('expend_item') }}</a-button>
-                <a-button :href="route('admin.funds.show',record.id)" >{{ $t('expend_summary') }}</a-button>
+                <a-button :href="route('admin.fund.budgets.index',record.id)" type="budget">{{ $t('budget_item') }}</a-button>
+                <a-button :href="route('admin.funds.show',record.id)" >{{ $t('budget_summary') }}</a-button>
                 <a-button :href="route('admin.fund.export',record.id)">{{ $t('export') }}</a-button>
 
                 <!-- <a-button @click="toggleSubmit(record)">

@@ -6,32 +6,32 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Category;
-use App\Models\Expend;
-use App\Models\ExpendItem;
+use App\Models\Budget;
+use App\Models\BudgetItem;
 
-class ExpendItemController extends Controller
+class BudgetItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Expend $expend)
+    public function index(Budget $budget)
     {
-        $expend->items;
-        $fund=$expend->fund;
+        $budget->items;
+        $fund=$budget->fund;
         $fund->items;
-        $categroy=Category::latestVersion('FDCT',$expend->year);
+        $categroy=Category::latestVersion('FDCT',$budget->year);
         if(empty($categroy)){
             return redirect()->route('dashboard');
         }
         
-        //dd(Category::where('version',$expend->year)->first());
+        //dd(Category::where('version',$budget->year)->first());
         $availableSplits=$fund->availableSplits();
-        return Inertia::render('Staff/ExpendItems',[
+        return Inertia::render('Staff/BudgetItems',[
             'categoryItems'=>$categroy->items,
             'fund'=>$fund,
-            'expend'=>$expend,
+            'budget'=>$budget,
             'availableSplits'=>$availableSplits
-            //'items'=>$expend->items
+            //'items'=>$budget->items
         ]);
     }
 
@@ -46,11 +46,11 @@ class ExpendItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Expend $expend, Request $request)
+    public function store(Budget $budget, Request $request)
     {
         //$toSubmit=$request->toSubmit;
         $items=$request->items;
-        $expend->items()->whereNotIn('id',array_column($items,'id'))->delete();
+        $budget->items()->whereNotIn('id',array_column($items,'id'))->delete();
         
         foreach($items as $i=>$item){
             unset($items[$i]['created_at']);
@@ -61,14 +61,14 @@ class ExpendItemController extends Controller
         foreach($items as $item){
             if(isset($item['id'])){
                 $item['creator_id']=auth()->user()->id;
-                ExpendItem::where('id',$item['id'])->update($item);
+                BudgetItem::where('id',$item['id'])->update($item);
             }else{
                 $item['updater_id']=auth()->user()->id;
-                ExpendItem::create($item);
+                BudgetItem::create($item);
             }
         }
         if($request->toSubmit){
-            $expend->setSubmitted();
+            $budget->setSubmitted();
         }
         return redirect()->back();
     }
@@ -92,7 +92,7 @@ class ExpendItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Expend $expend, ExpendItem $item)
+    public function update(Request $request, Budget $budget, BudgetItem $item)
     {
         $data=$request->all();
         unset($data['split']);
@@ -104,7 +104,7 @@ class ExpendItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Expend $expend, ExpendItem $item)
+    public function destroy(Budget $budget, BudgetItem $item)
     {
         dd($item);
     }

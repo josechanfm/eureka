@@ -2,16 +2,16 @@
 
 namespace App\Exports;
 
-use App\Models\Expend;
+use App\Models\Budget;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ExpendExport implements FromCollection, WithHeadings
+class BudgetExport implements FromCollection, WithHeadings
 {
-    protected $expend;
+    protected $budget;
 
-    public function __construct(Expend $expend){
-        $this->expend=$expend;
+    public function __construct(Budget $budget){
+        $this->budget=$budget;
     }
 
     /**
@@ -19,7 +19,7 @@ class ExpendExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return $this->expend->items->select('description','amount','reference_code','account_code');
+        return $this->budget->items->select('description','amount','reference_code','account_code');
     }
 
     public function headings(): array

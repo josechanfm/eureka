@@ -23,6 +23,7 @@ class FundController extends Controller
     public function index()
     {
         //$funds = Gate::allows('viewAny', Fund::class) ? Fund::all() : Fund::where('owner_id', auth()->id())->get();
+        //dd(auth()->user()->funds->where('is_closed',false)->where('is_submitted',true));
         return Inertia::render('Staff/Funds',[
             'categories'=>Category::where('active',true)->get(),
             'funds'=>auth()->user()->funds->where('is_closed',false)->where('is_submitted',true)

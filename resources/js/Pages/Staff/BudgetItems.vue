@@ -6,26 +6,26 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-          <ExpendHeader :expend="expend"/>
+          <BudgetHeader :budget="budget"/>
         <div class="container mx-auto pt-5">
           <div class="bg-white relative shadow rounded-lg md:p-5">
             <table width="100%" border="1">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th width="500px">{{ $t('expend_item_title') }}</th>
-                  <th>{{ $t('expend_item_description') }}</th>
+                  <th width="500px">{{ $t('budget_item_title') }}</th>
+                  <th>{{ $t('budget_item_description') }}</th>
                   <th>{{ $t('reference_code') }}</th>
                   <th width="150px">{{ $t('amount') }}</th>
                   <th>{{ $t('operation') }}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, idx) in expend.items">
+                <tr v-for="(item, idx) in budget.items">
                   <td>{{ idx+1 }}</td>
                   <td>
                     <div>{{ getFundItemSplit(item.fund_item_split_id) }}</div>
-                    <a-select v-model:value="item.account_code" :options="categoryItemAccountsByExpendItem(item)" :style="{width:'500px'}"/>
+                    <a-select v-model:value="item.account_code" :options="categoryItemAccountsByBudgetItem(item)" :style="{width:'500px'}"/>
                   </td>
                   <td>
                     <a-input v-model:value="item.description" />
@@ -41,7 +41,7 @@
                       @confirm="removeItem(idx)" @cancel="() => { }">
                       <a-button size="small" type="primary" danger>{{ $t('delete') }}</a-button>
                     </a-popconfirm>
-                    <!-- <inertia-link :href="route('staff.expend.items.destroy',{expend:expend.id,item:item.id})">Delete</inertia-link> -->
+                    <!-- <inertia-link :href="route('staff.budget.items.destroy',{budget:budget.id,item:item.id})">Delete</inertia-link> -->
                   </td>
                 </tr>
                 <tr>
@@ -54,15 +54,15 @@
           </div>
         </div>
         <div class="pt-5">
-          <span v-if="expend.status<='S2'">
-            <a-button type="primary" @click="onSaveExpendItems(false)">{{ $t('save') }}</a-button>
-            <a-button type="primary" @click="onSaveExpendItems(true)" class="ml-2">{{ $t('save_submit') }}</a-button>
+          <span v-if="budget.status<='S2'">
+            <a-button type="primary" @click="onSaveBudgetItems(false)">{{ $t('save') }}</a-button>
+            <a-button type="primary" @click="onSaveBudgetItems(true)" class="ml-2">{{ $t('save_submit') }}</a-button>
           </span>
-          <a-button :href="route('staff.fund.expends.index',fund.id)" class="ml-2">{{ $t('back') }}</a-button>
+          <a-button :href="route('staff.fund.budgets.index',fund.id)" class="ml-2">{{ $t('back') }}</a-button>
         </div>
         <a-divider/>
 
-        <div class="container mx-auto pt-5" v-if="expend.status<='S2'">
+        <div class="container mx-auto pt-5" v-if="budget.status<='S2'">
           <div class="bg-white relative shadow rounded-lg md:p-5">
             <a-button @click="onAddSplitItem2()" type="primary">{{ $t('add') }}</a-button>
             <div class="pt-5">
@@ -127,14 +127,14 @@
 
   <script>
   import StaffLayout from "@/Layouts/StaffLayout.vue";
-  import ExpendHeader from "@/Pages/Staff/ExpendHeader.vue";
+  import BudgetHeader from "@/Pages/Staff/BudgetHeader.vue";
 
   export default {
     components: {
       StaffLayout,
-      ExpendHeader
+      BudgetHeader
     },
-    props: ["categoryItems","fund","expend","availableSplits"],
+    props: ["categoryItems","fund","budget","availableSplits"],
     data() {
       return {
         selectedSplit:{
@@ -165,14 +165,14 @@
       },
     },
     methods: {
-      categoryItemAccountsByExpendItem(expendItem){
+      categoryItemAccountsByBudgetItem(budgetItem){
         console.log('categoryItemAccounts2')
-        // console.log(expendItem)
+        // console.log(budgetItem)
         let categoryItemId=null;
-        this.expend.fund.items.forEach(fundItem=>{
+        this.budget.fund.items.forEach(fundItem=>{
           if(categoryItemId) return ;
           fundItem.splits.forEach(split=>{
-            if(split.id==expendItem.fund_item_split_id){
+            if(split.id==budgetItem.fund_item_split_id){
               categoryItemId=fundItem.category_item_id;
             }
           })
@@ -200,7 +200,7 @@
         this.$refs.modalRef
           .validateFields()
           .then(() => {
-            this.$inertia.post(route("staff.expend.items.store",this.expend.id), this.selectedSplit, {
+            this.$inertia.post(route("staff.budget.items.store",this.budget.id), this.selectedSplit, {
               onSuccess: (page) => {
                 console.log(page)
               },
@@ -216,7 +216,7 @@
       updateRecord() {
         console.log(this.modal.data);
         this.$inertia.patch(
-          route("staff.expend.items.update", {expend:this.expend.id, item:this.modal.data.id}),this.modal.data,{
+          route("staff.budget.items.update", {budget:this.budget.id, item:this.modal.data.id}),this.modal.data,{
             onSuccess: (page) => {
               this.modal.data = {};
               this.modal.isOpen = false;
@@ -266,8 +266,8 @@
       onAddSplitItem2(){
         let accounts=this.categoryItemAccountsByCatItemId(this.selectedSplit.catItemId);
         console.log(accounts[0])
-        this.expend.items.push({
-          'expend_id':this.expend.id,
+        this.budget.items.push({
+          'budget_id':this.budget.id,
           'fund_item_split_id':this.selectedSplit.splitId,
           'category_item_id':this.selectedSplit.catItemId,
           'account_code':accounts[0].value,
@@ -278,17 +278,17 @@
       },
       onAddSplitItem(){
         console.log(this.selectedSplit);
-        this.expend.items.push({
-          'expend_id':this.expend.id,
+        this.budget.items.push({
+          'budget_id':this.budget.id,
           'fund_item_split_id':this.selectedSplit.catItemId,
           'description':this.selectedSplit.description,
           'amount':this.selectedSplit.amount
 
         });
       },
-      onSaveExpendItems(toSubmit=false){
-        this.$inertia.post(route("staff.expend.items.store",this.expend.id), 
-        {toSubmit:toSubmit, items:this.expend.items},
+      onSaveBudgetItems(toSubmit=false){
+        this.$inertia.post(route("staff.budget.items.store",this.budget.id), 
+        {toSubmit:toSubmit, items:this.budget.items},
         {
             onSuccess: (page) => {
               console.log(page)
@@ -300,10 +300,10 @@
       },
       removeItem(itemIdx){
         console.log(itemIdx)
-        this.expend.items.splice(itemIdx,1)
+        this.budget.items.splice(itemIdx,1)
       },
       grandTotal(){
-      const amounts = this.expend.items.map(i => i.amount);
+      const amounts = this.budget.items.map(i => i.amount);
       return amounts.reduce((sum,a)=>sum+parseInt(a),0).toLocaleString();
     },
 

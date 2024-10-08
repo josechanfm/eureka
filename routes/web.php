@@ -44,8 +44,8 @@ Route::get('/', function () {
 //     })->name('dashboard');
 //     Route::resource('funds',App\Http\Controllers\Staff\FundController::class)->names('staff.funds');
 //     Route::resource('fund/{fund}/items',App\Http\Controllers\Staff\FundItemController::class)->names('staff.fund.items');
-//     Route::resource('fund/{fund}/expends',App\Http\Controllers\Staff\ExpendController::class)->names('staff.fund.expends');
-//     Route::resource('expend/{expend}/items',App\Http\Controllers\Staff\ExpendItemController::class)->names('staff.expend.items');
+//     Route::resource('fund/{fund}/budgets',App\Http\Controllers\Staff\BudgetController::class)->names('staff.fund.budgets');
+//     Route::resource('budget/{budget}/items',App\Http\Controllers\Staff\BudgetItemController::class)->names('staff.budget.items');
 
 // });
 
@@ -62,8 +62,8 @@ Route::group([
     })->name('staff.dashboard');
     Route::resource('funds',App\Http\Controllers\Staff\FundController::class)->names('staff.funds');
     Route::resource('fund/{fund}/items',App\Http\Controllers\Staff\FundItemController::class)->names('staff.fund.items');
-    Route::resource('fund/{fund}/expends',App\Http\Controllers\Staff\ExpendController::class)->names('staff.fund.expends');
-    Route::resource('expend/{expend}/items',App\Http\Controllers\Staff\ExpendItemController::class)->names('staff.expend.items');
+    Route::resource('fund/{fund}/budgets',App\Http\Controllers\Staff\BudgetController::class)->names('staff.fund.budgets');
+    Route::resource('budget/{budget}/items',App\Http\Controllers\Staff\BudgetItemController::class)->names('staff.budget.items');
 
 });
 
@@ -82,17 +82,18 @@ Route::group([
     Route::resource('category/item/{item}/accounts',App\Http\Controllers\Admin\CategoryItemAccountController::class)->names('admin.category.item.accounts');
     Route::resource('funds',App\Http\Controllers\Admin\FundController::class)->names('admin.funds');
     Route::resource('fund/{fund}/items',App\Http\Controllers\Admin\FundItemController::class)->names('admin.fund.items');
-    Route::resource('fund/{fund}/expends',App\Http\Controllers\Admin\ExpendController::class)->names('admin.fund.expends');
-    Route::resource('expend/{expend}/items',App\Http\Controllers\Admin\ExpendItemController::class)->names('admin.expend.items');
+    Route::resource('fund/{fund}/budgets',App\Http\Controllers\Admin\BudgetController::class)->names('admin.fund.budgets');
+    Route::resource('budget/{budget}/items',App\Http\Controllers\Admin\BudgetItemController::class)->names('admin.budget.items');
     Route::post('fund/{fund}/toggle_submit',[App\Http\Controllers\Admin\FundController::class,'toggleSubmit'])->name('admin.fund.toggleSubmit');
     Route::post('fund/{fund}/toggle_close',[App\Http\Controllers\Admin\FundController::class,'toggleClose'])->name('admin.fund.toggleClose');
-    Route::post('expend/{expend}/toggle_submit',[App\Http\Controllers\Admin\ExpendController::class,'toggleSubmit'])->name('admin.expend.toggleSubmit');
-    Route::post('expend/{expend}/toggle_lock',[App\Http\Controllers\Admin\ExpendController::class,'toggleLock'])->name('admin.expend.toggleLock');
-    Route::post('expend/{expend}/toggle_close',[App\Http\Controllers\Admin\ExpendController::class,'toggleClose'])->name('admin.expend.toggleClose');
-    Route::post('expend/{expend}/change_status',[App\Http\Controllers\Admin\ExpendController::class,'changeStatus'])->name('admin.expend.changeStatus');
+    Route::post('budget/{budget}/toggle_submit',[App\Http\Controllers\Admin\BudgetController::class,'toggleSubmit'])->name('admin.budget.toggleSubmit');
+    Route::post('budget/{budget}/toggle_lock',[App\Http\Controllers\Admin\BudgetController::class,'toggleLock'])->name('admin.budget.toggleLock');
+    Route::post('budget/{budget}/toggle_close',[App\Http\Controllers\Admin\BudgetController::class,'toggleClose'])->name('admin.budget.toggleClose');
+    Route::post('budget/{budget}/change_status',[App\Http\Controllers\Admin\BudgetController::class,'changeStatus'])->name('admin.budget.changeStatus');
     Route::get('fund/{fund}/export',[App\Http\Controllers\Admin\FundController::class,'export'])->name('admin.fund.export');
-    Route::get('expend/{expend}/export',[App\Http\Controllers\Admin\ExpendController::class,'export'])->name('admin.expend.export');
-
+    Route::get('budget/{budget}/export',[App\Http\Controllers\Admin\BudgetController::class,'export'])->name('admin.budget.export');
+    Route::resource('expends',App\Http\Controllers\Admin\ExpendController::class)->names('admin.expends');
+    Route::resource('expend/items',App\Http\Controllers\Admin\ExpendItemController::class)->names('admin.expend.items');
 });
 
 

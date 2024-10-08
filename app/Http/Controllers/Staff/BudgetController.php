@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Expend;
+use App\Models\Budget;
 use App\Models\Fund;
 
 
-class ExpendController extends Controller
+class BudgetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +20,9 @@ class ExpendController extends Controller
         if($fund->is_closed || !$fund->isMember()){
             return redirect()->route('staff.funds.index');
         }
-        return Inertia::render('Staff/Expends',[
+        return Inertia::render('Staff/Budgets',[
             'fund'=>$fund,
-            'expends'=>Expend::whereBelongsTo($fund)->with('items')->get()
+            'budgets'=>Budget::whereBelongsTo($fund)->with('items')->get()
         ]);
     }
 
@@ -42,7 +42,8 @@ class ExpendController extends Controller
         $data=$request->all();
         $data['owner_id']=auth()->user()->id;
         $data['creator_id']=auth()->user()->id;
-        Expend::create($data);
+        $data['status']='S1';
+        Budget::create($data);
         return redirect()->back();
     }
 
@@ -57,33 +58,33 @@ class ExpendController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Fund $fund, Expend $expend)
+    public function edit(Fund $fund, Budget $budget)
     {
-        //dd($fund, $expend);
-        return Inertia::render('Staff/ExpendCreate',[
+        //dd($fund, $budget);
+        return Inertia::render('Staff/BudgetCreate',[
             'fund'=>$fund,
-            'expend'=>$expend
+            'budget'=>$budget
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Fund $fund, Expend $expend, Request $request)
+    public function update(Fund $fund, Budget $budget, Request $request)
     {
         $data=$request->all();
         $data['updater_id']=auth()->user()->id;
-        $expend->update($data);
+        $budget->update($data);
         return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fund $fund, Expend $expend)
+    public function destroy(Fund $fund, Budget $budget)
     {
-        $expend->delete();
-        return redirect()->route('staff.fund.expends.index',$fund->id);
+        $budget->delete();
+        return redirect()->route('staff.fund.budgets.index',$fund->id);
     }
     
 }

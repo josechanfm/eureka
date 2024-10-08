@@ -15,12 +15,11 @@
           <!-- <a-form-item label="支助項目分類" name="category">
             <a-select v-model:value="items.fund_category_id" :options="fundCategory.items" :fieldNames="{value:'id',label:'name_zh'}"/>
           </a-form-item> -->
-          <table width="100%" border="1">
+          <table width="100%">
             <thead>
               <tr>
                 <th>{{ $t('sequence') }}</th>
                 <th>{{ $t('funding_items') }}</th>
-                <th></th>
                 <th>{{ $t('amount') }}</th>
                 <th></th>
               </tr>
@@ -30,7 +29,6 @@
                 <tr>
                   <td colspan="5">
                     {{ i + 1 }}. {{ catItem.name_zh }}
-                    <a-button @click="onAddCategoryItem(catItem)" type="item-add" size="small">+</a-button>
                   </td>
                 </tr>
                 <template v-for="(item, itemIdx) in fund.items.filter(i => i.category_item_id == catItem.id)">
@@ -38,31 +36,10 @@
                     <tr>
                       <td width="50px" style="text-align: right;">{{ i + 1 }}.{{ itemIdx + 1 }}</td>
                       <td>
-                        <a-input v-model:value="item.splits[0].description"/>
-                      </td>
-                      <td width="60px">
-                        <a-tooltip placement="bottom">
-                          <template #title>{{ $t('multiple_item') }}</template>
-                            <a-button @click="onMultipleSplits(item, catItem)" type="item-add" size="small">*</a-button>
-                        </a-tooltip>
+                        {{item.splits[0].description}}
                       </td>
                       <td width="200px">
-                        <a-input-number 
-                          v-model:value="item.amount" 
-                          :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                          :style="{width:'100%'}"
-                        />
-                      </td>
-                      <td width="60px">
-                        <a-tooltip placement="bottom">
-                            <template #title>{{ $t('add_budget_item') }}</template>
-                            <a-button @click="onAddItem(catItem, item)" type="item-add" size="small">+</a-button>
-                        </a-tooltip>
-                        <a-popconfirm :title="$t('funding_remove_item')" ok-text="Yes" cancel-text="No"
-                                @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
-                          <a-button type="item-delete" size="small">-</a-button>
-                        </a-popconfirm>
+                        {{  item.amount.toLocaleString() }}
                       </td>
                     </tr>
                   </template>
@@ -73,61 +50,27 @@
                         <table width="100%">
                           <tr v-for="(split, splitIdx) in item.splits">
                             <td>
-                              <a-input v-model:value="split.description"/>
+                              {{ split.description }}
                             </td>
                             <td width="150px">
-                              <a-input-number
-                                v-model:value="split.amount" 
-                                :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                                :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                                :style="{width:'100%'}"
-                              />
-                            </td>
-                            <td width="60px">
-                              <a-tooltip placement="bottom">
-                                <template #title>{{ $t('add_budget_item') }}</template>
-                                <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="item-add"
-                                  size="small">+</a-button>
-                              </a-tooltip>
-                                <a-popconfirm :title="$t('funding_remove_split')" ok-text="Yes" cancel-text="No"
-                                  @confirm="onRemoveItemSplit(splitIdx, item, catItem)" @cancel="() => { }">
-                                  <a-tooltip placement="bottom">
-                                    <template #title>{{ $t('remove_budget_item') }}</template>
-                                    <a-button type="item-delete" size="small">-</a-button>
-                                  </a-tooltip>
-                              </a-popconfirm>
+                            {{  split.amount?.toLocaleString() }}
                             </td>
                           </tr>
                         </table>
                       </td>
                       <td width="150px">
-                        <a-input-number 
-                          v-model:value="item.amount"
-                          :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                          :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                          :style="{width:'100%'}"
-                        />
-                      </td>
-                      <td>
-                        <a-button @click="onAddItem(catItem, item)" type="item-add" size="small">+</a-button>
-                          <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
-                            @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
-                            <a-tooltip placement="bottom">
-                              <template #title>{{ $t('remove_budget_item') }}</template>
-                              <a-button type="item-delete" size="small">-</a-button>
-                            </a-tooltip>
-                          </a-popconfirm>
+                        {{ item.amount?.toLocaleString() }}
                       </td>
                     </tr>
                   </template>
                 </template>
                 <tr>
-                  <td colspan="4" style="text-align: right;">{{ $t('sub_total') }}</td>
+                  <td colspan="3" style="text-align: right;">{{ $t('sub_total') }}</td>
                   <td colspan="2">{{ subTotal(catItem) }}</td>
                 </tr>
               </template>
               <tr>
-                <td colspan="4" style="text-align: right;">{{ $t('grand_total') }}</td>
+                <td colspan="3" style="text-align: right;">{{ $t('grand_total') }}</td>
                 <td colspan="2">{{ grandTotal() }}</td>
               </tr>
             </tbody>

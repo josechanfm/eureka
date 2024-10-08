@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expends', function (Blueprint $table) {
+        Schema::create('budgets', function (Blueprint $table) {
             $table->id();
             $table->char('year',4);
             $table->foreignId('fund_id');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expends');
+        Schema::dropIfExists('budgets');
     }
 };

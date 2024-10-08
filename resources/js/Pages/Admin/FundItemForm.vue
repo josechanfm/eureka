@@ -8,7 +8,6 @@
       <div class="container mx-auto pt-5">
           <FundHeader :fund="fund"/>
         <a-divider/>
-  
         <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
           <a-form :model="fund.items" name="fund" :label-col="labelCol" autocomplete="off" :rules="rules"
             :validate-messages="validateMessages" @finish="onFinish(false)" enctype="multipart/form-data">
@@ -30,7 +29,7 @@
                   <tr>
                     <td colspan="5">
                       {{ i + 1 }}. {{ catItem.name_zh }}
-                      <a-button @click="onAddCategoryItem(catItem)" type="item-add" size="small">+</a-button>
+                      <a-button @click="onAddCategoryItem(catItem)" type="item-add" size="small" :disabled="!editable">+</a-button>
                     </td>
                   </tr>
                   <template v-for="(item, itemIdx) in fund.items.filter(i => i.category_item_id == catItem.id)">
@@ -43,7 +42,7 @@
                         <td width="60px">
                           <a-tooltip placement="bottom">
                             <template #title>{{ $t('multiple_item') }}</template>
-                              <a-button @click="onMultipleSplits(item, catItem)" type="item-add" size="small">*</a-button>
+                              <a-button @click="onMultipleSplits(item, catItem)" type="item-add" size="small" :disabled="!editable">*</a-button>
                           </a-tooltip>
                         </td>
                         <td width="200px">
@@ -57,11 +56,11 @@
                         <td width="60px">
                           <a-tooltip placement="bottom">
                               <template #title>{{ $t('add_budget_item') }}</template>
-                              <a-button @click="onAddItem(catItem, item)" type="item-add" size="small">+</a-button>
+                              <a-button @click="onAddItem(catItem, item)" type="item-add" size="small" :disabled="!editable">+</a-button>
                           </a-tooltip>
                           <a-popconfirm :title="$t('funding_remove_item')" ok-text="Yes" cancel-text="No"
                                   @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
-                            <a-button type="item-delete" size="small">-</a-button>
+                            <a-button type="item-delete" size="small" :disabled="!editable">-</a-button>
                           </a-popconfirm>
                         </td>
                       </tr>
@@ -86,14 +85,13 @@
                               <td width="60px">
                                 <a-tooltip placement="bottom">
                                   <template #title>{{ $t('add_budget_item') }}</template>
-                                  <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="item-add"
-                                    size="small">+</a-button>
+                                  <a-button @click="onAddItemSplit(splitIdx, item, catItem)" type="item-add" size="small" :disabled="!editable">+</a-button>
                                 </a-tooltip>
                                   <a-popconfirm :title="$t('funding_remove_split')" ok-text="Yes" cancel-text="No"
                                     @confirm="onRemoveItemSplit(splitIdx, item, catItem)" @cancel="() => { }">
                                     <a-tooltip placement="bottom">
                                       <template #title>{{ $t('remove_budget_item') }}</template>
-                                      <a-button type="item-delete" size="small">-</a-button>
+                                      <a-button type="item-delete" size="small" :disabled="!editable">-</a-button>
                                     </a-tooltip>
                                 </a-popconfirm>
                               </td>
@@ -109,14 +107,15 @@
                           />
                         </td>
                         <td>
-                          <a-button @click="onAddItem(catItem, item)" type="item-add" size="small">+</a-button>
+                          <a-button @click="onAddItem(catItem, item)" type="item-add" size="small" :disabled="!editable">+</a-button>
                             <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No"
                               @confirm="onRemoveItem(itemIdx, catItem, item)" @cancel="() => { }">
                               <a-tooltip placement="bottom">
                                 <template #title>{{ $t('remove_budget_item') }}</template>
-                                <a-button type="item-delete" size="small">-</a-button>
+                                <a-button type="item-delete" size="small" :disabled="!editable">-</a-button>
                               </a-tooltip>
                             </a-popconfirm>
+                            {{ item.reserved}}
                         </td>
                       </tr>
                     </template>
@@ -134,16 +133,16 @@
             </table>
             <div class="flex flex-row item-center justify-center gap-5 pt-5">
               <a-button :href="route('admin.funds.index')">{{ $t('back') }}</a-button>
-              <template v-if="fund.is_submitted==false">
-              <a-button type="primary" html-type="submit">{{ $t('save') }}</a-button>
-              <a-popconfirm :ok-text="$t('yes')" :cancel-text="$t('no')"
+              <span v-role="['admin','dei']">
+                <a-button type="primary" html-type="submit" :disabled="fund.is_submitted">{{ $t('save') }}</a-button>
+                <a-popconfirm :ok-text="$t('yes')" :cancel-text="$t('no')"
                   @confirm="onFinish(true)" @cancel="() => { }">
                   <template #title>
                       <div v-html="$t('save_submit_popup')"/>
                   </template>
-                  <a-button type="primary" danger>{{ $t('save_submit') }}</a-button>
-              </a-popconfirm>
-            </template>
+                  <a-button type="primary" danger  :disabled="fund.is_submitted">{{ $t('save_submit') }}</a-button>
+                </a-popconfirm>
+              </span>
             </div>
           </a-form>
         </div>
@@ -163,6 +162,7 @@
     props: ["fund", "category"],
     data() {
       return {
+        editable:false,
         myCategoryItems:[],
         rules: {
           name: { required: true },
@@ -193,13 +193,18 @@
   
     },
     mounted(){
-      // const uniqueCatItems = this.fund.items.reduce((acc, obj) => {
-      //     if (!acc.includes(obj.category_item_id)) {
-      //         acc.push(parseInt(obj.category_item_id));
-      //     }
-      //     return acc;
-      // }, []);
-      //this.myCategoryItems=this.category.items.filter(i=>uniqueCatItems.includes(i.id));
+      if(this.fund.is_submitted || this.fund.is_closed){
+        return;
+      }
+      const roles=this.$page.props.auth.user.roles.map(r=>r.name)
+      roles.forEach(r=>{
+        if(['admin','dei'].includes(r)){
+          this.editable=true;
+          return;
+        }
+      })
+
+      console.log(roles)
     },
     computed() {
     },
@@ -254,14 +259,20 @@
         item.splits.splice(splitIdx, 1)
       },
       onAddCategoryItem(catItem){
+        console.log(this.fund.items);
+        console.log(catItem)
         this.fund.items.push({
           "fund_id":this.fund.id,
           "category_item_id":catItem.id,
-          "accounts":[{
-            //"category_item_account_id":catItem.accounts[0].id,
-            "account_code":catItem.accounts[0].account_code
+          "sequence":0,
+          "description":catItem.name_zh,
+          "amount":"",
+          "remark":null,
+          "splits":[{
+          "description":catItem.name_zh
           }]
         })
+        console.log(this.fund.items);
       },
       onFinish(submit=false) {
         this.$inertia.post(route("admin.fund.items.store", this.fund.id), {toSubmit:submit, items:this.fund.items}, {
