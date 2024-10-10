@@ -17,6 +17,7 @@
                   <th>{{ $t('budget_item_description') }}</th>
                   <th>{{ $t('reference_code') }}</th>
                   <th width="150px">{{ $t('amount') }}</th>
+                  <th>{{ $t('expend_accumulated') }}</th>
                   <th>{{ $t('operation') }}</th>
                 </tr>
               </thead>
@@ -36,6 +37,7 @@
                   <td>
                     <a-input v-model:value="item.amount" />
                   </td>
+                  <td>{{ sumExpendItems(item.expend_items) }}</td>
                   <td>
                     <a-popconfirm :title="$t('funding_remove_item')" ok-text="Yes" cancel-text="No"
                       @confirm="removeItem(idx)" @cancel="() => { }">
@@ -165,6 +167,9 @@
       },
     },
     methods: {
+      sumExpendItems(expendItems){
+        return expendItems.reduce((a, c) => a + parseInt(c.amount), 0).toLocaleString()
+      },
       categoryItemAccountsByBudgetItem(budgetItem){
         console.log('categoryItemAccounts2')
         // console.log(budgetItem)

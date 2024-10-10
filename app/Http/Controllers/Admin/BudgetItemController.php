@@ -66,7 +66,7 @@ class BudgetItemController extends Controller
     {
         //dd($budget, $item, $request->all());
         $item->account_code=$request->account_code;
-        $item->actural=$request->actural;
+        $item->actual=$request->actual;
         $item->save();
         return redirect()->back();
     }

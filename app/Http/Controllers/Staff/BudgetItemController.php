@@ -19,7 +19,9 @@ class BudgetItemController extends Controller
         $budget->items;
         $fund=$budget->fund;
         $fund->items;
-        $categroy=Category::latestVersion('FDCT',$budget->year);
+        $categroy=$fund->category;
+        //$categroy=Category::latestVersion('FDCT',$budget->year);
+        //dd($categroy, $fund);
         if(empty($categroy)){
             return redirect()->route('dashboard');
         }

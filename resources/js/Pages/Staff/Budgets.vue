@@ -19,6 +19,9 @@
                 <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">{{ $t('edit') }}</a-button>
                 <a-button :href="route('staff.budget.items.index',record.id)" type="budget">{{ $t('budget_item') }}</a-button>
               </template>
+              <template v-else-if="column.dataIndex=='grand_total'">
+                {{ sumBudgetItems(record) }}
+              </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
               </template>
@@ -133,23 +136,21 @@
         return[
         {
             title: this.$t('year'),
-            i18n: "year",
             dataIndex: "year",
           },{
             title:  this.$t('budget_proposal'),
-            i18n: "title",
             dataIndex: "title",
           },{
             title: this.$t('proposal_number'),
-            i18n: "proposal_number",
             dataIndex: "proposal_number",
           },{
             title: this.$t('proposed_at'),
-            i18n: "proposed_at",
             dataIndex: "proposed_at",
           },{
+            title: this.$t('grand_total'),
+            dataIndex: "grand_total",
+          },{
             title: this.$t('operation'),
-            i18n: "operation",
             dataIndex: "operation",
             key: "operation",
           },
@@ -157,6 +158,9 @@
       }
     },
     methods: {
+      sumBudgetItems(record){
+        return record.items.reduce((a, c) => a + parseInt(c.amount), 0).toLocaleString()
+      },
       createRecord(){
         this.modal.data = {}
         this.modal.data.fund_id=this.fund.id

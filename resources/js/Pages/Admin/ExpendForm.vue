@@ -10,22 +10,30 @@
       <a-divider />
       <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
         <a-form :model="expend" name="expend" :label-col="labelCol" autocomplete="off" :rules="rules"
-          :validate-messages="validateMessages" @finish="onFinish" enctype="multipart/form-data">
-          <a-form-item :label="$t('budget')" name="budget_id">
-            <a-select v-model:value="expend.budget_id" :options="budgets" :fieldNames="{value:'id',label:'title'}"/>
-          </a-form-item>
-          <a-form-item :label="$t('expend_title')" name="title">
-            <a-input v-model:value="expend.title" />
-          </a-form-item>
-          <a-form-item :label="$t('expend_number')" name="number">
-            <a-input v-model:value="expend.number" />
-          </a-form-item>
-          <a-form-item :label="$t('expend_date')" name="date">
-            <a-input v-model:value="expend.date" />
-          </a-form-item>
-          <a-form-item :label="$t('expend_remark')" name="remark">
-            <a-textarea v-model:value="expend.remark" />
-          </a-form-item>
+              :validate-messages="validateMessages" @finish="onFinish" enctype="multipart/form-data">
+        <a-row>
+          <a-col :span="12">
+              <a-form-item :label="$t('budget')" name="budget_id">
+                <a-select v-model:value="expend.budget_id" :options="budgets" :fieldNames="{value:'id',label:'title'}"/>
+              </a-form-item>
+              <a-form-item :label="$t('expend_title')" name="title">
+                <a-input v-model:value="expend.title" />
+              </a-form-item>
+              <a-form-item :label="$t('expend_number')" name="number">
+                <a-input v-model:value="expend.number" />
+              </a-form-item>
+              <a-form-item :label="$t('expend_date')" name="date">
+                <a-input v-model:value="expend.date" />
+              </a-form-item>
+              <a-form-item :label="$t('expend_remark')" name="remark">
+                <a-textarea v-model:value="expend.remark" />
+              </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-table :dataSource="budgetItems" :columns="columnBudgetItems" :pagination="false"/>
+          </a-col>
+        </a-row>
+
           <a-button @click="addItem()" type="primary">Add item</a-button>
           <table width="100%" border="1">
             <thead>
@@ -38,11 +46,22 @@
             </thead>
             <tbody>
               <tr v-for="(item, itemIdx) in expend.items">
-                  <td>{{ item.description }}</td>
-                  <td>{{ item.amount }}</td>
-                  <td>{{ item.remark }}</td>
                   <td>
-                    <a-button @click="removeItem(itemIdx)">Delete</a-button>
+                    <a-input v-model:value="item.description" />
+                  </td>
+                  <td>
+                    <a-input v-model:value="item.amount" />
+                  </td>
+                  <td>
+                    <a-select 
+                      v-model:value="item.budget_item_id" 
+                      :options="budgets.find(b=>b.id==expend.budget_id).items" 
+                      :fieldNames="{value:'id',label:'description'}"
+                      :style="{width:'100%'}"
+                    />
+                  </td>
+                  <td>
+                    <a-button @click="removeItem(itemIdx)" danger>Delete</a-button>
                   </td>
               </tr>
 
@@ -81,6 +100,23 @@ export default {
   data() {
     return {
       dateFormat: 'YYYY-MM-DD',
+      columnBudgetItems:[
+        {
+          title:'Description',
+          dataIndex:'description'
+        },
+        {
+          title:'Amount',
+          dataIndex:'amount'
+        },{
+          title:'Account Code',
+          dataIndex:'account_code'
+        },
+        {
+          title:'Reference code',
+          dataIndex:'reference_code'
+        }
+      ],
       rules: {
         title: { required: true },
       },
@@ -105,6 +141,12 @@ export default {
 
   },
   computed: {
+    budgetItems(){
+      if(this.expend.budget_id){
+        return this.budgets.find(b=>b.id==this.expend.budget_id).items
+
+      }
+    }
   },
   methods: {
     addItem(){

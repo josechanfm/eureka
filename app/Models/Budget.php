@@ -15,7 +15,7 @@ class Budget extends Model
     }
 
     public function items(){
-        return $this->hasMany(BudgetItem::class);
+        return $this->hasMany(BudgetItem::class)->with('split')->with('expendItems');
     }
     public function expends(){
         return $this->hasMany(Expend::class);

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('expend_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('budget_item_id');
             $table->foreignId('expend_id');
             $table->string('description');
             $table->integer('amount');

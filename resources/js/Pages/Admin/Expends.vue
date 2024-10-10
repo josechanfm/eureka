@@ -128,13 +128,13 @@
             dataIndex: "title",
           },{
             title: this.$t('expend_number'),
-            dataIndex: "expended_number",
+            dataIndex: "number",
           },{
             title: this.$t('expend_date'),
-            dataIndex: "expend_date",
+            dataIndex: "date",
           },{
-            title: this.$t('exepnd_amount'),
-            dataIndex: "expend_amount",
+            title: this.$t('expend_item_amount'),
+            dataIndex: "amount",
           },{
             title: this.$t('operation'),
             i18n: "operation",

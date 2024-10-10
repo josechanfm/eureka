@@ -65,8 +65,8 @@
 "funding_remove_item":"刪除經費項目",
 "funding_remove_split":"刪除經費細項",
 "sequence":"序號",
-"budget_item":"預算項目",
-"budget_item_title":"預算項",
+"budget_item":"預算支出項目",
+"budget_item_title":"預算支出項",
 "budget_item_description":"預算支出說明",
 "budget_reserved":"已撥備預算",
 "budget_summary":"預算總覽",
@@ -100,10 +100,12 @@
 "expend_title":"單據標題",
 "expend_number":"單據編號",
 "expend_date":"日期",
-"exepnd_remark":"備註",
+"expend_remark":"備註",
 "expend_item":"支出項",
 "expend_item_description":"支出項說名",
 "expend_item_amount":"支出項金額",
 "expend_item_remark":"支出項備註",
+"expend_accumulated":"累計支出",
+
 "thank_you":"感謝"
 }

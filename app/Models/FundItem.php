@@ -13,8 +13,8 @@ class FundItem extends Model
 
     public function getReservedAttribute(){
         $reserve=BudgetItem::whereIn('fund_item_split_id',$this->splits->pluck('id'))->sum('amount');
-        $actural=BudgetItem::whereIn('fund_item_split_id',$this->splits->pluck('id'))->sum('actural');
-        return $reserve-($reserve-$actural);
+        $actual=BudgetItem::whereIn('fund_item_split_id',$this->splits->pluck('id'))->sum('actual');
+        return $reserve-($reserve-$actual);
     }
 
     public function categoryItem(){

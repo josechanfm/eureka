@@ -9,9 +9,13 @@ class ExpendItem extends Model
 {
     use HasFactory;
 
-    protected $fillable=['expend_id','description','amount','remark'];
+    protected $fillable=['expend_id','budget_item_id','description','amount','remark'];
+    //protected $with=['budgetItem'];
 
     public function expend(){
         return $this->belongsTo(Expend::class);
     }
+    // public function budgetItem(){
+    //     return $this->belongsTo(BudgetItem::class);
+    // }
 }

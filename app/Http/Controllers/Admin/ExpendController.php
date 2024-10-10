@@ -18,7 +18,7 @@ class ExpendController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Expends',[
-            'budgets'=>Budget::all(),
+            'budgets'=>Budget::with('items')->get(),
             'expends'=>Expend::all(),
         ]);
     }
@@ -57,7 +57,7 @@ class ExpendController extends Controller
         $expend->items;
         //dd($expend);
         return Inertia::render('Admin/ExpendForm',[
-            'budgets'=>Budget::where('status','S5')->get(),
+            'budgets'=>Budget::where('status','S5')->with('items')->get(),
             'expend'=>$expend
         ]);
 
@@ -79,7 +79,7 @@ class ExpendController extends Controller
                 $expend->items()->create($item);
             }
         }
-        return redirect()->back();
+        return to_route('admin.expends.index');
         // dd($expend, $request->all());
     }
 

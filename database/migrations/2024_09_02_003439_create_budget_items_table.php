@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('budget_id');
             $table->foreignId('fund_item_split_id');
             $table->string('description')->nullable();
-            $table->integer('amount');
+            $table->integer('amount')->nullable();
+            $table->integer('actual')->nullable();
             $table->string('remark')->nullable();
             $table->string('account_code');
             $table->string('reference_code')->nullable();
