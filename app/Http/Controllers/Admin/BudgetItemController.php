@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Category;
 use App\Models\Budget;
 use App\Models\BudgetItem;
 
@@ -19,6 +20,7 @@ class BudgetItemController extends Controller
         $fund=$budget->fund;
         $fund->acccounts;
         return Inertia::render('Admin/BudgetItems',[
+            'categoryItems'=>Category::find($fund->category_id)->items,
             'budget'=>$budget,
             'availableSplits'=>$fund->availableSplits()
             //'items'=>$budget->items

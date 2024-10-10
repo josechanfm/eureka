@@ -9,6 +9,8 @@
         <BudgetHeader :budget="budget"/>
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+          ss
+          {{categoryItems}}
           <a-table :dataSource="budget.items" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
@@ -25,6 +27,7 @@
               <template v-else-if="column.dataIndex=='account_code'">
                 <template v-if="editableData.id==record.id">
                   <a-input v-model:value="editableData.account_code"/>
+                  {{ record}}
                 </template>
               </template>
               <!-- <template v-if="column.dataIndex=='actual'">
@@ -50,13 +53,14 @@
   <script>
   import AdminLayout from "@/Layouts/AdminLayout.vue";
   import BudgetHeader from "@/Pages/Staff/BudgetHeader.vue";
+import CategoryItems from "./CategoryItems.vue";
   
   export default {
     components: {
       AdminLayout,
       BudgetHeader
     },
-    props: ["budget","availableSplits"],
+    props: ["categoryItems","budget","availableSplits"],
     data() {
       return {
         splits:[],

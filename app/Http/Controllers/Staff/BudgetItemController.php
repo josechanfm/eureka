@@ -59,10 +59,12 @@ class BudgetItemController extends Controller
             unset($items[$i]['updated_at']);
             unset($items[$i]['split']);
             unset($items[$i]['reserved']);
+            unset($items[$i]['expend_items']);
         }
         foreach($items as $item){
             if(isset($item['id'])){
                 $item['creator_id']=auth()->user()->id;
+                //dd($item,BudgetItem::where('id',$item['id'])->get());
                 BudgetItem::where('id',$item['id'])->update($item);
             }else{
                 $item['updater_id']=auth()->user()->id;

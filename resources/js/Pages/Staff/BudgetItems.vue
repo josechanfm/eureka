@@ -15,8 +15,8 @@
                   <th>#</th>
                   <th width="500px">{{ $t('budget_item_title') }}</th>
                   <th>{{ $t('budget_item_description') }}</th>
-                  <th>{{ $t('reference_code') }}</th>
                   <th width="150px">{{ $t('amount') }}</th>
+                  <th>{{ $t('reference_code') }}</th>
                   <th>{{ $t('expend_accumulated') }}</th>
                   <th>{{ $t('operation') }}</th>
                 </tr>
@@ -32,11 +32,9 @@
                     <a-input v-model:value="item.description" />
                   </td>
                   <td>
-                    {{item.reference_code}}
-                  </td>
-                  <td>
                     <a-input v-model:value="item.amount" />
                   </td>
+                  <td>{{item.reference_code}}</td>
                   <td>{{ sumExpendItems(item.expend_items) }}</td>
                   <td>
                     <a-popconfirm :title="$t('funding_remove_item')" ok-text="Yes" cancel-text="No"
@@ -47,8 +45,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="4" style="text-align:right">{{ $t('total') }}</td>
+                  <td colspan="3" style="text-align:right">{{ $t('total') }}</td>
                   <td>{{ grandTotal() }}</td>
+                  <td></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -120,6 +119,7 @@
             </div>
           </div>
         </div>
+        
       </div>
 
 
@@ -150,29 +150,27 @@
     created() {
     },
     computed:{
-      fundItemSplits(){
-        const fundItems = this.fund.items.filter(i => i.category_item_id == this.selectedSplit.catItemId)
-        let splits=[];
-        fundItems.forEach(item=>{
-          if(item.splits.length==1){
-            splits.push({value:item.splits[0].id,label:item.splits[0].description})
-          }else{
-            item.splits.forEach(split=>{
-              splits.push({value:split.id,label:split.description})
-            })
-          }
-        })
+      // fundItemSplits(){
+      //   const fundItems = this.fund.items.filter(i => i.category_item_id == this.selectedSplit.catItemId)
+      //   let splits=[];
+      //   fundItems.forEach(item=>{
+      //     if(item.splits.length==1){
+      //       splits.push({value:item.splits[0].id,label:item.splits[0].description})
+      //     }else{
+      //       item.splits.forEach(split=>{
+      //         splits.push({value:split.id,label:split.description})
+      //       })
+      //     }
+      //   })
 
-        return splits;
-      },
+      //   return splits;
+      // },
     },
     methods: {
       sumExpendItems(expendItems){
         return expendItems.reduce((a, c) => a + parseInt(c.amount), 0).toLocaleString()
       },
       categoryItemAccountsByBudgetItem(budgetItem){
-        console.log('categoryItemAccounts2')
-        // console.log(budgetItem)
         let categoryItemId=null;
         this.budget.fund.items.forEach(fundItem=>{
           if(categoryItemId) return ;
@@ -183,22 +181,22 @@
           })
         })
         const accounts = this.categoryItems.find(i => i.id == categoryItemId)?.accounts || [];
-          return accounts.map(account => ({
+        return accounts.map(account => ({
             value: account.account_code,
             label: account.name_zh + ' ' + account.account_code
           })
         );
-        return accounts;
-
+        // const accounts=[{value:'a',label:'aaa'}]
+        // return accounts
       },
       categoryItemAccountsByCatItemId(catItemId){
         const accounts = this.categoryItems.find(i => i.id == catItemId)?.accounts || [];
-          return accounts.map(account => ({
+        return accounts.map(account => ({
             value: account.account_code,
             label: account.name_zh + ' ' + account.account_code
           })
         );
-        return accounts;
+        
           //return this.categoryItems.find(i=>i.id==this.selectedSplit.catItemId).accounts;
       },
       storeRecord() {
@@ -219,7 +217,6 @@
           });
       },
       updateRecord() {
-        console.log(this.modal.data);
         this.$inertia.patch(
           route("staff.budget.items.update", {budget:this.budget.id, item:this.modal.data.id}),this.modal.data,{
             onSuccess: (page) => {
@@ -266,23 +263,20 @@
         this.selectedSplit.id=split.id
         this.selectedSplit.catItemId=catItem.id
         this.selectedSplit.description=split.description
-        console.log(this.selectedSplit)
       },
       onAddSplitItem2(){
         let accounts=this.categoryItemAccountsByCatItemId(this.selectedSplit.catItemId);
-        console.log(accounts[0])
         this.budget.items.push({
           'budget_id':this.budget.id,
           'fund_item_split_id':this.selectedSplit.splitId,
           'category_item_id':this.selectedSplit.catItemId,
           'account_code':accounts[0].value,
           'description':'--',
-          'amount':0
+          'amount':0,
+          'expend_items':[]
         });
-
       },
       onAddSplitItem(){
-        console.log(this.selectedSplit);
         this.budget.items.push({
           'budget_id':this.budget.id,
           'fund_item_split_id':this.selectedSplit.catItemId,
@@ -308,8 +302,8 @@
         this.budget.items.splice(itemIdx,1)
       },
       grandTotal(){
-      const amounts = this.budget.items.map(i => i.amount);
-      return amounts.reduce((sum,a)=>sum+parseInt(a),0).toLocaleString();
+        const amounts = this.budget.items.map(i => i.amount);
+        return amounts.reduce((sum,a)=>sum+parseInt(a),0).toLocaleString();
     },
 
     },

@@ -13,7 +13,7 @@
               :validate-messages="validateMessages" @finish="onFinish" enctype="multipart/form-data">
         <a-row>
           <a-col :span="12">
-              <a-form-item :label="$t('budget')" name="budget_id">
+              <a-form-item :label="$t('budgets')" name="budget_id">
                 <a-select v-model:value="expend.budget_id" :options="budgets" :fieldNames="{value:'id',label:'title'}"/>
               </a-form-item>
               <a-form-item :label="$t('expend_title')" name="title">
@@ -53,12 +53,12 @@
                     <a-input v-model:value="item.amount" />
                   </td>
                   <td>
-                    <a-select 
+                    <!-- <a-select 
                       v-model:value="item.budget_item_id" 
                       :options="budgets.find(b=>b.id==expend.budget_id).items" 
                       :fieldNames="{value:'id',label:'description'}"
                       :style="{width:'100%'}"
-                    />
+                    /> -->
                   </td>
                   <td>
                     <a-button @click="removeItem(itemIdx)" danger>Delete</a-button>

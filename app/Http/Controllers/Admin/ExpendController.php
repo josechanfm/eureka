@@ -55,9 +55,14 @@ class ExpendController extends Controller
     public function edit(Expend $expend)
     {
         $expend->items;
-        //dd($expend);
+        $budgets=Budget::where('status','S5')->with('items')->get();
+        if($budgets->count()==0){
+            return Inertia::render('Error',[
+                'message'=>"You don't have any budget could use!"
+            ]);
+        }
         return Inertia::render('Admin/ExpendForm',[
-            'budgets'=>Budget::where('status','S5')->with('items')->get(),
+            'budgets'=>$budgets,
             'expend'=>$expend
         ]);
 

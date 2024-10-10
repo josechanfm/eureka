@@ -9,6 +9,7 @@
           <!-- <FundHeader :fund="fund" /> -->
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
+          <a-button type="primary">Add Expend</a-button>
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
