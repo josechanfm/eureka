@@ -13,9 +13,9 @@
               :validate-messages="validateMessages" @finish="onFinish" enctype="multipart/form-data">
         <a-row>
           <a-col :span="12">
-              <a-form-item :label="$t('budgets')" name="budget_id">
+              <!-- <a-form-item :label="$t('budgets')" name="budget_id">
                 <a-select v-model:value="expend.budget_id" :options="budgets" :fieldNames="{value:'id',label:'title'}"/>
-              </a-form-item>
+              </a-form-item> -->
               <a-form-item :label="$t('expend_title')" name="title">
                 <a-input v-model:value="expend.title" />
               </a-form-item>
@@ -30,56 +30,55 @@
               </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-table :dataSource="budgetItems" :columns="columnBudgetItems" :pagination="false"/>
+            <a-table :dataSource="budget.items" :columns="columnBudgetItems" :pagination="false"/>
           </a-col>
         </a-row>
+        <a-button @click="addItem()" type="primary">Add item</a-button>
+        <table width="100%" border="1">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Remark</th>
+              <th>Operation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, itemIdx) in expend.items">
+                <td>
+                  <a-input v-model:value="item.description" />
+                </td>
+                <td>
+                  <a-input v-model:value="item.amount" />
+                </td>
+                <td>
+                  <!-- <a-select 
+                    v-model:value="item.budget_item_id" 
+                    :options="budgets.find(b=>b.id==expend.budget_id).items" 
+                    :fieldNames="{value:'id',label:'description'}"
+                    :style="{width:'100%'}"
+                  /> -->
+                </td>
+                <td>
+                  <a-button @click="removeItem(itemIdx)" danger>Delete</a-button>
+                </td>
+            </tr>
 
-          <a-button @click="addItem()" type="primary">Add item</a-button>
-          <table width="100%" border="1">
-            <thead>
-              <tr>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Remark</th>
-                <th>Operation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, itemIdx) in expend.items">
-                  <td>
-                    <a-input v-model:value="item.description" />
-                  </td>
-                  <td>
-                    <a-input v-model:value="item.amount" />
-                  </td>
-                  <td>
-                    <!-- <a-select 
-                      v-model:value="item.budget_item_id" 
-                      :options="budgets.find(b=>b.id==expend.budget_id).items" 
-                      :fieldNames="{value:'id',label:'description'}"
-                      :style="{width:'100%'}"
-                    /> -->
-                  </td>
-                  <td>
-                    <a-button @click="removeItem(itemIdx)" danger>Delete</a-button>
-                  </td>
-              </tr>
+          </tbody>
+        </table>
+        <div class="flex flex-row item-center justify-center gap-5 pt-5">
+          <a-button :href="route('admin.budget.expends.index',expend.budget_id)">{{ $t('back') }}</a-button>
+          <a-button type="primary" html-type="submit">
+            <span v-if="expend.id">
+              {{ $t('update') }}
+            </span>
+            <span v-else>
+              {{ $t('save') }}
+            </span>
+          </a-button>
 
-            </tbody>
-          </table>
-          <div class="flex flex-row item-center justify-center gap-5 pt-5">
-            <a-button :href="route('admin.expends.index')">{{ $t('back') }}</a-button>
-            <a-button type="primary" html-type="submit">
-              <span v-if="expend.id">
-                {{ $t('update') }}
-              </span>
-              <span v-else>
-                {{ $t('save') }}
-              </span>
-            </a-button>
-
-          </div>
-        </a-form>
+        </div>
+      </a-form>
 
       </div>
     </div>
@@ -96,7 +95,7 @@ export default {
     AdminLayout,
     FundHeader,
   },
-  props: ["budgets", "expend"],
+  props: ["budget", "expend"],
   data() {
     return {
       dateFormat: 'YYYY-MM-DD',
@@ -151,6 +150,7 @@ export default {
   methods: {
     addItem(){
       this.expend.items.push({
+        'budget_item_id':this.budget.id,
         'description':'new item',
         'amount':'0',
         'remark':null
@@ -163,7 +163,7 @@ export default {
     onFinish(){
       if(this.expend.id){
         console.log('update');
-            this.$inertia.patch(route("admin.expends.update",this.expend.id), this.expend, {
+            this.$inertia.patch(route("admin.budget.expends.update",{budget:this.expend.budget_id,expend:this.expend.id}), this.expend, {
               onSuccess: (page) => {
                 console.log(page)
               },
@@ -173,7 +173,7 @@ export default {
             });
       }else{
         console.log('store');
-        this.$inertia.post(route("admin.expends.store"), this.expend, {
+        this.$inertia.post(route("admin.budget.expends.store",this.expend.budget_id), this.expend, {
               onSuccess: (page) => {
                 console.log(page)
               },

@@ -19,7 +19,8 @@ return new class extends Migration
             $table->integer('amount')->nullable();
             $table->integer('actual')->nullable();
             $table->string('remark')->nullable();
-            $table->string('account_code');
+            $table->foreignId('category_item_account_id')->nullable();
+            $table->string('account_code')->nullable();
             $table->string('reference_code')->nullable();
             $table->foreignId('creator_id')->nullable();
             $table->foreignId('updater_id')->nullable();

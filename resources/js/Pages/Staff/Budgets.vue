@@ -19,6 +19,9 @@
                 <a-button @click="editRecord(record)" :disabled="record.is_locked || record.is_closed">{{ $t('edit') }}</a-button>
                 <a-button :href="route('staff.budget.items.index',record.id)" type="budget">{{ $t('budget_item') }}</a-button>
               </template>
+              <template v-else-if="column.dataIndex=='year'">
+                {{ record.category.year }}
+              </template>
               <template v-else-if="column.dataIndex=='grand_total'">
                 {{ sumBudgetItems(record) }}
               </template>
@@ -42,7 +45,7 @@
           :validate-messages="validateMessages"
         >
           <a-form-item :label="$t('year')" name="year">
-            <a-select v-model:value="modal.data.year" :options="years" :disabled="modal.data.status > 'S2'"/>
+            <a-select v-model:value="modal.data.category_id" :options="categories" :fieldNames="{value:'id',label:'year'}" :disabled="modal.data.status > 'S2'"/>
           </a-form-item>
           <a-form-item :label="$t('budget_title')" name="title">
             <a-input v-model:value="modal.data.title" :disabled="modal.data.status > 'S2'"/>
@@ -93,7 +96,7 @@
       StaffLayout,
       FundHeader
     },
-    props: ["fund","budgets"],
+    props: ["categories","fund","budgets"],
     data() {
       return {
         years:[],
@@ -105,7 +108,7 @@
           mode: "",
         },
         rules: {
-          year:{ required: true },
+          category_id:{ required: true },
           title:{ required: true },
         },
         validateMessages: {

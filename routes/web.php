@@ -92,7 +92,7 @@ Route::group([
     Route::post('budget/{budget}/change_status',[App\Http\Controllers\Admin\BudgetController::class,'changeStatus'])->name('admin.budget.changeStatus');
     Route::get('fund/{fund}/export',[App\Http\Controllers\Admin\FundController::class,'export'])->name('admin.fund.export');
     Route::get('budget/{budget}/export',[App\Http\Controllers\Admin\BudgetController::class,'export'])->name('admin.budget.export');
-    Route::resource('expends',App\Http\Controllers\Admin\ExpendController::class)->names('admin.expends');
+    Route::resource('budget/{budget}/expends',App\Http\Controllers\Admin\ExpendController::class)->names('admin.budget.expends');
     Route::resource('expend/items',App\Http\Controllers\Admin\ExpendItemController::class)->names('admin.expend.items');
 });
 

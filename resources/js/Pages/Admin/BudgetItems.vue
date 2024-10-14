@@ -9,8 +9,6 @@
         <BudgetHeader :budget="budget"/>
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          ss
-          {{categoryItems}}
           <a-table :dataSource="budget.items" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
@@ -26,8 +24,11 @@
               </template>
               <template v-else-if="column.dataIndex=='account_code'">
                 <template v-if="editableData.id==record.id">
-                  <a-input v-model:value="editableData.account_code"/>
-                  {{ record}}
+                  <a-input v-model:value="editableData.account_code" v-if="editableData.user_define"/>
+                  <a-select v-model:value="editableData.category_item_account_id" :options="editableData.options" :style="{'width':'100%'}" @change="onChangeAccountCode"/>
+                </template>
+                <template v-else>
+                  {{ record.category_item_account_code}}
                 </template>
               </template>
               <!-- <template v-if="column.dataIndex=='actual'">
@@ -37,7 +38,7 @@
               </template> -->
               <template v-else-if="column.dataIndex=='fund_item_split'">
                 {{ record.split.item.description }}<br>
-                {{ record.split.description }}
+                {{ record.split.description }}<br>
               </template>
               <template v-else-if="column.dataIndex=='expend'">
                 {{ sumExpends(record) }}
@@ -50,9 +51,9 @@
   </template>
   
 
-  <script>
-  import AdminLayout from "@/Layouts/AdminLayout.vue";
-  import BudgetHeader from "@/Pages/Staff/BudgetHeader.vue";
+<script>
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+import BudgetHeader from "@/Pages/Staff/BudgetHeader.vue";
 import CategoryItems from "./CategoryItems.vue";
   
   export default {
@@ -66,8 +67,11 @@ import CategoryItems from "./CategoryItems.vue";
         splits:[],
         editableData:{
           id:null,
+          category_item_account_id:null,
           account_code:null,
-          actual:null
+          actual:null,
+          options:null,
+          user_define:false
         },
         labelCol: {
           style: {
@@ -112,12 +116,26 @@ import CategoryItems from "./CategoryItems.vue";
         ]
       }
     },
+
     methods: {
+      onChangeAccountCode(categoryItemAccountid){
+        const account=this.editableData.options.find(option=>option.value==categoryItemAccountid);
+        this.editableData.account_code=account.user_define?account.account_code:null
+        this.editableData.user_define=account.user_define
+      },
       sumExpends(record){
         return record.expend_items.reduce((a, c) => a + parseInt(c.amount), 0).toLocaleString()
       },
       onEditRecord(record){
+        const categoryItemAccounts=this.categoryItems.find(item=>item.id==record.split.item.category_item_id).accounts
         this.editableData={...record}
+        this.editableData.user_define=categoryItemAccounts.find(account=>account.id==record.category_item_account_id)?.user_define
+        this.editableData.options=categoryItemAccounts.map(a=>({
+          value:a.id, 
+          label:a.name_zh+a.account_code,
+          account_code:a.account_code,
+          user_define:a.user_define
+        }))
       },
       onSaveRecord(record){
         this.$inertia.patch(

@@ -26,6 +26,10 @@ defineProps({
                         <td>{{ budget.fund.amount }}</td>
                     </tr>
                     <tr class="border-b hover:bg-gray-50">
+                        <th class="py-1 px-4 font-medium text-gray-700">{{ $t('year') }}</th>
+                        <td>{{ budget.category.year }}</td>
+                    </tr>
+                    <tr class="border-b hover:bg-gray-50">
                         <th class="py-1 px-4 font-medium text-gray-700">{{ $t('budget_title') }}</th>
                         <td>{{ budget.title }}</td>
                     </tr>

@@ -15,10 +15,13 @@ class ExpendController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Budget $budget)
     {
+        //dd($budget);
+        $budget->fund;
+        $budget->category;
         return Inertia::render('Admin/Expends',[
-            'budgets'=>Budget::with('items')->get(),
+            'budget'=>$budget,//Budget::with('items')->get(),
             'expends'=>Expend::all(),
         ]);
     }
@@ -34,13 +37,12 @@ class ExpendController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage.fund
      */
     public function store(Request $request)
     {
         //
     }
-
     /**
      * Display the specified resource.
      */
@@ -52,17 +54,19 @@ class ExpendController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Expend $expend)
+    public function edit(Budget $budget, Expend $expend)
     {
         $expend->items;
-        $budgets=Budget::where('status','S5')->with('items')->get();
-        if($budgets->count()==0){
-            return Inertia::render('Error',[
-                'message'=>"You don't have any budget could use!"
-            ]);
-        }
+        $budget->items;
+        //dd($budget, $expend);
+        //$budgets=Budget::where('status','S5')->with('items')->get();
+        // if($budgets->count()==0){
+        //     return Inertia::render('Error',[
+        //         'message'=>"You don't have any budget could use!"
+        //     ]);
+        // }
         return Inertia::render('Admin/ExpendForm',[
-            'budgets'=>$budgets,
+            'budget'=>$budget,
             'expend'=>$expend
         ]);
 
@@ -71,7 +75,7 @@ class ExpendController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Expend $expend)
+    public function update(Budget $budget, Expend $expend, Request $request)
     {
         $expend->update($request->all());
         $itemIds=array_column($request->items,'id');
@@ -84,7 +88,7 @@ class ExpendController extends Controller
                 $expend->items()->create($item);
             }
         }
-        return to_route('admin.expends.index');
+        return to_route('admin.budget.expends.index',$expend->budget_id);
         // dd($expend, $request->all());
     }
 

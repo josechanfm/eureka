@@ -8,12 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Fund extends Model
 {
     use HasFactory;
-    protected $fillable=['category_id','entity','declarant','birm','project_code','title','responsible','amount','type','duration','grant','grants','repayment','repayments','created_by','updated_by'];
+    protected $fillable=['year','category','entity','declarant','birm','project_code','title','responsible','amount','type','duration','grant','grants','repayment','repayments','created_by','updated_by'];
     protected $casts=['is_submitted'=>'boolean','grants'=>'array','repayments'=>'array','is_closed'=>'boolean'];
     
-    public function category(){
-        return $this->belongsTo(Category::class)->with('items');
-    }
     public function items(){
         return $this->hasMany(FundItem::class)->with('splits')->orderBy('sequence');
     }

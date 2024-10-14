@@ -6,14 +6,14 @@
         </h2>
       </template>
       <div class="container mx-auto pt-5">
-          <!-- <FundHeader :fund="fund" /> -->
+        <BudgetHeader :budget="budget"/>
         <a-divider/>
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
           <a-button type="primary">Add Expend</a-button>
           <a-table :dataSource="expends" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
               <template v-if="column.dataIndex == 'operation'">
-                <a-button :href="route('admin.expends.edit',record.id)" type="edit">{{ $t('expend_item') }}</a-button>
+                <a-button :href="route('admin.budget.expends.edit',{budget:record.budget_id, expend:record.id})" type="edit">{{ $t('expend_item') }}</a-button>
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -79,15 +79,15 @@
   
   <script>
   import AdminLayout from "@/Layouts/AdminLayout.vue";
-  import FundHeader from "@/Pages/Staff/FundHeader.vue";
+  import BudgetHeader from "@/Pages/Staff/BudgetHeader.vue";
   import { message } from 'ant-design-vue';
 
   export default {
     components: {
       AdminLayout,
-      FundHeader,
+      BudgetHeader,
     },
-    props: ["fund","budgets","expends"],
+    props: ["fund","budget","expends"],
     data() {
       return {
         dateFormat:'YYYY-MM-DD',

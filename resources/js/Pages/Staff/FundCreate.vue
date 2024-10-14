@@ -5,7 +5,6 @@
           {{ $t('my_project') }}
         </h2>
       </template>
-
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto p-5">
           <a-typography-title class="text-center">{{ category.title_zh }}</a-typography-title>

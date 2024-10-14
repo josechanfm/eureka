@@ -7,8 +7,9 @@
       </template>
       <div class="container mx-auto pt-5">
         <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-          <a-button type="primary" class="float-right m-5" :href="route('admin.funds.create',{id:selectedCategory})">{{ $t('create') }}</a-button>
-          <a-select v-model:value="selectedCategory" :options="categories" :fieldNames="{value:'id',label:'title_zh'}" class="float-right m-5" style="width:200px"/>
+
+          <a-button type="primary" class="float-right m-5" :href="route('admin.funds.create',{category:selectedCategory})">{{ $t('create') }}</a-button>
+          <a-select v-model:value="selectedCategory" :options="categories"  class="float-right m-5" style="width:200px"/>
 
           <a-table :dataSource="funds" :columns="columns">
             <template #bodyCell="{ column, text, record, index }">
@@ -62,7 +63,7 @@
     props: ["categories","funds"],
     data() {
       return {
-        selectedCategory:this.categories[0].id,        
+        selectedCategory:this.categories[0].value,
         // modal: {
         //   isOpen: false,
         //   data: {},

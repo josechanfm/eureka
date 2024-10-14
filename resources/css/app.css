@@ -38,3 +38,7 @@
 .ant-btn-budget{
     @apply bg-orange-500 text-white disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
 }
+
+.ant-btn-expend{
+    @apply bg-amber-500 text-white disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
+}

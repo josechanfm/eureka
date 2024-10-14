@@ -9,6 +9,10 @@ defineProps({
             <table class="min-w-full bg-white border border-gray-200">
                 <tbody>
                     <tr class="border-b hover:bg-gray-50">
+                        <th class="py-1 px-4 font-medium text-gray-700">{{ $t('category') }}:</th>
+                        <td class="py-1 px-4">{{ fund.category }}</td>
+                    </tr>
+                    <tr class="border-b hover:bg-gray-50">
                         <th class="py-1 px-4 font-medium text-gray-700">{{ $t('project_code') }}:</th>
                         <td class="py-1 px-4">{{ fund.project_code }}</td>
                     </tr>

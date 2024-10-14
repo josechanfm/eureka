@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Budget extends Model
 {
     use HasFactory;
-    protected $fillable=['year','fund_id','title','proposal_number','proposed_at','proposed_by','approved_at','remark','owner_id','creator_id','updater_id','status'];
+    protected $fillable=['category_id','fund_id','title','proposal_number','proposed_at','proposed_by','approved_at','remark','owner_id','creator_id','updater_id','status'];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 
     public function fund(){
         return $this->belongsTo(Fund::class);

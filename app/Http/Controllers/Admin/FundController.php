@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use App\Models\Config;
 use App\Models\Category;
 use App\Models\CategoryItem;
 use App\Models\Fund;
@@ -21,7 +22,8 @@ class FundController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Funds',[
-            'categories'=>Category::where('active',true)->get(),
+            //'categories'=>Category::where('active',true)->get(),
+            'categories'=>Config::item('fund_categories'),
             'funds'=>Fund::withCount('budgets')->get()
         ]);
     }
@@ -33,25 +35,20 @@ class FundController extends Controller
     {
         //dd($request->all());
         $result=$request->validate([
-            'id' => [
+            'category' => [
                 'required',
-                'integer',
-                Rule::exists('categories')->where(function($query){
-                    return $query->where('active',true);
-                })
+                'string',
             ]
         ]);
-        $fund=Fund::make(['category_id'=>1,'grants'=>[],'repayments'=>[]]);
-        //dd('create fund',$fund);
-
+        $category=Category::latestVersion($result['category']);
+        if(empty($category)){
+            return redirect()->route('admin.funds.index');
+        };
+        $fund=Fund::make(['category'=>$result['category'],'grants'=>[],'repayments'=>[]]);
+        //dd(Category::latestVersion($result['category']),$fund);
         return Inertia::render('Admin/FundForm',[
-            'category'=>Category::find($request->id),
+            'category'=>$category,
             'fund'=>$fund
-            // 'fund'=>(Object)[
-            //     'category_id'=>1,
-            //     'grants'=>[],
-            //     'repayments'=>[]
-            // ]
         ]);
     }
 

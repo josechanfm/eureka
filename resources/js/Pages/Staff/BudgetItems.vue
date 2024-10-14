@@ -26,13 +26,13 @@
                   <td>{{ idx+1 }}</td>
                   <td>
                     <div>{{ getFundItemSplit(item.fund_item_split_id) }}</div>
-                    <a-select v-model:value="item.account_code" :options="categoryItemAccountsByBudgetItem(item)" :style="{width:'500px'}"/>
+                    <a-select v-model:value="item.account_code" :options="categoryItemAccountsByBudgetItem(item)" :style="{width:'500px'}" :disabled="disabledMode()"/>
                   </td>
                   <td>
-                    <a-input v-model:value="item.description" />
+                    <a-input v-model:value="item.description"  :disabled="disabledMode()"/>
                   </td>
                   <td>
-                    <a-input v-model:value="item.amount" />
+                    <a-input v-model:value="item.amount"  :disabled="disabledMode()"/>
                   </td>
                   <td>{{item.reference_code}}</td>
                   <td>{{ sumExpendItems(item.expend_items) }}</td>
@@ -59,6 +59,7 @@
             <a-button type="primary" @click="onSaveBudgetItems(false)">{{ $t('save') }}</a-button>
             <a-button type="primary" @click="onSaveBudgetItems(true)" class="ml-2">{{ $t('save_submit') }}</a-button>
           </span>
+          <a-button class="ml-2" @click="printPdf()">Print PDF</a-button>
           <a-button :href="route('staff.fund.budgets.index',fund.id)" class="ml-2">{{ $t('back') }}</a-button>
         </div>
         <a-divider/>
@@ -167,6 +168,12 @@
       // },
     },
     methods: {
+      printPdf(){
+        alert("print to PDF");
+      },
+      disabledMode(){
+        return (this.budget.status=='S1' || this.budget.status=='S2')?false:true
+      },
       sumExpendItems(expendItems){
         return expendItems.reduce((a, c) => a + parseInt(c.amount), 0).toLocaleString()
       },

@@ -14,8 +14,9 @@
               <template v-if="column.dataIndex == 'operation'">
                 <a-button @click="viewRecord(record)" v-if="record.is_locked || record.is_closed">{{ $t('view') }}</a-button>
                 <a-button @click="editRecord(record)" v-else>{{ $t('edit') }}</a-button>
-                <a-button :href="route('admin.budget.items.index',record.id)" type="edit">{{ $t('budget_item') }}</a-button>
+                <a-button :href="route('admin.budget.items.index',record.id)" type="budget">{{ $t('budget_item') }}</a-button>
                 <a-button :href="route('admin.budget.export',record.id)">{{ $t('export') }}</a-button>
+                <a-button :href="route('admin.budget.expends.index',record.id)" type="expend">{{ $t('expend') }}</a-button>
               </template>
               <template v-else-if="column.dataIndex == 'status'">
                 <!-- Status label -->
@@ -62,6 +63,9 @@
               </template>
               <template v-else-if="column.dataIndex == 'reference'">
                 {{ '000'+record.id }}
+              </template>
+              <template v-else-if="column.dataIndex == 'year'">
+                {{ record.category.year }}
               </template>
               <template v-else>
                 {{ record[column.dataIndex] }}
@@ -125,10 +129,10 @@
     </AdminLayout>
   </template>
   
-  <script>
-  import AdminLayout from "@/Layouts/AdminLayout.vue";
-  import FundHeader from "@/Pages/Staff/FundHeader.vue";
-  import { message } from 'ant-design-vue';
+<script>
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+import FundHeader from "@/Pages/Staff/FundHeader.vue";
+import { message } from 'ant-design-vue';
 
   export default {
     components: {
@@ -172,29 +176,26 @@
     computed:{
       columns(){
         return[
-        {
+          {
+            title: this.$t('year'),
+            dataIndex: "year",
+          },{
             title: this.$t('expend_title'),
-            i18n: "title",
             dataIndex: "title",
           },{
             title: this.$t('proposal_number'),
-            i18n: "proposal_number",
             dataIndex: "proposal_number",
           },{
             title: this.$t('proposed_at'),
-            i18n: "proposed_at",
             dataIndex: "proposed_at",
           },{
             title: this.$t('proposed_by'),
-            i18n: "proposed_by",
             dataIndex: "proposed_by",
           },{
             title: this.$t('reference_code'),
-            i18n: "reference",
             dataIndex: "reference",
           },{
             title: this.$t('status'),
-            i18n: "status",
             dataIndex: "status",
             minWidth: "260px",
             customCell:(text,record,index)=>({

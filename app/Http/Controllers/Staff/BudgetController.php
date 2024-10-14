@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Budget;
+use App\Models\Category;
 use App\Models\Fund;
 
 
@@ -16,13 +17,13 @@ class BudgetController extends Controller
      */
     public function index(Fund $fund)
     {
-
-        if($fund->is_closed || !$fund->isMember()){
+        if($fund->is_submitted==false || $fund->is_closed || !$fund->isMember()){
             return redirect()->route('staff.funds.index');
         }
         return Inertia::render('Staff/Budgets',[
+            'categories'=>Category::where('type',$fund->category)->get(),
             'fund'=>$fund,
-            'budgets'=>Budget::whereBelongsTo($fund)->with('items')->get()
+            'budgets'=>Budget::whereBelongsTo($fund)->with('category')->with('items')->get()
         ]);
     }
 

@@ -17,10 +17,12 @@ class BudgetItemController extends Controller
     public function index(Budget $budget)
     {
         $budget->items;
+        $budget->category;
         $fund=$budget->fund;
         $fund->acccounts;
+        //dd($fund,$budget);
         return Inertia::render('Admin/BudgetItems',[
-            'categoryItems'=>Category::find($fund->category_id)->items,
+            'categoryItems'=>Category::latestVersion($fund->category)->items,
             'budget'=>$budget,
             'availableSplits'=>$fund->availableSplits()
             //'items'=>$budget->items
@@ -67,6 +69,7 @@ class BudgetItemController extends Controller
     public function update(Budget $budget, BudgetItem $item, Request $request )
     {
         //dd($budget, $item, $request->all());
+        $item->category_item_account_id=$request->category_item_account_id;
         $item->account_code=$request->account_code;
         $item->actual=$request->actual;
         $item->save();

@@ -17,9 +17,10 @@ class BudgetController extends Controller
      */
     public function index(Fund $fund)
     {
+        //dd(Budget::whereBelongsTo($fund)->with('category')->get());
         return Inertia::render('Admin/Budgets',[
             'fund'=>$fund,
-            'budgets'=>Budget::whereBelongsTo($fund)->get()
+            'budgets'=>Budget::whereBelongsTo($fund)->with('category')->get()
         ]);
     }
 
@@ -81,7 +82,7 @@ class BudgetController extends Controller
     {
     }
     public function genReferenceCode($budget){
-        $codePrefix=$budget->fund->category->initial;
+        $codePrefix=$budget->category->initial;
         $codePrefix.=substr('0000'.$budget->fund->id,-4).'-';
         $codePrefix.=substr('0000'.$budget->id,-4);
         foreach($budget->items as $i=>$item){

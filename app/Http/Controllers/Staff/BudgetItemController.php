@@ -19,7 +19,8 @@ class BudgetItemController extends Controller
         $budget->items;
         $fund=$budget->fund;
         $fund->items;
-        $categroy=$fund->category;
+        //$categroy=$fund->category;
+        $categroy=Category::latestVersion('FDCT');
         //$categroy=Category::latestVersion('FDCT',$budget->year);
         //dd($categroy, $fund);
         if(empty($categroy)){
