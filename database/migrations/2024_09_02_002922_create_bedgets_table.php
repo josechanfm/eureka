@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('budgets', function (Blueprint $table) {
             $table->id();
             $table->char('year',4);
+            $table->foreignId('category_id');
             $table->foreignId('fund_id');
             $table->string('title');
             $table->string('proposal_number')->nullable();

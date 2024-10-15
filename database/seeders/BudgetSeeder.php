@@ -6,7 +6,7 @@ use App\Models\CategoryItem;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Fund;
-use App\Models\Budget;
+use App\Models\Category;
 use App\Models\CategoryItemAccount;
 
 class BudgetSeeder extends Seeder
@@ -18,10 +18,12 @@ class BudgetSeeder extends Seeder
     {
         $fund=Fund::find(1);
         $budgetItems=$fund->items;
+        $category=Category::where('type','FDCT')->first();
         $budget=$fund->budgets()->create([
             'year'=>'2024',
             'title'=>'項目啓動經費',
             'owner_id'=>1,
+            'status'=>'S0'
         ]);
 
         $budget->items()->create([

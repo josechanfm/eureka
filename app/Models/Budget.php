@@ -9,7 +9,11 @@ class Budget extends Model
 {
     use HasFactory;
     protected $fillable=['category_id','fund_id','title','proposal_number','proposed_at','proposed_by','approved_at','remark','owner_id','creator_id','updater_id','status'];
+    protected $appends=['total'];
 
+    public function getTotalAttribute(){
+        return $this->items->sum('amount');
+    }
     public function category(){
         return $this->belongsTo(Category::class);
     }

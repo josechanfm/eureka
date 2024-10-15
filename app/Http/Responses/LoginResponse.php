@@ -17,8 +17,17 @@ class LoginResponse implements LoginResponseContract
      */
     public function toResponse($request)
     {
+
+        //$pageRoute=config('fortify.home');
+        $pageRoute='staff/dashboard';
+        //dd($pageRoute);
+        if(auth()->user()->roles->count()>0){
+            $pageRoute='admin/dashboard';
+        };
+
+        
         return $request->wantsJson()
             ? response()->json(['two_factor' => false])
-            : redirect()->intended(config('fortify.home'));
+            : redirect()->intended($pageRoute);
     }
 }

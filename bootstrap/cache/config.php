@@ -569,7 +569,7 @@
     'username' => 'username',
     'email' => 'email',
     'views' => true,
-    'home' => '/dashboard',
+    'home' => '/',
     'prefix' => '',
     'domain' => NULL,
     'lowercase_usernames' => true,
