@@ -17,9 +17,8 @@ class FundSeeder extends Seeder
      */
     public function run(): void
     {
-        $category=Category::where('type','FDCT')->first();
         $fund=Fund::create([
-            'category_id'=>$category->id,
+            'category'=>'FDCT',
             // 'entity'=>'MPU',
             // 'declarant'=>'Jose',
             // 'birm'=>'12345678',

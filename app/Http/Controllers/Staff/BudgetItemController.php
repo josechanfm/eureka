@@ -5,24 +5,34 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Fund;
 use App\Models\Category;
 use App\Models\Budget;
 use App\Models\BudgetItem;
 
 class BudgetItemController extends Controller
 {
+    public function __construct()
+    {
+        // Apply the policy for all resource actions
+        $this->authorizeResource(Fund::class, 'fund');
+    }    
     /**
      * Display a listing of the resource.
      */
     public function index(Budget $budget)
     {
         $budget->items;
+        $budget->category;
         $fund=$budget->fund;
         $fund->items;
+        if($fund->is_closed){
+            return to_route('staff.funds.index');
+        }
         //$categroy=$fund->category;
         $categroy=Category::latestVersion('FDCT');
         //$categroy=Category::latestVersion('FDCT',$budget->year);
-        //dd($categroy, $fund);
+        //dd($budget, $categroy, $fund);
         if(empty($categroy)){
             return redirect()->route('dashboard');
         }
@@ -61,6 +71,7 @@ class BudgetItemController extends Controller
             unset($items[$i]['split']);
             unset($items[$i]['reserved']);
             unset($items[$i]['expend_items']);
+            unset($items[$i]['category_item_account_code']);
         }
         foreach($items as $item){
             if(isset($item['id'])){

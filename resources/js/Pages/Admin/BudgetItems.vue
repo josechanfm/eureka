@@ -24,6 +24,7 @@
               </template>
               <template v-else-if="column.dataIndex=='account_code'">
                 <template v-if="editableData.id==record.id">
+                  {{ editableData }}
                   <a-input v-model:value="editableData.account_code" v-if="editableData.user_define"/>
                   <a-select v-model:value="editableData.category_item_account_id" :options="editableData.options" :style="{'width':'100%'}" @change="onChangeAccountCode"/>
                 </template>

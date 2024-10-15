@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('funds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id');
+            $table->string('category',20);
             $table->string('entity')->nullable();
             $table->string('declarant')->nullable();
             $table->string('birm')->nullable();

@@ -15,7 +15,7 @@ class BudgetItem extends Model
 
     public function getCategoryItemAccountCodeAttribute(){
         $account=CategoryItemAccount::find($this->category_item_account_id);
-
+        //dd($account);
         if($account){
             if($account->user_define){
                 return $this->account_code;

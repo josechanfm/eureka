@@ -28,18 +28,21 @@ class Budget extends Model
     public function expends(){
         return $this->hasMany(Expend::class);
     }
+    public function categoryItemAccount(){
+        return $this->belongsTo(CategoryItemAccount::class);
+    }
     public function setSubmitted(){
         $this->status='S3';
         $this->save();
         return $this->status;
     }
     public function canSubmit(){
-        if($this->items()->where('account_code','GF')->count()>0){
+        if($this->items->where('category_item_account_code',null)->count()>0){
             return false;
         }
-        if($this->items()->where('account_code','')->orWhereNull('account_code')->count()>0){
-            return false;
-        }
+        // if($this->items()->where('account_code','')->orWhereNull('account_code')->count()>0){
+        //     return false;
+        // }
         return true;
     }
     // public function setReturned(){

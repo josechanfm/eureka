@@ -39,7 +39,7 @@
 
                 <a-button @click="toggleClose(record)">
                   <span v-if="record.is_closed">{{ $t('reopen') }}</span>
-                  <span v-else>{{ $t('archived') }}</span>
+                  <span v-else>{{ $t('archive') }}</span>
                 </a-button>
               </template>
               <template v-else>
